@@ -1,0 +1,713 @@
+<title>엔비디아 투자 컨설팅 리포트 · 2026.07.28</title>
+<style>
+:root{
+  --bg:#F7F8FA; --surface:#FFFFFF; --surface-2:#F2F4F6; --ink:#191F28; --muted:#8B95A1;
+  --accent:#3182F6; --accent-soft:#EBF2FE; --up:#F04452; --down:#3182F6; --line:#E5E8EB;
+  --warn:#FF9500; --warn-soft:#FFF4E5; --up-soft:#FEECEE; --neutral:#B0B8C1;
+  --shadow:0 1px 3px rgba(25,31,40,.05), 0 6px 20px rgba(25,31,40,.06);
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#16181C; --surface:#202124; --surface-2:#26282C; --ink:#F2F3F5; --muted:#8B95A1;
+    --accent:#4593FC; --accent-soft:#1D2A3D; --up:#FF5D6C; --down:#4593FC; --line:#2E3136;
+    --warn:#FFA726; --warn-soft:#3A2E18; --up-soft:#3A1F24; --neutral:#5A626B;
+    --shadow:0 1px 3px rgba(0,0,0,.3), 0 6px 20px rgba(0,0,0,.25);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#16181C; --surface:#202124; --surface-2:#26282C; --ink:#F2F3F5; --muted:#8B95A1;
+  --accent:#4593FC; --accent-soft:#1D2A3D; --up:#FF5D6C; --down:#4593FC; --line:#2E3136;
+  --warn:#FFA726; --warn-soft:#3A2E18; --up-soft:#3A1F24; --neutral:#5A626B;
+  --shadow:0 1px 3px rgba(0,0,0,.3), 0 6px 20px rgba(0,0,0,.25);
+}
+:root[data-theme="light"]{
+  --bg:#F7F8FA; --surface:#FFFFFF; --surface-2:#F2F4F6; --ink:#191F28; --muted:#8B95A1;
+  --accent:#3182F6; --accent-soft:#EBF2FE; --up:#F04452; --down:#3182F6; --line:#E5E8EB;
+  --warn:#FF9500; --warn-soft:#FFF4E5; --up-soft:#FEECEE; --neutral:#B0B8C1;
+  --shadow:0 1px 3px rgba(25,31,40,.05), 0 6px 20px rgba(25,31,40,.06);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:"Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  -webkit-font-smoothing:antialiased; line-height:1.55;
+  font-variant-numeric:tabular-nums; letter-spacing:-0.01em;
+}
+.wrap{max-width:760px; margin:0 auto; padding:32px 20px 80px; display:flex; flex-direction:column; gap:14px}
+.num{font-variant-numeric:tabular-nums}
+
+/* ── header ── */
+.hd{display:flex; flex-direction:column; gap:20px; padding:8px 4px 4px}
+.hd-top{display:flex; align-items:center; gap:8px; flex-wrap:wrap}
+.pill{display:inline-flex; align-items:center; gap:5px; border-radius:999px; padding:5px 11px;
+  font-size:12px; font-weight:700; background:var(--surface-2); color:var(--muted)}
+.pill.brand{background:var(--accent-soft); color:var(--accent)}
+h1{font-size:30px; font-weight:800; margin:0; letter-spacing:-0.035em; line-height:1.2; text-wrap:balance}
+.hd-price{display:flex; align-items:flex-end; gap:12px; flex-wrap:wrap}
+.px{font-size:56px; font-weight:800; letter-spacing:-0.045em; line-height:1}
+.px small{font-size:22px; font-weight:700; margin-right:2px}
+.chg{font-size:17px; font-weight:700; color:var(--down); padding-bottom:6px}
+.hd-sub{font-size:13px; color:var(--muted)}
+
+/* ── share ── */
+.share{position:relative; align-self:flex-start}
+.share-btn{border:0; cursor:pointer; border-radius:999px; padding:10px 18px; font:inherit;
+  font-size:14px; font-weight:700; background:var(--ink); color:var(--bg); display:inline-flex; align-items:center; gap:7px}
+.share-btn:hover{opacity:.88}
+.share-btn:focus-visible,.mi:focus-visible,.mini:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+.panel{position:absolute; z-index:30; top:calc(100% + 8px); left:0; width:min(340px,86vw);
+  background:var(--surface); border-radius:18px; box-shadow:0 8px 32px rgba(25,31,40,.16); padding:8px;
+  display:none; flex-direction:column; gap:2px}
+.panel.open{display:flex}
+.mi{width:100%; text-align:left; border:0; background:transparent; color:var(--ink); font:inherit;
+  font-size:14px; font-weight:600; padding:12px 14px; border-radius:12px; cursor:pointer;
+  display:flex; align-items:center; justify-content:space-between; gap:8px}
+.mi:hover{background:var(--surface-2)}
+.mi .caret{color:var(--muted); font-size:12px}
+.body{display:none; padding:4px 14px 14px; flex-direction:column; gap:8px}
+.body.open{display:flex}
+.body input,.body textarea{width:100%; font:inherit; font-size:13px; color:var(--ink);
+  background:var(--surface-2); border:0; border-radius:12px; padding:11px 13px; resize:none}
+.body input:focus,.body textarea:focus{outline:2px solid var(--accent)}
+.body textarea{height:112px; line-height:1.5}
+.mini{display:inline-flex; justify-content:center; border:0; cursor:pointer; font:inherit; font-size:13px;
+  font-weight:700; padding:10px 14px; border-radius:12px; background:var(--accent); color:#fff; text-decoration:none}
+.mini:hover{opacity:.9}
+.mini[aria-disabled="true"]{background:var(--surface-2); color:var(--muted); pointer-events:none}
+.hint{font-size:11.5px; color:var(--muted); line-height:1.45}
+
+/* ── cards & sections ── */
+.card{background:var(--surface); border-radius:20px; padding:26px 24px; box-shadow:var(--shadow);
+  display:flex; flex-direction:column; gap:18px}
+.sec-h{display:flex; align-items:baseline; gap:10px; flex-wrap:wrap}
+.sec-n{font-size:11px; font-weight:800; color:var(--accent); letter-spacing:.08em}
+h2{font-size:20px; font-weight:800; margin:0; letter-spacing:-0.03em}
+.lede{font-size:14.5px; color:var(--ink); opacity:.85; margin:0; line-height:1.65; max-width:62ch}
+.note{font-size:12.5px; color:var(--muted); margin:0; line-height:1.55; max-width:64ch}
+.sec-note{font-size:12.5px; color:var(--muted); margin:0; line-height:1.55}
+
+/* ── stat tiles ── */
+.tiles{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px}
+.tile{background:var(--surface-2); border-radius:16px; padding:16px 16px 15px; display:flex; flex-direction:column; gap:5px}
+.tile .lab{font-size:11.5px; font-weight:600; color:var(--muted)}
+.tile .val{font-size:27px; font-weight:800; letter-spacing:-0.04em; line-height:1.1}
+.tile .val.sm{font-size:22px}
+.tile .sub{font-size:11.5px; font-weight:600; color:var(--muted)}
+.up{color:var(--up)} .down{color:var(--down)} .warnc{color:var(--warn)}
+
+/* ── bars ── */
+.bars{display:flex; flex-direction:column; gap:11px}
+.bar-row{display:grid; grid-template-columns:82px 1fr auto; align-items:center; gap:12px}
+.bar-row .bl{font-size:12.5px; font-weight:600; color:var(--muted); text-align:right}
+.bar-row.wide{grid-template-columns:104px 1fr auto}
+.track{height:12px; background:var(--surface-2); border-radius:999px; overflow:hidden}
+.fill{height:100%; border-radius:999px; background:var(--accent)}
+.fill.n{background:var(--neutral)} .fill.r{background:var(--up)} .fill.w{background:var(--warn)}
+.fill.soft{background:var(--accent); opacity:.38}
+.bv{font-size:13px; font-weight:800; letter-spacing:-0.02em; min-width:62px; text-align:right}
+.grp-t{font-size:12px; font-weight:700; color:var(--muted); margin-bottom:-2px}
+
+/* ── diverging bars (이평 이격) ── */
+.dv{display:flex; flex-direction:column; gap:9px}
+.dv-row{display:grid; grid-template-columns:78px 1fr 62px; align-items:center; gap:12px}
+.dv-row .bl{font-size:12.5px; font-weight:700; color:var(--muted); text-align:right}
+.dv-track{position:relative; height:14px; background:var(--surface-2); border-radius:999px}
+.dv-track::before{content:""; position:absolute; left:50%; top:-3px; bottom:-3px; width:1.5px; background:var(--line)}
+.dv-fill{position:absolute; top:2px; bottom:2px; border-radius:999px}
+.dv-val{font-size:13px; font-weight:800; text-align:right; letter-spacing:-0.02em}
+.dv-scale{display:flex; justify-content:space-between; font-size:11px; color:var(--muted); font-weight:600; padding-left:90px; padding-right:74px}
+
+/* ── chips ── */
+.chips{display:flex; flex-wrap:wrap; gap:7px}
+.chip{display:inline-flex; align-items:center; gap:6px; border-radius:999px; padding:7px 13px;
+  font-size:12.5px; font-weight:700; background:var(--surface-2); color:var(--ink)}
+.chip.b{background:var(--accent-soft); color:var(--accent)}
+.chip.r{background:var(--up-soft); color:var(--up)}
+.chip.w{background:var(--warn-soft); color:var(--warn)}
+.chip .dot{width:6px; height:6px; border-radius:50%; background:currentColor}
+
+/* ── kv grid ── */
+.kv{display:grid; grid-template-columns:repeat(auto-fit,minmax(148px,1fr)); gap:10px}
+.kv .k{font-size:11.5px; color:var(--muted); font-weight:600}
+.kv .v{font-size:16px; font-weight:800; letter-spacing:-0.02em}
+.kv > div{background:var(--surface-2); border-radius:14px; padding:13px 14px; display:flex; flex-direction:column; gap:3px}
+
+/* ── chart ── */
+.chart-wrap{overflow-x:auto; -webkit-overflow-scrolling:touch}
+.chart-wrap svg{display:block; width:100%; min-width:540px; height:auto}
+.legend{display:flex; flex-wrap:wrap; gap:14px; font-size:12px; font-weight:600; color:var(--muted)}
+.legend span{display:inline-flex; align-items:center; gap:6px}
+.legend i{width:14px; height:3px; border-radius:2px; display:inline-block}
+
+/* ── gauge / meter ── */
+.meter{display:flex; flex-direction:column; gap:7px}
+.meter-top{display:flex; justify-content:space-between; align-items:baseline; gap:10px}
+.meter-lab{font-size:12.5px; font-weight:700; color:var(--muted)}
+.meter-val{font-size:19px; font-weight:800; letter-spacing:-0.03em}
+.rail{position:relative; height:10px; border-radius:999px; background:var(--surface-2)}
+.rail .seg{position:absolute; top:0; bottom:0}
+.rail .knob{position:absolute; top:50%; width:16px; height:16px; border-radius:50%; background:var(--ink);
+  transform:translate(-50%,-50%); box-shadow:0 0 0 3px var(--surface)}
+.scale{display:flex; justify-content:space-between; font-size:11px; color:var(--muted); font-weight:600}
+
+/* ── timeline ── */
+.tl{display:flex; flex-direction:column; gap:0; position:relative; padding-left:2px}
+.tl-item{display:grid; grid-template-columns:58px 20px 1fr; gap:0 10px; align-items:start; padding-bottom:20px; position:relative}
+.tl-item:last-child{padding-bottom:0}
+.tl-date{font-size:11.5px; font-weight:700; color:var(--muted); padding-top:2px; text-align:right}
+.tl-rail{position:relative; display:flex; justify-content:center}
+.tl-rail::before{content:""; position:absolute; top:9px; bottom:-20px; width:2px; background:var(--line)}
+.tl-item:last-child .tl-rail::before{display:none}
+.tl-dot{width:11px; height:11px; border-radius:50%; margin-top:4px; position:relative; z-index:1;
+  box-shadow:0 0 0 3px var(--surface)}
+.d-pos{background:var(--up)} .d-neg{background:var(--down)} .d-neu{background:var(--neutral)} .d-evt{background:var(--warn)}
+.tl-body{display:flex; flex-direction:column; gap:3px; padding-bottom:2px}
+.tl-t{font-size:14px; font-weight:700; letter-spacing:-0.02em}
+.tl-d{font-size:12.5px; color:var(--muted); line-height:1.5}
+.tone-bar{display:flex; height:10px; border-radius:999px; overflow:hidden; gap:2px; background:transparent}
+.tone-bar div{height:100%}
+.senti-legend{display:flex; flex-wrap:wrap; gap:7px; margin-top:9px}
+
+/* ── risk stripes ── */
+.risks{display:flex; flex-direction:column; gap:8px}
+.risk{display:grid; grid-template-columns:6px 1fr auto; gap:0 14px; align-items:center;
+  background:var(--surface-2); border-radius:14px; overflow:hidden; padding-right:14px}
+.risk .stripe{align-self:stretch}
+.s-hi{background:var(--up)} .s-mid{background:var(--warn)} .s-lo{background:var(--neutral)}
+.risk .rn{padding:12px 0; display:flex; flex-direction:column; gap:2px}
+.risk .rt{font-size:13.5px; font-weight:700}
+.risk .rd{font-size:12px; color:var(--muted); line-height:1.45}
+.badge{font-size:11px; font-weight:800; border-radius:999px; padding:4px 10px; white-space:nowrap}
+.b-hi{background:var(--up-soft); color:var(--up)}
+.b-mid{background:var(--warn-soft); color:var(--warn)}
+.b-lo{background:var(--surface); color:var(--muted)}
+
+/* ── two column ── */
+.two{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+.col{border-radius:16px; padding:18px 18px 20px; display:flex; flex-direction:column; gap:11px}
+.col.pos, .col.plus{background:var(--up-soft)} .col.neg, .col.minus{background:var(--accent-soft)}
+.col h3{margin:0; font-size:14px; font-weight:800; letter-spacing:-0.02em}
+.col.pos h3{color:var(--up)} .col.neg h3{color:var(--accent)}
+.col ul{margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:9px}
+.col li{font-size:13px; line-height:1.55; padding-left:13px; position:relative; color:var(--ink)}
+.col li::before{content:""; position:absolute; left:0; top:8px; width:5px; height:5px; border-radius:50%; background:currentColor; opacity:.45}
+@media (max-width:600px){
+  .two{grid-template-columns:1fr} .px{font-size:44px} h1{font-size:25px}
+  .bar-row,.bar-row.wide{grid-template-columns:74px 1fr auto}
+  .dv-row{grid-template-columns:62px 1fr 56px}
+  .dv-scale{padding-left:74px; padding-right:68px}
+}
+
+.disc{background:var(--surface-2); border-radius:14px; padding:14px 16px; font-size:12px; color:var(--muted); line-height:1.6}
+.srcs{font-size:11.5px; color:var(--muted); line-height:1.6}
+footer{text-align:left; font-size:11.5px; color:var(--muted); padding:6px 4px}
+
+@media print{
+  body{background:#fff; color:#000}
+  .share{display:none !important}
+  .wrap{max-width:100%; padding:0}
+  .card{box-shadow:none; border:1px solid #ddd; page-break-inside:avoid; padding:16px}
+  .tile,.risk,.kv>div,.col{background:#f5f5f5 !important; page-break-inside:avoid}
+  .tl-item,.bar-row,.dv-row,.meter,.chart-wrap{page-break-inside:avoid}
+  h2{page-break-after:avoid}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none !important; transition:none !important}}
+</style>
+
+<div class="wrap">
+
+<header class="hd">
+  <div class="hd-top">
+    <span class="pill brand">NASDAQ NVDA</span>
+    <span class="pill">반도체 · AI 가속기</span>
+    <span class="pill">기준일 2026.07.28 (종가 07.27)</span>
+  </div>
+  <div>
+    <h1 class="title">엔비디아 투자 컨설팅 리포트</h1>
+    <div class="hd-sub">5개 분석 에이전트(산업·재무·기술·뉴스·리스크) 결과 종합</div>
+  </div>
+  <div class="hd-price">
+    <div class="px num"><small>$</small>196.51</div>
+    <div class="chg num">−4.99% <span style="font-weight:600">(전일 대비)</span></div>
+  </div>
+</header>
+
+<!-- 공유 -->
+<div class="share">
+  <button class="share-btn" id="shareBtn" aria-expanded="false" aria-haspopup="true">공유 <span aria-hidden="true">▾</span></button>
+  <div class="panel" id="sharePanel" role="menu">
+    <button class="mi" id="miMail" role="menuitem" aria-expanded="false">메일로 보내기 <span class="caret" aria-hidden="true">▾</span></button>
+    <div class="body" id="bdMail">
+      <input type="email" id="mailTo" placeholder="받는 사람 이메일 주소" autocomplete="email">
+      <a class="mini" id="mailLink" href="#" aria-disabled="true">보내기</a>
+      <p class="hint">클릭하면 메일 작성창이 열리며, 직접 보내기를 눌러야 전달됩니다. 자동 발송되지 않습니다.</p>
+    </div>
+    <button class="mi" id="miKakao" role="menuitem" aria-expanded="false">카카오톡으로 공유 <span class="caret" aria-hidden="true">▾</span></button>
+    <div class="body" id="bdKakao">
+      <textarea id="kkText" readonly></textarea>
+      <button class="mini" id="kkCopy" type="button">복사</button>
+      <button class="mini" id="kkShare" type="button" style="display:none; background:var(--surface-2); color:var(--ink)">다른 앱으로 공유</button>
+      <p class="hint">복사한 내용을 카카오톡 채팅방에 붙여넣어 공유하세요.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ① 요약 -->
+<section class="card">
+  <div class="sec-h"><span class="sec-n">01</span><h2>요약</h2></div>
+  <div class="tiles">
+    <div class="tile"><span class="lab">현재가 (07.27 종가)</span><span class="val num">$196.51</span><span class="sub down num">−4.99% · 52주 고점 대비 −16.92%</span></div>
+    <div class="tile"><span class="lab">PER (TTM)</span><span class="val num">30.05<span style="font-size:15px">배</span></span><span class="sub num">FY27E 21.9배 · FY28E 15.3배</span></div>
+    <div class="tile"><span class="lab">RSI (14)</span><span class="val num">42.45</span><span class="sub">중립 · 과매도 미진입</span></div>
+    <div class="tile"><span class="lab">AI 가속기 점유율</span><span class="val num">78<span style="font-size:15px">%</span></span><span class="sub num">2024년 87% → 하락 추세</span></div>
+    <div class="tile"><span class="lab">컨센서스 목표주가</span><span class="val sm num">$302.83</span><span class="sub up num">현재가 대비 +54.1%</span></div>
+    <div class="tile"><span class="lab">종합 리스크</span><span class="val sm warnc">중상</span><span class="sub">5단계 중 4단계</span></div>
+  </div>
+  <p class="lede">매출은 분기 $81.6B(YoY +85%)로 오히려 가속 중이지만, 주가는 1년 +13.3%에 그쳐 반도체 ETF(+114.7%)에 101%p 뒤처졌습니다. 7월 27일 순환금융 우려로 하루 −4.99% 급락하며 5·20·60·120일선을 한꺼번에 이탈했고, 8월 26일 실적 발표가 방향을 가르는 최대 변수입니다.</p>
+  <p class="sec-note">실적은 최고 속도, 주가는 섹터 최하위 — 독점 프리미엄 재조정 국면</p>
+</section>
+
+<!-- ② 산업 개요 -->
+<section class="card">
+  <div class="sec-h"><span class="sec-n">02</span><h2>산업 개요</h2><span class="pill">AI 가속기 · 데이터센터 반도체</span></div>
+  <div class="tiles">
+    <div class="tile"><span class="lab">글로벌 클라우드 capex (2026E)</span><span class="val num">$6,850<span style="font-size:15px">억</span></span><span class="sub">하이퍼스케일러 AI 인프라 투자</span></div>
+    <div class="tile"><span class="lab">데이터센터 매출 (Q1 FY27)</span><span class="val num">$75.2<span style="font-size:15px">B</span></span><span class="sub up num">YoY +92%</span></div>
+    <div class="tile"><span class="lab">CoWoS 첨단 패키징 확보</span><span class="val num">70<span style="font-size:15px">%+</span></span><span class="sub">TSMC 물량 우선 배정</span></div>
+  </div>
+
+  <div class="bars">
+    <div class="grp-t">AI 가속기 매출 기준 점유율 · 2026년 (추정)</div>
+    <div class="bar-row wide"><span class="bl">NVIDIA</span><div class="track"><div class="fill" style="width:100.0%"></div></div><span class="bv num">78%</span></div>
+    <div class="bar-row wide"><span class="bl">커스텀 ASIC</span><div class="track"><div class="fill n" style="width:16.7%"></div></div><span class="bv num">13%</span></div>
+    <div class="bar-row wide"><span class="bl">AMD</span><div class="track"><div class="fill n" style="width:7.7%"></div></div><span class="bv num">6%</span></div>
+    <div class="bar-row wide"><span class="bl">Intel Gaudi</span><div class="track"><div class="fill n" style="width:3.8%"></div></div><span class="bv num">3%</span></div>
+  </div>
+
+  <div class="bars">
+    <div class="grp-t">NVIDIA 점유율 추세 · 훈련 중심 → 추론 확산</div>
+    <div class="bar-row wide"><span class="bl">2024 정점</span><div class="track"><div class="fill soft" style="width:100.0%"></div></div><span class="bv num">87%</span></div>
+    <div class="bar-row wide"><span class="bl">2026 현재</span><div class="track"><div class="fill" style="width:89.7%"></div></div><span class="bv num">78%</span></div>
+    <div class="bar-row wide"><span class="bl">2028E 추론</span><div class="track"><div class="fill w" style="width:28.7%"></div></div><span class="bv num">25%</span></div>
+  </div>
+
+  <div class="bars">
+    <div class="grp-t">2026년 출하 증가율 · 커스텀 ASIC이 범용 GPU를 앞섬</div>
+    <div class="bar-row wide"><span class="bl">커스텀 ASIC</span><div class="track"><div class="fill w" style="width:100.0%"></div></div><span class="bv num">+44.6%</span></div>
+    <div class="bar-row wide"><span class="bl">범용 GPU</span><div class="track"><div class="fill" style="width:36.1%"></div></div><span class="bv num">+16.1%</span></div>
+  </div>
+
+  <div class="bars">
+    <div class="grp-t">분기 데이터센터 매출 비교 (십억 달러)</div>
+    <div class="bar-row wide"><span class="bl">NVIDIA</span><div class="track"><div class="fill" style="width:100.0%"></div></div><span class="bv num">$75.2B</span></div>
+    <div class="bar-row wide"><span class="bl">AMD</span><div class="track"><div class="fill n" style="width:7.7%"></div></div><span class="bv num">$5.8B</span></div>
+  </div>
+
+  <div class="chips">
+    <span class="chip b"><span class="dot"></span>CUDA 소프트웨어 생태계</span>
+    <span class="chip b"><span class="dot"></span>HBM 우선 배정</span>
+    <span class="chip w"><span class="dot"></span>AMD, 메타·OpenAI와 6GW 계약</span>
+    <span class="chip w"><span class="dot"></span>브로드컴 AI 백로그 $73B</span>
+    <span class="chip w"><span class="dot"></span>구글 TPU·아마존 Trainium·MS Maia·메타 MTIA</span>
+    <span class="chip r"><span class="dot"></span>Blackwell·Rubin 대중국 수출 금지</span>
+    <span class="chip r"><span class="dot"></span>H200 조건부 허용 · 매출 25% 납부</span>
+    <span class="chip r"><span class="dot"></span>HBM3E 가격 20% 인상</span>
+  </div>
+  <p class="note">산업 구조가 "NVIDIA 단일 지배"에서 "GPU + 커스텀 ASIC + 중국산 AI칩"으로 갈라지고 있습니다. 훈련(training) 영역의 해자는 여전히 견고하지만, 추론(inference)에서는 하이퍼스케일러 자체 칩이 빠르게 파고들고 있습니다. 2030년 시장 규모 추정치는 기관에 따라 $68B~$440B로 6배 이상 벌어져, 산업 전망 자체의 불확실성이 큽니다.</p>
+</section>
+
+<!-- ③ 재무 분석 -->
+<section class="card">
+  <div class="sec-h"><span class="sec-n">03</span><h2>재무 분석</h2><span class="pill">Q1 FY27 확정 · Q2 컨센서스</span></div>
+
+  <div class="tiles">
+    <div class="tile"><span class="lab">분기 매출 (Q1 FY27)</span><span class="val num">$81.6<span style="font-size:15px">B</span></span><span class="sub up num">YoY +85.2% · QoQ +19.8%</span></div>
+    <div class="tile"><span class="lab">분기 영업이익률</span><span class="val num">65.6<span style="font-size:15px">%</span></span><span class="sub num">영업이익 $53.54B</span></div>
+    <div class="tile"><span class="lab">분기 순이익률</span><span class="val num">71.5<span style="font-size:15px">%</span></span><span class="sub num">순이익 $58.32B</span></div>
+  </div>
+
+  <div class="bars">
+    <div class="grp-t">분기 매출 추이 (십억 달러)</div>
+    <div class="bar-row wide"><span class="bl">Q1 FY26</span><div class="track"><div class="fill soft" style="width:48.0%"></div></div><span class="bv num">44.07</span></div>
+    <div class="bar-row wide"><span class="bl">Q4 FY26</span><div class="track"><div class="fill soft" style="width:74.2%"></div></div><span class="bv num">68.13</span></div>
+    <div class="bar-row wide"><span class="bl">Q1 FY27</span><div class="track"><div class="fill" style="width:88.9%"></div></div><span class="bv num">81.62</span></div>
+    <div class="bar-row wide"><span class="bl">Q2 FY27(E)</span><div class="track"><div class="fill w" style="width:100.0%"></div></div><span class="bv num">91.82</span></div>
+  </div>
+
+  <div class="bars">
+    <div class="grp-t">연간 매출 (십억 달러)</div>
+    <div class="bar-row wide"><span class="bl">FY2025</span><div class="track"><div class="fill soft" style="width:60.4%"></div></div><span class="bv num">130.48</span></div>
+    <div class="bar-row wide"><span class="bl">FY2026</span><div class="track"><div class="fill" style="width:100.0%"></div></div><span class="bv num">215.94</span></div>
+  </div>
+
+  <div class="bars">
+    <div class="grp-t">FY2026 이익 (십억 달러)</div>
+    <div class="bar-row wide"><span class="bl">영업이익</span><div class="track"><div class="fill" style="width:100.0%"></div></div><span class="bv num">130.39</span></div>
+    <div class="bar-row wide"><span class="bl">순이익</span><div class="track"><div class="fill soft" style="width:92.1%"></div></div><span class="bv num">120.07</span></div>
+  </div>
+
+  <div class="bars">
+    <div class="grp-t">수익성 지표 (TTM, %)</div>
+    <div class="bar-row wide"><span class="bl">매출총이익률</span><div class="track"><div class="fill" style="width:100.0%"></div></div><span class="bv num">74.1%</span></div>
+    <div class="bar-row wide"><span class="bl">영업이익률</span><div class="track"><div class="fill" style="width:88.5%"></div></div><span class="bv num">65.6%</span></div>
+    <div class="bar-row wide"><span class="bl">순이익률</span><div class="track"><div class="fill" style="width:85.0%"></div></div><span class="bv num">63.0%</span></div>
+  </div>
+
+  <div class="bars">
+    <div class="grp-t">PER 비교 (배) · 이익 성장 반영 시 급격히 낮아짐</div>
+    <div class="bar-row wide"><span class="bl">TTM</span><div class="track"><div class="fill" style="width:100.0%"></div></div><span class="bv num">30.05</span></div>
+    <div class="bar-row wide"><span class="bl">Fwd FY27E</span><div class="track"><div class="fill soft" style="width:72.9%"></div></div><span class="bv num">21.90</span></div>
+    <div class="bar-row wide"><span class="bl">Fwd FY28E</span><div class="track"><div class="fill soft" style="width:50.9%"></div></div><span class="bv num">15.30</span></div>
+  </div>
+
+  <div class="meter">
+    <div class="meter-top"><span class="meter-lab">자사 히스토리컬 PER 밴드 내 위치</span><span class="meter-val num">30.05배</span></div>
+    <div class="rail"><div class="seg" style="left:0; width:100%; background:var(--accent); opacity:.2; border-radius:999px"></div><div class="knob" style="left:44.6%"></div></div>
+    <div class="scale"><span class="num">하단 25.1배</span><span class="num">상단 36.2배</span></div>
+  </div>
+
+  <div class="bars">
+    <div class="grp-t">자본 효율 (TTM, %)</div>
+    <div class="bar-row wide"><span class="bl">ROE</span><div class="track"><div class="fill r" style="width:100.0%"></div></div><span class="bv num">114.3%</span></div>
+    <div class="bar-row wide"><span class="bl">ROA</span><div class="track"><div class="fill r" style="width:46.1%"></div></div><span class="bv num">52.7%</span></div>
+  </div>
+
+  <div class="kv">
+    <div><span class="k">시가총액</span><span class="v num">$4.76조</span></div>
+    <div><span class="k">PBR</span><span class="v num">24.35배</span></div>
+    <div><span class="k">PSR (TTM)</span><span class="v num">18.78배</span></div>
+    <div><span class="k">EV/EBITDA (TTM)</span><span class="v num">28.49배</span></div>
+    <div><span class="k">PEG</span><span class="v num down">0.57</span></div>
+    <div><span class="k">부채비율</span><span class="v num">6.6%</span></div>
+    <div><span class="k">유동비율</span><span class="v num">3.44배</span></div>
+    <div><span class="k">순현금</span><span class="v num">$68.2B</span></div>
+    <div><span class="k">TTM 영업현금흐름</span><span class="v num">$125.65B</span></div>
+    <div><span class="k">TTM 잉여현금흐름</span><span class="v num">$119.1B</span></div>
+    <div><span class="k">FCF 마진</span><span class="v num">약 47%</span></div>
+    <div><span class="k">52주 밴드</span><span class="v num" style="font-size:14px">$164.07~$236.54</span></div>
+  </div>
+
+  <div class="chips">
+    <span class="chip r"><span class="dot"></span>4개 분기 연속 EPS 컨센 상회 (+3.46%~+5.54%)</span>
+    <span class="chip b"><span class="dot"></span>애널리스트 61명 중 매수 이상 58명</span>
+    <span class="chip w"><span class="dot"></span>2026.08.26 Q2 FY27 발표 · 컨센 매출 $91.82B / EPS $2.08</span>
+  </div>
+  <p class="note">PEG 0.57은 이익 성장 속도에 견주면 PER 30배가 비싸지 않다는 뜻입니다. 다만 PBR 24.35배와 PSR 18.78배는 자산·매출 기준으로 보면 여전히 높은 수준이라, 밸류에이션 판단이 "이익 성장이 계속되는가"에 전적으로 걸려 있습니다. 재무 구조 자체는 부채비율 6.6%·순현금 $68.2B로 매우 견고합니다.</p>
+</section>
+
+<!-- ④ 기술적 분석 -->
+<section class="card">
+  <div class="sec-h"><span class="sec-n">04</span><h2>기술적 분석</h2><span class="pill">일봉 기준 · 2026.07.27 종가</span></div>
+
+  <p class="note" style="margin-bottom:-4px">technical-analyst의 차트 이미지 파일이 전달되지 않아, 아래는 산출된 지표 수치를 그대로 시각화한 가격 레벨 맵입니다.</p>
+
+  <div class="legend">
+    <span><i style="background:var(--ink)"></i>현재가</span>
+    <span><i style="background:#3182F6"></i>이동평균선</span>
+    <span><i style="background:#F04452"></i>저항</span>
+    <span><i style="background:#8B95A1"></i>지지</span>
+  </div>
+
+  <div class="chart-wrap">
+    <svg viewBox="0 0 700 330" role="img" aria-label="엔비디아 가격 레벨 맵. 현재가 196.51달러는 MA5 206.29, MA20 203.53, MA60 208.72, MA120 197.45 아래에 있고, MA200 192.77 위 1.94퍼센트에 위치. 1차 저항 205~209달러, 2차 저항 211~214달러, 1차 지지 192~195달러, 2차 지지 189.8달러.">
+      <!-- 저항 밴드 -->
+      <rect x="150" y="30.4" width="410" height="31.1" fill="#F04452" fill-opacity="0.10" rx="6"/>
+      <rect x="150" y="82.2" width="410" height="41.5" fill="#F04452" fill-opacity="0.10" rx="6"/>
+      <!-- 지지 밴드 -->
+      <rect x="150" y="227.4" width="410" height="31.1" fill="#8B95A1" fill-opacity="0.14" rx="6"/>
+      <text x="552" y="45" font-size="10.5" font-weight="700" fill="#F04452" font-family="inherit" text-anchor="end">2차 저항 $211~214</text>
+      <text x="552" y="99.5" font-size="10.5" font-weight="700" fill="#F04452" font-family="inherit" text-anchor="end">1차 저항 $205~209</text>
+      <text x="552" y="246" font-size="10.5" font-weight="700" fill="#8B95A1" font-family="inherit" text-anchor="end">1차 지지 $192~195</text>
+
+      <!-- 이동평균선 -->
+      <line x1="150" y1="85.1" x2="560" y2="85.1" stroke="#3182F6" stroke-width="1.6" stroke-dasharray="5 4"/>
+      <text x="8" y="89" font-size="11" font-weight="700" fill="#3182F6" font-family="inherit">MA60</text>
+      <text x="86" y="89" font-size="11" font-weight="700" fill="var(--muted)" font-family="inherit">208.72</text>
+
+      <line x1="150" y1="110.3" x2="560" y2="110.3" stroke="#3182F6" stroke-width="1.6" stroke-dasharray="5 4"/>
+      <text x="8" y="114" font-size="11" font-weight="700" fill="#3182F6" font-family="inherit">MA5</text>
+      <text x="86" y="114" font-size="11" font-weight="700" fill="var(--muted)" font-family="inherit">206.29</text>
+
+      <line x1="150" y1="138.9" x2="560" y2="138.9" stroke="#3182F6" stroke-width="1.6" stroke-dasharray="5 4"/>
+      <text x="8" y="142.5" font-size="11" font-weight="700" fill="#3182F6" font-family="inherit">MA20</text>
+      <text x="86" y="142.5" font-size="11" font-weight="700" fill="var(--muted)" font-family="inherit">203.53</text>
+
+      <line x1="150" y1="202.0" x2="560" y2="202.0" stroke="#3182F6" stroke-width="1.6" stroke-dasharray="5 4"/>
+      <text x="8" y="199" font-size="11" font-weight="700" fill="#3182F6" font-family="inherit">MA120</text>
+      <text x="86" y="199" font-size="11" font-weight="700" fill="var(--muted)" font-family="inherit">197.45</text>
+
+      <line x1="150" y1="250.5" x2="560" y2="250.5" stroke="#3182F6" stroke-width="1.6" stroke-dasharray="5 4"/>
+      <text x="8" y="254.1" font-size="11" font-weight="700" fill="#3182F6" font-family="inherit">MA200</text>
+      <text x="86" y="254.1" font-size="11" font-weight="700" fill="var(--muted)" font-family="inherit">192.77</text>
+
+      <!-- 2차 지지 -->
+      <line x1="150" y1="281.3" x2="560" y2="281.3" stroke="#8B95A1" stroke-width="1.4" stroke-dasharray="2 4"/>
+      <text x="552" y="295" font-size="10.5" font-weight="700" fill="#8B95A1" font-family="inherit" text-anchor="end">2차 지지 $189.80</text>
+
+      <!-- 현재가 -->
+      <line x1="120" y1="211.7" x2="568" y2="211.7" stroke="var(--ink)" stroke-width="2.5"/>
+      <circle cx="150" cy="211.7" r="5" fill="var(--ink)" stroke="var(--surface)" stroke-width="2"/>
+      <rect x="574" y="199.7" width="122" height="24" rx="12" fill="var(--ink)"/>
+      <text x="635" y="216" font-size="12.5" font-weight="800" fill="var(--surface)" font-family="inherit" text-anchor="middle">현재가 $196.51</text>
+    </svg>
+  </div>
+
+  <div class="dv">
+    <div class="grp-t">이동평균선 이격도 · 5·20·60·120일선 전부 하회</div>
+    <div class="dv-row"><span class="bl">MA5</span><div class="dv-track"><div class="dv-fill" style="left:15.2%; width:34.8%; background:var(--down)"></div></div><span class="dv-val num down">−4.74%</span></div>
+    <div class="dv-row"><span class="bl">MA20</span><div class="dv-track"><div class="dv-fill" style="left:24.7%; width:25.3%; background:var(--down)"></div></div><span class="dv-val num down">−3.45%</span></div>
+    <div class="dv-row"><span class="bl">MA60</span><div class="dv-track"><div class="dv-fill" style="left:7.1%; width:42.9%; background:var(--down)"></div></div><span class="dv-val num down">−5.85%</span></div>
+    <div class="dv-row"><span class="bl">MA120</span><div class="dv-track"><div class="dv-fill" style="left:46.5%; width:3.5%; background:var(--down)"></div></div><span class="dv-val num down">−0.48%</span></div>
+    <div class="dv-row"><span class="bl">MA200</span><div class="dv-track"><div class="dv-fill" style="left:50.0%; width:14.2%; background:var(--up)"></div></div><span class="dv-val num up">+1.94%</span></div>
+    <div class="dv-scale"><span>−6%</span><span>0</span><span>+6%</span></div>
+  </div>
+
+  <div class="meter">
+    <div class="meter-top"><span class="meter-lab">RSI (14) · 30 이하 과매도 / 70 이상 과매수</span><span class="meter-val num">42.45</span></div>
+    <div class="rail">
+      <div class="seg" style="left:0%; width:30%; background:var(--accent); opacity:.25; border-radius:999px 0 0 999px"></div>
+      <div class="seg" style="left:70%; width:30%; background:var(--up); opacity:.25; border-radius:0 999px 999px 0"></div>
+      <div class="knob" style="left:42.45%"></div>
+    </div>
+    <div class="scale"><span>0</span><span>30</span><span>70</span><span>100</span></div>
+  </div>
+
+  <div class="meter">
+    <div class="meter-top"><span class="meter-lab">52주 밴드 내 위치</span><span class="meter-val num">44.8%</span></div>
+    <div class="rail"><div class="knob" style="left:44.8%"></div></div>
+    <div class="scale"><span class="num">최저 $164.07 (25.09.05)</span><span class="num">최고 $236.54 (26.05.14)</span></div>
+  </div>
+
+  <div class="chips">
+    <span class="chip b"><span class="dot"></span>MACD 데드크로스 발생</span>
+    <span class="chip b"><span class="dot"></span>MACD −0.0243 / Signal 0.0569 / Hist −0.0812</span>
+    <span class="chip w"><span class="dot"></span>MA120 하향 이탈 근접</span>
+    <span class="chip r"><span class="dot"></span>7/27 −4.99% 급락 · 주요 이평선 동반 이탈</span>
+    <span class="chip"><span class="dot"></span>거래량 1억 5,341만주 · 20일 평균 대비 +17.3%</span>
+  </div>
+
+  <div class="kv">
+    <div><span class="k">1차 지지선</span><span class="v num">$192~195</span></div>
+    <div><span class="k">2차 지지선</span><span class="v num">$189.80</span></div>
+    <div><span class="k">1차 저항선</span><span class="v num">$205~209</span></div>
+    <div><span class="k">2차 저항선</span><span class="v num">$211~214</span></div>
+  </div>
+  <p class="note">4~5월 급등 후 6~7월 $190~215 박스권에서 횡보하다, 7월 27일 하루 만에 −4.99% 급락하며 박스 하단을 이탈했습니다. 거래량이 평소보다 17% 많았다는 것은 실제 매물이 나왔다는 뜻이고, 단기 추세는 하락 전환 신호입니다. 다만 RSI 42.45는 아직 과매도 구간(30 이하)이 아니어서, 기술적 반등 근거로 삼기에는 이릅니다.</p>
+</section>
+
+<!-- ⑤ 뉴스 -->
+<section class="card">
+  <div class="sec-h"><span class="sec-n">05</span><h2>최근 뉴스 · 시장 심리</h2><span class="pill">최근 4주 · 06.말~07.27</span></div>
+  <div>
+    <div class="tone-bar">
+      <div style="width:45.5%; background:var(--up); border-radius:999px 0 0 999px"></div>
+      <div style="width:18.2%; background:var(--neutral)"></div>
+      <div style="width:36.4%; background:var(--down); border-radius:0 999px 999px 0"></div>
+    </div>
+    <div class="senti-legend">
+      <span class="chip r"><span class="dot"></span>긍정 5건</span>
+      <span class="chip"><span class="dot"></span>중립 2건</span>
+      <span class="chip b"><span class="dot"></span>부정 4건</span>
+    </div>
+  </div>
+
+  <div class="tl">
+    <div class="tl-item"><div class="tl-date">07.06</div><div class="tl-rail"><div class="tl-dot d-neg"></div></div>
+      <div class="tl-body"><div class="tl-t">Kyber NVL144 랙 2028년 지연설</div><div class="tl-d">SemiAnalysis 보도. 다음 날 NVIDIA가 공식 반박했으나 로드맵 신뢰에 흠집.</div></div></div>
+    <div class="tl-item"><div class="tl-date">07.07</div><div class="tl-rail"><div class="tl-dot d-neg"></div></div>
+      <div class="tl-body"><div class="tl-t">DeepSeek, 자체 추론칩 개발 보도</div><div class="tl-d">로이터. 대중국 장기 수요가 구조적으로 줄어들 수 있다는 신호.</div></div></div>
+    <div class="tl-item"><div class="tl-date">07월 중</div><div class="tl-rail"><div class="tl-dot d-neu"></div></div>
+      <div class="tl-body"><div class="tl-t">미중 수출규제 · H200 조건부 허용</div><div class="tl-d">미국은 매출 25%를 재무부에 납부하는 조건으로 허용했지만, 중국 정부가 자국 기업 구매를 사실상 불허해 실제 매출 반영은 지연.</div></div></div>
+    <div class="tl-item"><div class="tl-date">07.17</div><div class="tl-rail"><div class="tl-dot d-neg"></div></div>
+      <div class="tl-body"><div class="tl-t">Netlist ITC 조사 연루</div><div class="tl-d">HBM 공급망과 특허·법적 리스크가 동시에 걸림.</div></div></div>
+    <div class="tl-item"><div class="tl-date">07.20</div><div class="tl-rail"><div class="tl-dot d-pos"></div></div>
+      <div class="tl-body"><div class="tl-t">Zacks Research, Hold → Strong Buy 상향</div><div class="tl-d">실적 모멘텀을 근거로 투자의견 두 단계 상향.</div></div></div>
+    <div class="tl-item"><div class="tl-date">07.24</div><div class="tl-rail"><div class="tl-dot d-pos"></div></div>
+      <div class="tl-body"><div class="tl-t">SK그룹과 $500B+ 전략적 파트너십</div><div class="tl-d">AI 팩토리·차세대 메모리 공동 추진. 역대 최대 규모의 파트너십.</div></div></div>
+    <div class="tl-item"><div class="tl-date">07.24</div><div class="tl-rail"><div class="tl-dot d-pos"></div></div>
+      <div class="tl-body"><div class="tl-t">NAVER·Brookfield와 한국 AI 팩토리 200MW 확장</div><div class="tl-d">아시아 지역 인프라 수주 파이프라인 확대.</div></div></div>
+    <div class="tl-item"><div class="tl-date">07.26</div><div class="tl-rail"><div class="tl-dot d-pos"></div></div>
+      <div class="tl-body"><div class="tl-t">젠슨 황, Vera Rubin 지연설 직접 반박</div><div class="tl-d">"이미 대량 양산 중"이라고 공개 발언.</div></div></div>
+    <div class="tl-item"><div class="tl-date">07.27</div><div class="tl-rail"><div class="tl-dot d-pos"></div></div>
+      <div class="tl-body"><div class="tl-t">Safe Superintelligence(SSI)에 $5B 투자</div><div class="tl-d">장기 파트너십 체결. 다만 투자→매출 회수 구조라는 지적도 함께 나옴.</div></div></div>
+    <div class="tl-item"><div class="tl-date">07.27</div><div class="tl-rail"><div class="tl-dot d-neg"></div></div>
+      <div class="tl-body"><div class="tl-t">OpenAI $250B 파이낸싱 보증설 → 순환금융 우려 재점화</div><div class="tl-d">NVDA −4~5%, AMD −5%, 마이크론 −2%, SK하이닉스 −6% 동반 급락. 애플이 시총 1위 재탈환. 이번 조정의 직접 도화선.</div></div></div>
+    <div class="tl-item"><div class="tl-date">07.27</div><div class="tl-rail"><div class="tl-dot d-neu"></div></div>
+      <div class="tl-body"><div class="tl-t">애널리스트 컨센서스 목표주가 $302~304</div><div class="tl-d">매수 의견 우세하나 개별 목표가는 $180~$500으로 갈려 시각차가 큼.</div></div></div>
+    <div class="tl-item"><div class="tl-date">08.26 예정</div><div class="tl-rail"><div class="tl-dot d-evt"></div></div>
+      <div class="tl-body"><div class="tl-t">Q2 FY27 실적 발표</div><div class="tl-d">컨센서스 매출 $91.82B(YoY +96.4%)·EPS $2.08. 향후 방향을 가르는 최대 캐탈리스트.</div></div></div>
+  </div>
+  <p class="note">구조적 성장 스토리에 대한 신뢰(대형 파트너십·목표주가 상향)와 밸류에이션·파이낸싱 구조에 대한 경계심(순환금융, 경쟁 심화)이 팽팽히 맞서는 혼재 국면입니다. 7월 마지막 주의 순환금융 우려발 급락은 8월 26일 실적 발표 전까지 변동성을 키우는 요인으로 남습니다.</p>
+</section>
+
+<!-- ⑥ 리스크 -->
+<section class="card">
+  <div class="sec-h"><span class="sec-n">06</span><h2>리스크 분석</h2><span class="pill">종합 등급 중상</span></div>
+
+  <div class="meter">
+    <div class="meter-top"><span class="meter-lab">종합 리스크 등급 (5단계)</span><span class="meter-val warnc">중상 · 4단계</span></div>
+    <div class="rail"><div class="seg" style="left:0; width:80%; background:var(--warn); border-radius:999px"></div><div class="knob" style="left:80%"></div></div>
+    <div class="scale"><span>낮음</span><span>중간</span><span>높음</span></div>
+  </div>
+
+  <div class="tiles">
+    <div class="tile"><span class="lab">베타 (5년)</span><span class="val num">2.14</span><span class="sub num">1년 베타 1.87</span></div>
+    <div class="tile"><span class="lab">실현변동성 (60일)</span><span class="val num">41.7<span style="font-size:15px">%</span></span><span class="sub num">시장 대비 2.8~3.2배</span></div>
+    <div class="tile"><span class="lab">ATR(14) · 하루 평균 변동폭</span><span class="val sm num">$8.03</span><span class="sub num">주가의 4.09%</span></div>
+    <div class="tile"><span class="lab">1년 최대낙폭 (MaxDD)</span><span class="val sm num down">−20.2%</span><span class="sub num">고점 대비 현재 −16.92%</span></div>
+    <div class="tile"><span class="lab">일간 VaR (95%)</span><span class="val sm num down">−3.81%</span><span class="sub num">CVaR(95%) −4.65%</span></div>
+    <div class="tile"><span class="lab">MA200 방어선</span><span class="val sm num">$192.77</span><span class="sub num">현재가 대비 여유 1.94%</span></div>
+  </div>
+
+  <div class="bars">
+    <div class="grp-t">1년 수익률 비교 · 매출 +85% 성장에도 섹터 최하위</div>
+    <div class="bar-row wide"><span class="bl">SOXX (반도체)</span><div class="track"><div class="fill" style="width:100.0%"></div></div><span class="bv num">+114.70%</span></div>
+    <div class="bar-row wide"><span class="bl">SPY (시장)</span><div class="track"><div class="fill n" style="width:15.5%"></div></div><span class="bv num">+17.79%</span></div>
+    <div class="bar-row wide"><span class="bl">NVDA</span><div class="track"><div class="fill w" style="width:11.6%"></div></div><span class="bv num">+13.26%</span></div>
+  </div>
+
+  <div class="bars">
+    <div class="grp-t">변동성 계수 · 시장(1.00) 대비</div>
+    <div class="bar-row wide"><span class="bl">베타 5년</span><div class="track"><div class="fill r" style="width:100.0%"></div></div><span class="bv num">2.14</span></div>
+    <div class="bar-row wide"><span class="bl">베타 1년</span><div class="track"><div class="fill r" style="width:87.4%"></div></div><span class="bv num">1.87</span></div>
+    <div class="bar-row wide"><span class="bl">시장 기준</span><div class="track"><div class="fill n" style="width:46.7%"></div></div><span class="bv num">1.00</span></div>
+  </div>
+
+  <div class="meter">
+    <div class="meter-top"><span class="meter-lab">8/26 실적 발표 예상 변동범위</span><span class="meter-val num">1σ ±11.0%</span></div>
+    <div class="rail" style="height:14px">
+      <div class="seg" style="left:25.3%; width:49.4%; background:var(--warn); opacity:.45; border-radius:999px"></div>
+      <div class="knob" style="left:50.0%"></div>
+    </div>
+    <div class="scale"><span class="num">2σ 하단 $153</span><span class="num">1σ $175~$218</span><span class="num">2σ 상단 $240</span></div>
+  </div>
+
+  <div class="risks">
+    <div class="risk"><div class="stripe s-hi"></div><div class="rn"><span class="rt">가격 · 변동성</span><span class="rd">베타 2.14, 실현변동성 41.7%, 일간 VaR −3.81%</span></div><span class="badge b-hi">상</span></div>
+    <div class="risk"><div class="stripe s-hi"></div><div class="rn"><span class="rt">상대성과 · 자금 이탈</span><span class="rd">SOXX 대비 101%p 열위, 공매도 잔고 전월 대비 +4.5%</span></div><span class="badge b-hi">상</span></div>
+    <div class="risk"><div class="stripe s-hi"></div><div class="rn"><span class="rt">지정학 · 규제</span><span class="rd">미중 양방향 수출 봉쇄, AI OVERWATCH Act 등 규제 법안 진행</span></div><span class="badge b-hi">상</span></div>
+    <div class="risk"><div class="stripe s-hi"></div><div class="rn"><span class="rt">이벤트 · 뉴스</span><span class="rd">순환금융 서사, 지연설·반박이 반복되는 뉴스 흐름</span></div><span class="badge b-hi">상</span></div>
+    <div class="risk"><div class="stripe s-mid"></div><div class="rn"><span class="rt">산업 · 경쟁</span><span class="rd">커스텀 ASIC 출하 +44.6%, 추론 점유율 2028년 20~30% 전망</span></div><span class="badge b-mid">중~상</span></div>
+    <div class="risk"><div class="stripe s-mid"></div><div class="rn"><span class="rt">단기 이벤트 집중</span><span class="rd">8/26 실적 하나에 1σ ±11%의 양방향 갭 리스크가 몰림</span></div><span class="badge b-mid">중~상</span></div>
+    <div class="risk"><div class="stripe s-mid"></div><div class="rn"><span class="rt">밸류에이션</span><span class="rd">PER 30.05배는 자사 밴드 중상단, 다만 PEG 0.57</span></div><span class="badge b-mid">중</span></div>
+    <div class="risk"><div class="stripe s-mid"></div><div class="rn"><span class="rt">공급망 · 원가</span><span class="rd">CoWoS 오버부킹, HBM 공급부족, HBM3E 가격 20% 인상</span></div><span class="badge b-mid">중</span></div>
+    <div class="risk"><div class="stripe s-lo"></div><div class="rn"><span class="rt">재무 건전성</span><span class="rd">부채비율 6.6%, 순현금 $68.2B, FCF 마진 47%, ROE 114%</span></div><span class="badge b-lo">하</span></div>
+  </div>
+
+  <div class="two">
+    <div class="col" style="background:var(--warn-soft)">
+      <h3 style="color:var(--warn)">'상'으로 상향되는 조건</h3>
+      <ul>
+        <li>MA200($192.77) 이탈 또는 $189.80 붕괴</li>
+        <li>8/26 가이던스가 컨센서스를 하회</li>
+        <li>순환금융 관련 규제·회계 이슈가 공식화</li>
+      </ul>
+    </div>
+    <div class="col" style="background:var(--accent-soft)">
+      <h3 style="color:var(--accent)">'중'으로 하향되는 조건</h3>
+      <ul>
+        <li>$211~214 저항 회복 및 MA50 탈환</li>
+        <li>8/26 실적에서 고객 다변화가 입증</li>
+      </ul>
+    </div>
+  </div>
+  <p class="note">리스크의 본질은 "기업이 망하는" 파산 리스크가 아니라 "AI 사이클의 독점 프리미엄이 재조정되는" 리레이팅 리스크입니다. 재무 하방 방어선은 예외적으로 견고해 '상'까지는 아니지만, 가격·서사·지정학 세 축이 동시에 악화되어 '중'에 머물 수도 없다는 것이 리스크 분석의 결론입니다.</p>
+</section>
+
+<!-- ⑦ 종합 -->
+<section class="card">
+  <div class="sec-h"><span class="sec-n">07</span><h2>종합 정리</h2></div>
+  <div class="two">
+    <div class="col pos plus">
+      <h3>긍정 요인</h3>
+      <ul>
+        <li>Q1 FY27 매출 $81.6B(YoY +85.2%), 데이터센터 $75.2B(+92%)로 성장 가속</li>
+        <li>영업이익률 65.6%·순이익률 71.5%, ROE 114.3%의 압도적 수익성</li>
+        <li>PEG 0.57, Fwd PER FY27E 21.9배·FY28E 15.3배로 이익 기준 부담 완화</li>
+        <li>부채비율 6.6%, 순현금 $68.2B, TTM FCF $119.1B(마진 47%)</li>
+        <li>AI 가속기 점유율 78%로 여전히 압도적 1위, CUDA·CoWoS 70%+·HBM 우선 배정</li>
+        <li>4개 분기 연속 EPS 컨센 상회, 서프라이즈 폭 확대 추세</li>
+        <li>SK그룹 $500B+, NAVER·Brookfield 200MW, SSI $5B 등 파트너십 확대</li>
+        <li>애널리스트 61명 중 매수 이상 58명, 컨센서스 목표주가 $302.83(+54.1%)</li>
+      </ul>
+    </div>
+    <div class="col neg minus">
+      <h3>부정 요인</h3>
+      <ul>
+        <li>1년 수익률 +13.26%로 SOXX(+114.70%) 대비 101%p 열위, 섹터 자금 로테이션</li>
+        <li>7/27 −4.99% 급락으로 MA5·20·60·120일선 동반 이탈, MACD 데드크로스</li>
+        <li>OpenAI $250B 보증설발 순환금융 우려가 서사 리스크로 부상</li>
+        <li>점유율 2024년 87% → 2026년 78%, 추론 영역은 2028년 20~30% 전망</li>
+        <li>커스텀 ASIC 출하 증가율 44.6%로 범용 GPU(16.1%)를 크게 앞섬</li>
+        <li>미중 양방향 봉쇄 — H200은 매출 25% 납부 조건, Blackwell·Rubin은 금지</li>
+        <li>베타 2.14·실현변동성 41.7%·일간 VaR −3.81%의 고변동성</li>
+        <li>8/26 실적에 1σ ±11%(2σ $153~$240)의 양방향 갭 리스크 집중</li>
+      </ul>
+    </div>
+  </div>
+  <div class="disc">본 리포트는 정보 제공을 목적으로 하며 투자 조언이 아닙니다. 투자 결정과 그 책임은 투자자 본인에게 있습니다. 본 리포트는 매수·매도·보유 등 어떠한 투자 의견도 제시하지 않으며, 5개 분석 단계의 결과를 긍정·부정 요인으로 정리하는 데 그칩니다.</div>
+  <p class="srcs">데이터 출처: 야후 파이낸스 일봉·거래량, NVIDIA 분기 실적 공시, 애널리스트 컨센서스, 국내외 언론 보도(로이터·SemiAnalysis 등), New Street Research·BofA 등 산업 추정치. Q1 FY27은 확정 실적, Q2 FY27은 컨센서스 추정치입니다. 분기 매출 추이의 전년 동기·전분기 값은 제시된 YoY·QoQ 증가율로부터 역산했으며, AI 가속기 점유율 78%는 제시 범위 75~81%의 중간값입니다. technical-analyst의 차트 이미지 파일은 전달되지 않아 지표 수치 기반 레벨 맵으로 대체했습니다.</p>
+</section>
+
+<footer>작성 2026.07.28 · 엔비디아(NVDA · NASDAQ) · 산업 / 재무 / 기술 / 뉴스 / 리스크 5단계 분석 종합</footer>
+
+</div>
+
+<script>
+(function(){
+  var btn=document.getElementById('shareBtn'), panel=document.getElementById('sharePanel');
+  function closeAll(){ panel.classList.remove('open'); btn.setAttribute('aria-expanded','false'); }
+  btn.addEventListener('click', function(e){
+    e.stopPropagation();
+    var open=panel.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open?'true':'false');
+  });
+  document.addEventListener('click', function(e){ if(!panel.contains(e.target) && e.target!==btn) closeAll(); });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeAll(); });
+
+  function toggle(itemId, bodyId){
+    var it=document.getElementById(itemId), bd=document.getElementById(bodyId);
+    it.addEventListener('click', function(){
+      var open=bd.classList.toggle('open');
+      it.setAttribute('aria-expanded', open?'true':'false');
+    });
+  }
+  toggle('miMail','bdMail'); toggle('miKakao','bdKakao');
+
+  var SUMMARY='엔비디아(NVDA) 2026.07.27 종가 $196.51 (-4.99%).\n'
+    + '매출은 분기 $81.6B(YoY +85%)로 가속 중이나, 1년 주가 수익률은 +13.3%로 반도체 ETF(+114.7%)에 101%p 열위.\n'
+    + 'PER(TTM) 30.05배, RSI 42.45, 종합 리스크 중상. 7/27 순환금융 우려로 주요 이평선 동반 이탈, 8/26 실적이 최대 변수.';
+
+  // 메일
+  var input=document.getElementById('mailTo'), link=document.getElementById('mailLink');
+  function buildMail(){
+    var to=input.value.trim();
+    if(!to || !input.checkValidity()){
+      link.setAttribute('href','#'); link.setAttribute('aria-disabled','true'); return;
+    }
+    var subject=encodeURIComponent('엔비디아 투자 컨설팅 리포트 - 2026-07-28');
+    var body=encodeURIComponent(SUMMARY + '\n\n리포트 링크: ' + window.location.href);
+    link.setAttribute('href', 'mailto:' + to + '?subject=' + subject + '&body=' + body);
+    link.setAttribute('aria-disabled','false');
+  }
+  input.addEventListener('input', buildMail);
+
+  // 카카오
+  var ta=document.getElementById('kkText'), copyBtn=document.getElementById('kkCopy'), shareBtn2=document.getElementById('kkShare');
+  ta.value = '[엔비디아 투자 컨설팅 리포트 · 2026.07.28]\n' + SUMMARY + '\n\n' + window.location.href;
+  copyBtn.addEventListener('click', function(){
+    ta.focus(); ta.select(); ta.setSelectionRange(0, ta.value.length);
+    var ok=false;
+    try{ ok=document.execCommand('copy'); }catch(err){ ok=false; }
+    copyBtn.textContent = ok ? '복사됨!' : '직접 선택해 복사해 주세요';
+    setTimeout(function(){ copyBtn.textContent='복사'; }, 1800);
+  });
+  if(navigator.share){
+    shareBtn2.style.display='inline-flex';
+    shareBtn2.addEventListener('click', function(){
+      navigator.share({title:'엔비디아 투자 컨설팅 리포트', text:ta.value}).catch(function(){});
+    });
+  }
+})();
+</script>

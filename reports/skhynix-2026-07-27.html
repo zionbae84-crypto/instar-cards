@@ -1,0 +1,593 @@
+<title>SK하이닉스 투자 컨설팅 리포트 · 2026.07.27</title>
+<style>
+:root{
+  --bg:#F7F8FA; --surface:#FFFFFF; --surface-2:#F2F4F6; --ink:#191F28; --muted:#8B95A1;
+  --accent:#3182F6; --accent-soft:#EBF2FE; --up:#F04452; --down:#3182F6; --line:#E5E8EB;
+  --warn:#FF9500; --warn-soft:#FFF4E5; --up-soft:#FEECEE; --neutral:#B0B8C1;
+  --shadow:0 1px 3px rgba(25,31,40,.05), 0 6px 20px rgba(25,31,40,.06);
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#16181C; --surface:#202124; --surface-2:#26282C; --ink:#F2F3F5; --muted:#8B95A1;
+    --accent:#4593FC; --accent-soft:#1D2A3D; --up:#FF5D6C; --down:#4593FC; --line:#2E3136;
+    --warn:#FFA726; --warn-soft:#3A2E18; --up-soft:#3A1F24; --neutral:#5A626B;
+    --shadow:0 1px 3px rgba(0,0,0,.3), 0 6px 20px rgba(0,0,0,.25);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#16181C; --surface:#202124; --surface-2:#26282C; --ink:#F2F3F5; --muted:#8B95A1;
+  --accent:#4593FC; --accent-soft:#1D2A3D; --up:#FF5D6C; --down:#4593FC; --line:#2E3136;
+  --warn:#FFA726; --warn-soft:#3A2E18; --up-soft:#3A1F24; --neutral:#5A626B;
+  --shadow:0 1px 3px rgba(0,0,0,.3), 0 6px 20px rgba(0,0,0,.25);
+}
+:root[data-theme="light"]{
+  --bg:#F7F8FA; --surface:#FFFFFF; --surface-2:#F2F4F6; --ink:#191F28; --muted:#8B95A1;
+  --accent:#3182F6; --accent-soft:#EBF2FE; --up:#F04452; --down:#3182F6; --line:#E5E8EB;
+  --warn:#FF9500; --warn-soft:#FFF4E5; --up-soft:#FEECEE; --neutral:#B0B8C1;
+  --shadow:0 1px 3px rgba(25,31,40,.05), 0 6px 20px rgba(25,31,40,.06);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:"Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  -webkit-font-smoothing:antialiased; line-height:1.55;
+  font-variant-numeric:tabular-nums; letter-spacing:-0.01em;
+}
+.wrap{max-width:760px; margin:0 auto; padding:32px 20px 80px; display:flex; flex-direction:column; gap:14px}
+.num{font-variant-numeric:tabular-nums}
+
+/* ── header ── */
+.hd{display:flex; flex-direction:column; gap:20px; padding:8px 4px 4px}
+.hd-top{display:flex; align-items:center; gap:8px; flex-wrap:wrap}
+.pill{display:inline-flex; align-items:center; gap:5px; border-radius:999px; padding:5px 11px;
+  font-size:12px; font-weight:700; background:var(--surface-2); color:var(--muted)}
+.pill.brand{background:var(--accent-soft); color:var(--accent)}
+h1{font-size:30px; font-weight:800; margin:0; letter-spacing:-0.035em; line-height:1.2}
+.hd-price{display:flex; align-items:flex-end; gap:12px; flex-wrap:wrap}
+.px{font-size:56px; font-weight:800; letter-spacing:-0.045em; line-height:1}
+.px small{font-size:22px; font-weight:700; margin-left:2px}
+.chg{font-size:17px; font-weight:700; color:var(--up); padding-bottom:6px}
+.hd-sub{font-size:13px; color:var(--muted)}
+
+/* ── share ── */
+.share{position:relative; align-self:flex-start}
+.share-btn{border:0; cursor:pointer; border-radius:999px; padding:10px 18px; font:inherit;
+  font-size:14px; font-weight:700; background:var(--ink); color:var(--bg); display:inline-flex; align-items:center; gap:7px}
+.share-btn:hover{opacity:.88}
+.share-btn:focus-visible,.mi:focus-visible,.mini:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+.panel{position:absolute; z-index:30; top:calc(100% + 8px); left:0; width:min(340px,86vw);
+  background:var(--surface); border-radius:18px; box-shadow:0 8px 32px rgba(25,31,40,.16); padding:8px;
+  display:none; flex-direction:column; gap:2px}
+.panel.open{display:flex}
+.mi{width:100%; text-align:left; border:0; background:transparent; color:var(--ink); font:inherit;
+  font-size:14px; font-weight:600; padding:12px 14px; border-radius:12px; cursor:pointer;
+  display:flex; align-items:center; justify-content:space-between; gap:8px}
+.mi:hover{background:var(--surface-2)}
+.mi .caret{color:var(--muted); font-size:12px}
+.body{display:none; padding:4px 14px 14px; flex-direction:column; gap:8px}
+.body.open{display:flex}
+.body input,.body textarea{width:100%; font:inherit; font-size:13px; color:var(--ink);
+  background:var(--surface-2); border:0; border-radius:12px; padding:11px 13px; resize:none}
+.body input:focus,.body textarea:focus{outline:2px solid var(--accent)}
+.body textarea{height:112px; line-height:1.5}
+.mini{display:inline-flex; justify-content:center; border:0; cursor:pointer; font:inherit; font-size:13px;
+  font-weight:700; padding:10px 14px; border-radius:12px; background:var(--accent); color:#fff; text-decoration:none}
+.mini:hover{opacity:.9}
+.mini[aria-disabled="true"]{background:var(--surface-2); color:var(--muted); pointer-events:none}
+.hint{font-size:11.5px; color:var(--muted); line-height:1.45}
+
+/* ── cards & sections ── */
+.card{background:var(--surface); border-radius:20px; padding:26px 24px; box-shadow:var(--shadow);
+  display:flex; flex-direction:column; gap:18px}
+.sec-h{display:flex; align-items:baseline; gap:10px; flex-wrap:wrap}
+.sec-n{font-size:11px; font-weight:800; color:var(--accent); letter-spacing:.08em}
+h2{font-size:20px; font-weight:800; margin:0; letter-spacing:-0.03em}
+.lede{font-size:14.5px; color:var(--ink); opacity:.85; margin:0; line-height:1.65; max-width:62ch}
+.note{font-size:12.5px; color:var(--muted); margin:0; line-height:1.55}
+
+/* ── stat tiles ── */
+.tiles{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px}
+.tile{background:var(--surface-2); border-radius:16px; padding:16px 16px 15px; display:flex; flex-direction:column; gap:5px}
+.tile .lab{font-size:11.5px; font-weight:600; color:var(--muted)}
+.tile .val{font-size:27px; font-weight:800; letter-spacing:-0.04em; line-height:1.1}
+.tile .val.sm{font-size:22px}
+.tile .sub{font-size:11.5px; font-weight:600; color:var(--muted)}
+.up{color:var(--up)} .down{color:var(--down)} .warnc{color:var(--warn)}
+
+/* ── bars ── */
+.bars{display:flex; flex-direction:column; gap:11px}
+.bar-row{display:grid; grid-template-columns:82px 1fr auto; align-items:center; gap:12px}
+.bar-row .bl{font-size:12.5px; font-weight:600; color:var(--muted); text-align:right}
+.bar-row.wide{grid-template-columns:96px 1fr auto}
+.track{height:12px; background:var(--surface-2); border-radius:999px; overflow:hidden}
+.fill{height:100%; border-radius:999px; background:var(--accent)}
+.fill.n{background:var(--neutral)} .fill.r{background:var(--up)} .fill.w{background:var(--warn)}
+.fill.soft{background:var(--accent); opacity:.38}
+.bv{font-size:13px; font-weight:800; letter-spacing:-0.02em; min-width:60px; text-align:right}
+.grp-t{font-size:12px; font-weight:700; color:var(--muted); margin-bottom:-2px}
+
+/* ── kv grid ── */
+.kv{display:grid; grid-template-columns:repeat(auto-fit,minmax(132px,1fr)); gap:10px}
+.kv .k{font-size:11.5px; color:var(--muted); font-weight:600}
+.kv .v{font-size:16px; font-weight:800; letter-spacing:-0.02em}
+.kv > div{background:var(--surface-2); border-radius:14px; padding:13px 14px; display:flex; flex-direction:column; gap:3px}
+
+/* ── chips ── */
+.chips{display:flex; flex-wrap:wrap; gap:7px}
+.chip{display:inline-flex; align-items:center; gap:6px; border-radius:999px; padding:7px 13px;
+  font-size:12.5px; font-weight:700; background:var(--surface-2); color:var(--ink)}
+.chip.b{background:var(--accent-soft); color:var(--accent)}
+.chip.r{background:var(--up-soft); color:var(--up)}
+.chip.w{background:var(--warn-soft); color:var(--warn)}
+.chip .dot{width:6px; height:6px; border-radius:50%; background:currentColor}
+
+/* ── chart ── */
+.chart-wrap{overflow-x:auto; -webkit-overflow-scrolling:touch}
+.chart-wrap svg{display:block; width:100%; min-width:560px; height:auto}
+.legend{display:flex; flex-wrap:wrap; gap:14px; font-size:12px; font-weight:600; color:var(--muted)}
+.legend span{display:inline-flex; align-items:center; gap:6px}
+.legend i{width:14px; height:3px; border-radius:2px; display:inline-block}
+
+/* ── gauge / meter ── */
+.meter{display:flex; flex-direction:column; gap:7px}
+.meter-top{display:flex; justify-content:space-between; align-items:baseline}
+.meter-lab{font-size:12.5px; font-weight:700; color:var(--muted)}
+.meter-val{font-size:19px; font-weight:800; letter-spacing:-0.03em}
+.rail{position:relative; height:10px; border-radius:999px; background:var(--surface-2)}
+.rail .seg{position:absolute; top:0; bottom:0}
+.rail .knob{position:absolute; top:50%; width:16px; height:16px; border-radius:50%; background:var(--ink);
+  transform:translate(-50%,-50%); box-shadow:0 0 0 3px var(--surface)}
+.scale{display:flex; justify-content:space-between; font-size:11px; color:var(--muted); font-weight:600}
+
+/* ── timeline ── */
+.tl{display:flex; flex-direction:column; gap:0; position:relative; padding-left:2px}
+.tl-item{display:grid; grid-template-columns:58px 20px 1fr; gap:0 10px; align-items:start; padding-bottom:20px; position:relative}
+.tl-item:last-child{padding-bottom:0}
+.tl-date{font-size:11.5px; font-weight:700; color:var(--muted); padding-top:2px; text-align:right}
+.tl-rail{position:relative; display:flex; justify-content:center}
+.tl-rail::before{content:""; position:absolute; top:9px; bottom:-20px; width:2px; background:var(--line)}
+.tl-item:last-child .tl-rail::before{display:none}
+.tl-dot{width:11px; height:11px; border-radius:50%; margin-top:4px; position:relative; z-index:1;
+  box-shadow:0 0 0 3px var(--surface)}
+.d-pos{background:var(--up)} .d-neg{background:var(--down)} .d-neu{background:var(--neutral)} .d-evt{background:var(--warn)}
+.tl-body{display:flex; flex-direction:column; gap:3px; padding-bottom:2px}
+.tl-t{font-size:14px; font-weight:700; letter-spacing:-0.02em}
+.tl-d{font-size:12.5px; color:var(--muted); line-height:1.5}
+.tone-bar{display:flex; height:10px; border-radius:999px; overflow:hidden; gap:2px; background:transparent}
+.tone-bar div{height:100%}
+
+/* ── risk stripes ── */
+.risks{display:flex; flex-direction:column; gap:8px}
+.risk{display:grid; grid-template-columns:6px 1fr auto; gap:0 14px; align-items:center;
+  background:var(--surface-2); border-radius:14px; overflow:hidden; padding-right:14px}
+.risk .stripe{align-self:stretch}
+.s-hi{background:var(--up)} .s-mid{background:var(--warn)} .s-lo{background:var(--neutral)}
+.risk .rn{padding:12px 0; display:flex; flex-direction:column; gap:2px}
+.risk .rt{font-size:13.5px; font-weight:700}
+.risk .rd{font-size:12px; color:var(--muted); line-height:1.45}
+.badge{font-size:11px; font-weight:800; border-radius:999px; padding:4px 10px; white-space:nowrap}
+.b-hi{background:var(--up-soft); color:var(--up)}
+.b-mid{background:var(--warn-soft); color:var(--warn)}
+.b-lo{background:var(--surface); color:var(--muted)}
+
+/* ── two column ── */
+.two{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+.col{border-radius:16px; padding:18px 18px 20px; display:flex; flex-direction:column; gap:11px}
+.col.pos{background:var(--up-soft)} .col.neg{background:var(--accent-soft)}
+.col h3{margin:0; font-size:14px; font-weight:800; letter-spacing:-0.02em}
+.col.pos h3{color:var(--up)} .col.neg h3{color:var(--accent)}
+.col ul{margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:9px}
+.col li{font-size:13px; line-height:1.55; padding-left:13px; position:relative; color:var(--ink)}
+.col li::before{content:""; position:absolute; left:0; top:8px; width:5px; height:5px; border-radius:50%; background:currentColor; opacity:.45}
+@media (max-width:600px){ .two{grid-template-columns:1fr} .px{font-size:44px} h1{font-size:25px} .bar-row{grid-template-columns:70px 1fr auto} }
+
+.disc{background:var(--surface-2); border-radius:14px; padding:14px 16px; font-size:12px; color:var(--muted); line-height:1.6}
+.srcs{font-size:11.5px; color:var(--muted); line-height:1.6}
+footer{text-align:left; font-size:11.5px; color:var(--muted); padding:6px 4px}
+
+@media print{
+  body{background:#fff; color:#000}
+  .share{display:none !important}
+  .wrap{max-width:100%; padding:0}
+  .card{box-shadow:none; border:1px solid #ddd; page-break-inside:avoid; padding:16px}
+  .tile,.risk,.kv>div,.col{background:#f5f5f5 !important; page-break-inside:avoid}
+  .tl-item,.bar-row{page-break-inside:avoid}
+  h2{page-break-after:avoid}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none !important; transition:none !important}}
+</style>
+
+<div class="wrap">
+
+<header class="hd">
+  <div class="hd-top">
+    <span class="pill brand">KOSPI 000660</span>
+    <span class="pill">반도체 · 메모리</span>
+    <span class="pill">기준일 2026.07.27</span>
+  </div>
+  <div>
+    <h1>SK하이닉스 투자 컨설팅 리포트</h1>
+    <div class="hd-sub">5개 분석 에이전트(산업·재무·기술·뉴스·리스크) 결과 종합</div>
+  </div>
+  <div class="hd-price">
+    <div class="px num">1,816,000<small>원</small></div>
+    <div class="chg num">+3.24% <span style="font-weight:600">(전일 대비)</span></div>
+  </div>
+</header>
+
+<!-- 공유 -->
+<div class="share">
+  <button class="share-btn" id="shareBtn" aria-expanded="false" aria-haspopup="true">공유 <span aria-hidden="true">▾</span></button>
+  <div class="panel" id="sharePanel" role="menu">
+    <button class="mi" id="miMail" role="menuitem" aria-expanded="false">메일로 보내기 <span class="caret" aria-hidden="true">▾</span></button>
+    <div class="body" id="bdMail">
+      <input type="email" id="mailTo" placeholder="받는 사람 이메일 주소" autocomplete="email">
+      <a class="mini" id="mailLink" href="#" aria-disabled="true">보내기</a>
+      <p class="hint">클릭하면 메일 작성창이 열리며, 직접 보내기를 눌러야 전달됩니다. 자동 발송되지 않습니다.</p>
+    </div>
+    <button class="mi" id="miKakao" role="menuitem" aria-expanded="false">카카오톡으로 공유 <span class="caret" aria-hidden="true">▾</span></button>
+    <div class="body" id="bdKakao">
+      <textarea id="kkText" readonly></textarea>
+      <button class="mini" id="kkCopy" type="button">복사</button>
+      <button class="mini" id="kkShare" type="button" style="display:none; background:var(--surface-2); color:var(--ink)">다른 앱으로 공유</button>
+      <p class="hint">복사한 내용을 카카오톡 채팅방에 붙여넣어 공유하세요.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ① 요약 -->
+<section class="card">
+  <div class="sec-h"><span class="sec-n">01</span><h2>요약</h2></div>
+  <div class="tiles">
+    <div class="tile"><span class="lab">현재가</span><span class="val num">1,816,000</span><span class="sub up num">+3.24% · 고점 대비 −39.2%</span></div>
+    <div class="tile"><span class="lab">PER (TTM)</span><span class="val num">17.54<span style="font-size:15px">배</span></span><span class="sub num">FY2026 추정 6.00배</span></div>
+    <div class="tile"><span class="lab">RSI (14)</span><span class="val num">42.06</span><span class="sub">중립 · 과매도 아님</span></div>
+    <div class="tile"><span class="lab">HBM 점유율</span><span class="val num">58<span style="font-size:15px">%</span></span><span class="sub">2026 1Q 세계 1위</span></div>
+    <div class="tile"><span class="lab">컨센서스 목표주가</span><span class="val sm num">3,626,000</span><span class="sub up num">현재가 대비 +99.7%</span></div>
+    <div class="tile"><span class="lab">종합 리스크</span><span class="val sm warnc">중상</span><span class="sub">5단계 중 4단계</span></div>
+  </div>
+  <p class="lede">실적은 사상 최대 국면(2026 1Q 영업이익률 71.5%)이지만, 주가는 6월 고점에서 39% 조정 중이고 연율 변동성이 110%에 달합니다. 7월 29일 2분기 실적 발표가 향후 방향을 가르는 최대 변수입니다.</p>
+</section>
+
+<!-- ② 산업 개요 -->
+<section class="card">
+  <div class="sec-h"><span class="sec-n">02</span><h2>산업 개요</h2><span class="pill">메모리 슈퍼사이클</span></div>
+  <div class="tiles">
+    <div class="tile"><span class="lab">HBM 시장 규모 (2026E)</span><span class="val num">546<span style="font-size:15px">억$</span></span><span class="sub up num">전년 대비 +58%</span></div>
+    <div class="tile"><span class="lab">D램 매출 성장 (2026E)</span><span class="val num up">+51<span style="font-size:15px">%</span></span><span class="sub">낸드 +45% (BofA)</span></div>
+    <div class="tile"><span class="lab">엔비디아 매출 비중</span><span class="val num">63<span style="font-size:15px">%</span></span><span class="sub num">2025년 72% → 하락(분산 진행)</span></div>
+  </div>
+
+  <div class="bars">
+    <div class="grp-t">HBM 시장 점유율 · 2026년 1분기</div>
+    <div class="bar-row"><span class="bl">SK하이닉스</span><div class="track"><div class="fill" style="width:100.0%"></div></div><span class="bv num">58%</span></div>
+    <div class="bar-row"><span class="bl">삼성전자</span><div class="track"><div class="fill n" style="width:36.2%"></div></div><span class="bv num">21%</span></div>
+    <div class="bar-row"><span class="bl">마이크론</span><div class="track"><div class="fill n" style="width:36.2%"></div></div><span class="bv num">21%</span></div>
+  </div>
+
+  <div class="bars">
+    <div class="grp-t">차세대 HBM4 점유율 전망 (자료별 54~70%, 중간값 기준)</div>
+    <div class="bar-row"><span class="bl">SK하이닉스</span><div class="track"><div class="fill" style="width:100.0%"></div></div><span class="bv num">62%</span></div>
+    <div class="bar-row"><span class="bl">삼성전자</span><div class="track"><div class="fill n" style="width:32.3%"></div></div><span class="bv num">20%</span></div>
+    <div class="bar-row"><span class="bl">마이크론</span><div class="track"><div class="fill n" style="width:29.0%"></div></div><span class="bv num">18%</span></div>
+  </div>
+
+  <div class="chips">
+    <span class="chip b"><span class="dot"></span>DRAM 수요가 공급 2.1%p 초과</span>
+    <span class="chip b"><span class="dot"></span>NAND 수요가 공급 4.7%p 초과</span>
+    <span class="chip w"><span class="dot"></span>2027~28년 공급과잉 재발 우려</span>
+    <span class="chip w"><span class="dot"></span>수출규제·관세 지정학 리스크</span>
+  </div>
+  <p class="note">BofA는 2026년 메모리 업황을 1990년대 호황에 견줍니다. 다만 3사 동시 대규모 증설이 진행 중이어서, 이번 사이클의 위험은 지금의 수급이 아니라 2027년 이후 공급 과잉입니다.</p>
+</section>
+
+<!-- ③ 재무 분석 -->
+<section class="card">
+  <div class="sec-h"><span class="sec-n">03</span><h2>재무 분석</h2><span class="pill">1Q 확정 · 2Q 컨센서스</span></div>
+
+  <div class="bars">
+    <div class="grp-t">분기 매출 · 전년 동기 대비 (조원)</div>
+    <div class="bar-row wide"><span class="bl">2025 1Q</span><div class="track"><div class="fill soft" style="width:21.0%"></div></div><span class="bv num">17.6</span></div>
+    <div class="bar-row wide"><span class="bl">2026 1Q</span><div class="track"><div class="fill" style="width:62.7%"></div></div><span class="bv num">52.6</span></div>
+    <div class="bar-row wide"><span class="bl">2025 2Q</span><div class="track"><div class="fill soft" style="width:26.5%"></div></div><span class="bv num">22.2</span></div>
+    <div class="bar-row wide"><span class="bl">2026 2Q(E)</span><div class="track"><div class="fill" style="width:100.0%"></div></div><span class="bv num">83.9</span></div>
+  </div>
+
+  <div class="bars">
+    <div class="grp-t">분기 영업이익 · 전년 동기 대비 (조원)</div>
+    <div class="bar-row wide"><span class="bl">2025 1Q</span><div class="track"><div class="fill soft" style="width:11.6%"></div></div><span class="bv num">7.4</span></div>
+    <div class="bar-row wide"><span class="bl">2026 1Q</span><div class="track"><div class="fill" style="width:58.6%"></div></div><span class="bv num">37.6</span></div>
+    <div class="bar-row wide"><span class="bl">2025 2Q</span><div class="track"><div class="fill soft" style="width:14.4%"></div></div><span class="bv num">9.2</span></div>
+    <div class="bar-row wide"><span class="bl">2026 2Q(E)</span><div class="track"><div class="fill" style="width:100.0%"></div></div><span class="bv num">64.2</span></div>
+  </div>
+
+  <div class="tiles">
+    <div class="tile"><span class="lab">2026 1Q 영업이익률 (확정)</span><span class="val num">71.5<span style="font-size:15px">%</span></span><span class="sub num">매출 52.58조 · 순이익 40.35조</span></div>
+    <div class="tile"><span class="lab">2026 2Q 영업이익률 (E)</span><span class="val num">76.3<span style="font-size:15px">%</span></span><span class="sub num">영업이익 YoY +596.5%</span></div>
+  </div>
+
+  <div class="bars">
+    <div class="grp-t">PER 비교 (배)</div>
+    <div class="bar-row wide"><span class="bl">SK · TTM</span><div class="track"><div class="fill" style="width:100.0%"></div></div><span class="bv num">17.54</span></div>
+    <div class="bar-row wide"><span class="bl">동일업종 평균</span><div class="track"><div class="fill n" style="width:96.3%"></div></div><span class="bv num">16.89</span></div>
+    <div class="bar-row wide"><span class="bl">SK · FY26E</span><div class="track"><div class="fill soft" style="width:34.2%"></div></div><span class="bv num">6.00</span></div>
+  </div>
+
+  <div class="bars">
+    <div class="grp-t">EV/EBITDA (배) · ROE (%)</div>
+    <div class="bar-row wide"><span class="bl">EV/EB FY25</span><div class="track"><div class="fill n" style="width:100.0%"></div></div><span class="bv num">7.59</span></div>
+    <div class="bar-row wide"><span class="bl">EV/EB FY26E</span><div class="track"><div class="fill" style="width:49.8%"></div></div><span class="bv num">3.78</span></div>
+    <div class="bar-row wide"><span class="bl">ROE TTM</span><div class="track"><div class="fill soft" style="width:63.3%"></div></div><span class="bv num">61.2%</span></div>
+    <div class="bar-row wide"><span class="bl">ROE FY26E</span><div class="track"><div class="fill" style="width:100.0%"></div></div><span class="bv num">96.6%</span></div>
+  </div>
+
+  <div class="kv">
+    <div><span class="k">PBR</span><span class="v num">7.83배</span></div>
+    <div><span class="k">부채비율</span><span class="v num">35.56%</span></div>
+    <div><span class="k">순부채비율</span><span class="v num down">−8.44%</span></div>
+    <div><span class="k">당좌비율</span><span class="v num">185.53%</span></div>
+    <div><span class="k">1Q 잉여현금흐름</span><span class="v num">18.7조원</span></div>
+    <div><span class="k">배당수익률</span><span class="v num">0.17%</span></div>
+  </div>
+  <p class="note">순부채비율이 마이너스라는 것은 빚보다 현금이 많은 순현금 상태라는 뜻입니다. 배당은 DPS 3,000원·배당성향 4.88%로 낮은 편이며, 벌어들인 현금을 배당 대신 설비 투자에 재투입하는 성장 재투자형 구조입니다. PER은 실적 기준(TTM)으로는 업종 평균보다 소폭 높지만, 올해 이익 추정치를 반영하면 6배 수준으로 낮아집니다.</p>
+</section>
+
+<!-- ④ 기술적 분석 -->
+<section class="card">
+  <div class="sec-h"><span class="sec-n">04</span><h2>기술적 분석</h2><span class="pill">일봉 · 최근 120거래일</span></div>
+
+  <div class="legend">
+    <span><i style="background:var(--ink)"></i>종가</span>
+    <span><i style="background:#3182F6"></i>MA20</span>
+    <span><i style="background:#FF9500"></i>MA60</span>
+    <span><i style="background:#8B95A1"></i>MA120</span>
+  </div>
+
+  <div class="chart-wrap">
+    <svg viewBox="0 0 720 300" role="img" aria-label="SK하이닉스 최근 120거래일 종가와 이동평균선 추이. 6월 고점 298만원 이후 조정 중이며 현재 종가 181.6만원은 MA20·MA60 아래, MA120 위에 위치.">
+      <defs>
+        <linearGradient id="ag" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="var(--accent)" stop-opacity="0.16"/>
+          <stop offset="100%" stop-color="var(--accent)" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <line x1="8" y1="182.8" x2="662" y2="182.8" stroke="var(--line)" stroke-width="1"/><text x="666" y="179.8" font-size="9.5" font-weight="600" fill="var(--muted)" font-family="inherit">100만</text><line x1="8" y1="102.0" x2="662" y2="102.0" stroke="var(--line)" stroke-width="1"/><text x="666" y="99.0" font-size="9.5" font-weight="600" fill="var(--muted)" font-family="inherit">200만</text><line x1="8" y1="21.2" x2="662" y2="21.2" stroke="var(--line)" stroke-width="1"/><text x="666" y="18.2" font-size="9.5" font-weight="600" fill="var(--muted)" font-family="inherit">300만</text>
+      <path d="M8.0,195.6 L13.5,194.0 L19.0,190.2 L24.5,196.5 L30.0,190.3 L35.5,190.9 L41.0,195.6 L46.5,195.8 L52.0,191.9 L57.5,192.8 L63.0,194.1 L68.5,191.9 L73.9,192.5 L79.4,191.4 L84.9,186.9 L90.4,186.8 L95.9,182.4 L101.4,181.3 L106.9,174.8 L112.4,177.9 L117.9,187.7 L123.4,195.0 L128.9,187.6 L134.4,188.9 L139.9,196.1 L145.4,187.8 L150.9,186.4 L156.4,188.5 L161.9,190.1 L167.4,184.9 L172.9,185.2 L178.4,178.3 L183.9,181.7 L189.4,182.2 L194.9,188.2 L200.4,183.9 L205.8,183.2 L211.3,188.2 L216.8,189.1 L222.3,193.1 L227.8,198.4 L233.3,191.4 L238.8,196.5 L244.3,192.8 L249.8,192.0 L255.3,189.6 L260.8,180.1 L266.3,183.0 L271.8,180.6 L277.3,179.6 L282.8,174.5 L288.3,171.8 L293.8,170.3 L299.3,172.5 L304.8,169.4 L310.3,164.7 L315.8,164.8 L321.3,164.6 L326.8,164.9 L332.3,159.2 L337.7,158.6 L343.2,159.1 L348.7,159.7 L354.2,146.7 L359.7,134.2 L365.2,129.9 L370.7,127.4 L376.2,111.7 L381.7,115.3 L387.2,103.9 L392.7,104.4 L398.2,116.6 L403.7,114.9 L409.2,122.6 L414.7,122.6 L420.2,106.8 L425.7,106.8 L431.2,97.8 L436.7,82.4 L442.2,78.6 L447.7,75.1 L453.2,72.7 L458.7,72.9 L464.2,77.9 L469.6,96.3 L475.1,109.2 L480.6,84.6 L486.1,98.1 L491.6,93.8 L497.1,89.9 L502.6,78.7 L508.1,71.1 L513.6,59.9 L519.1,46.6 L524.6,40.2 L530.1,27.7 L535.6,57.1 L541.1,55.1 L546.6,27.9 L552.1,47.6 L557.6,51.2 L563.1,49.5 L568.6,56.7 L574.1,86.9 L579.6,67.6 L585.1,74.3 L590.6,85.7 L596.1,95.8 L601.5,87.0 L607.0,87.4 L612.5,114.5 L618.0,109.0 L623.5,95.4 L629.0,114.8 L634.5,121.1 L640.0,115.2 L645.5,115.7 L651.0,108.5 L656.5,121.5 L662.0,116.9 L662.0,240.0 L8.0,240.0 Z" fill="url(#ag)"/>
+      <path d="M8.0,224.3 L13.5,223.9 L19.0,223.4 L24.5,223.0 L30.0,222.6 L35.5,222.2 L41.0,221.8 L46.5,221.4 L52.0,221.0 L57.5,220.6 L63.0,220.2 L68.5,219.8 L73.9,219.4 L79.4,218.9 L84.9,218.5 L90.4,218.0 L95.9,217.5 L101.4,217.0 L106.9,216.4 L112.4,215.9 L117.9,215.4 L123.4,215.0 L128.9,214.6 L134.4,214.1 L139.9,213.7 L145.4,213.3 L150.9,212.8 L156.4,212.4 L161.9,212.0 L167.4,211.5 L172.9,211.1 L178.4,210.6 L183.9,210.2 L189.4,209.7 L194.9,209.3 L200.4,208.9 L205.8,208.5 L211.3,208.1 L216.8,207.7 L222.3,207.4 L227.8,207.0 L233.3,206.7 L238.8,206.3 L244.3,206.0 L249.8,205.7 L255.3,205.3 L260.8,204.9 L266.3,204.5 L271.8,204.1 L277.3,203.7 L282.8,203.3 L288.3,202.9 L293.8,202.4 L299.3,202.0 L304.8,201.5 L310.3,201.0 L315.8,200.6 L321.3,200.1 L326.8,199.6 L332.3,199.2 L337.7,198.7 L343.2,198.2 L348.7,197.7 L354.2,197.1 L359.7,196.5 L365.2,195.7 L370.7,195.0 L376.2,194.2 L381.7,193.3 L387.2,192.4 L392.7,191.5 L398.2,190.7 L403.7,189.8 L409.2,189.0 L414.7,188.2 L420.2,187.3 L425.7,186.3 L431.2,185.3 L436.7,184.1 L442.2,182.9 L447.7,181.7 L453.2,180.5 L458.7,179.3 L464.2,178.1 L469.6,177.1 L475.1,176.2 L480.6,175.1 L486.1,174.1 L491.6,173.0 L497.1,172.0 L502.6,170.8 L508.1,169.6 L513.6,168.2 L519.1,166.8 L524.6,165.3 L530.1,163.7 L535.6,162.4 L541.1,161.0 L546.6,159.5 L552.1,158.1 L557.6,156.7 L563.1,155.4 L568.6,154.1 L574.1,153.1 L579.6,152.0 L585.1,150.9 L590.6,149.9 L596.1,149.0 L601.5,148.1 L607.0,147.1 L612.5,146.3 L618.0,145.6 L623.5,144.7 L629.0,143.9 L634.5,143.3 L640.0,142.5 L645.5,141.8 L651.0,141.0 L656.5,140.3 L662.0,139.6" fill="none" stroke="#8B95A1" stroke-width="1.6" stroke-opacity="0.85" stroke-linejoin="round" stroke-linecap="round"/>
+      <path d="M8.0,212.9 L13.5,212.6 L19.0,212.2 L24.5,211.8 L30.0,211.4 L35.5,211.0 L41.0,210.7 L46.5,210.4 L52.0,210.0 L57.5,209.6 L63.0,209.2 L68.5,208.9 L73.9,208.4 L79.4,208.0 L84.9,207.5 L90.4,206.9 L95.9,206.2 L101.4,205.6 L106.9,204.8 L112.4,204.1 L117.9,203.6 L123.4,203.1 L128.9,202.6 L134.4,202.1 L139.9,201.7 L145.4,201.2 L150.9,200.7 L156.4,200.2 L161.9,199.8 L167.4,199.2 L172.9,198.7 L178.4,198.0 L183.9,197.3 L189.4,196.7 L194.9,196.2 L200.4,195.6 L205.8,195.1 L211.3,194.6 L216.8,194.1 L222.3,193.8 L227.8,193.5 L233.3,193.2 L238.8,193.0 L244.3,192.8 L249.8,192.6 L255.3,192.3 L260.8,192.0 L266.3,191.6 L271.8,191.2 L277.3,190.8 L282.8,190.3 L288.3,189.8 L293.8,189.3 L299.3,188.8 L304.8,188.2 L310.3,187.6 L315.8,186.9 L321.3,186.3 L326.8,185.7 L332.3,185.0 L337.7,184.4 L343.2,183.8 L348.7,183.3 L354.2,182.5 L359.7,181.5 L365.2,180.5 L370.7,179.4 L376.2,178.0 L381.7,176.7 L387.2,175.2 L392.7,173.7 L398.2,172.5 L403.7,171.2 L409.2,170.0 L414.7,169.0 L420.2,167.6 L425.7,166.4 L431.2,165.0 L436.7,163.4 L442.2,161.8 L447.7,159.9 L453.2,157.9 L458.7,156.0 L464.2,154.1 L469.6,152.4 L475.1,151.1 L480.6,149.4 L486.1,147.9 L491.6,146.3 L497.1,144.7 L502.6,143.0 L508.1,141.2 L513.6,139.1 L519.1,136.9 L524.6,134.4 L530.1,131.8 L535.6,129.7 L541.1,127.5 L546.6,124.8 L552.1,122.4 L557.6,119.9 L563.1,117.6 L568.6,115.2 L574.1,113.5 L579.6,111.4 L585.1,109.5 L590.6,107.9 L596.1,106.5 L601.5,104.9 L607.0,103.4 L612.5,102.4 L618.0,101.3 L623.5,100.1 L629.0,99.1 L634.5,98.3 L640.0,97.5 L645.5,96.7 L651.0,95.7 L656.5,95.0 L662.0,94.3" fill="none" stroke="#FF9500" stroke-width="1.6" stroke-opacity="0.9" stroke-linejoin="round" stroke-linecap="round"/>
+      <path d="M8.0,203.5 L13.5,202.7 L19.0,201.7 L24.5,201.2 L30.0,200.5 L35.5,199.8 L41.0,199.5 L46.5,199.1 L52.0,198.5 L57.5,198.0 L63.0,197.5 L68.5,196.9 L73.9,196.4 L79.4,195.9 L84.9,195.1 L90.4,194.2 L95.9,193.2 L101.4,192.2 L106.9,190.7 L112.4,189.7 L117.9,189.3 L123.4,189.3 L128.9,189.2 L134.4,188.8 L139.9,189.1 L145.4,189.0 L150.9,188.5 L156.4,188.1 L161.9,188.0 L167.4,187.6 L172.9,187.2 L178.4,186.5 L183.9,186.0 L189.4,185.5 L194.9,185.6 L200.4,185.5 L205.8,185.5 L211.3,185.8 L216.8,186.5 L222.3,187.3 L227.8,187.8 L233.3,187.7 L238.8,188.1 L244.3,188.3 L249.8,188.1 L255.3,188.2 L260.8,187.9 L266.3,187.6 L271.8,187.1 L277.3,186.9 L282.8,186.3 L288.3,186.0 L293.8,185.4 L299.3,184.9 L304.8,184.0 L310.3,183.0 L315.8,182.1 L321.3,180.9 L326.8,179.7 L332.3,178.0 L337.7,176.0 L343.2,174.4 L348.7,172.6 L354.2,170.3 L359.7,167.4 L365.2,164.4 L370.7,161.8 L376.2,158.2 L381.7,154.9 L387.2,151.2 L392.7,147.7 L398.2,144.9 L403.7,142.1 L409.2,139.6 L414.7,137.3 L420.2,134.4 L425.7,131.5 L431.2,128.2 L436.7,124.0 L442.2,120.0 L447.7,115.8 L453.2,111.5 L458.7,107.2 L464.2,103.7 L469.6,101.8 L475.1,100.8 L480.6,98.7 L486.1,98.0 L491.6,96.9 L497.1,96.2 L502.6,94.9 L508.1,92.6 L513.6,89.9 L519.1,86.1 L524.6,82.0 L530.1,78.0 L535.6,75.5 L541.1,73.4 L546.6,70.7 L552.1,69.1 L557.6,67.9 L563.1,66.8 L568.6,66.0 L574.1,66.4 L579.6,65.0 L585.1,63.2 L590.6,63.3 L596.1,63.2 L601.5,62.8 L607.0,62.7 L612.5,64.5 L618.0,66.4 L623.5,68.2 L629.0,71.6 L634.5,75.6 L640.0,80.0 L645.5,82.9 L651.0,85.6 L656.5,90.3 L662.0,93.7" fill="none" stroke="#3182F6" stroke-width="1.6" stroke-opacity="0.9" stroke-linejoin="round" stroke-linecap="round"/>
+      <path d="M8.0,195.6 L13.5,194.0 L19.0,190.2 L24.5,196.5 L30.0,190.3 L35.5,190.9 L41.0,195.6 L46.5,195.8 L52.0,191.9 L57.5,192.8 L63.0,194.1 L68.5,191.9 L73.9,192.5 L79.4,191.4 L84.9,186.9 L90.4,186.8 L95.9,182.4 L101.4,181.3 L106.9,174.8 L112.4,177.9 L117.9,187.7 L123.4,195.0 L128.9,187.6 L134.4,188.9 L139.9,196.1 L145.4,187.8 L150.9,186.4 L156.4,188.5 L161.9,190.1 L167.4,184.9 L172.9,185.2 L178.4,178.3 L183.9,181.7 L189.4,182.2 L194.9,188.2 L200.4,183.9 L205.8,183.2 L211.3,188.2 L216.8,189.1 L222.3,193.1 L227.8,198.4 L233.3,191.4 L238.8,196.5 L244.3,192.8 L249.8,192.0 L255.3,189.6 L260.8,180.1 L266.3,183.0 L271.8,180.6 L277.3,179.6 L282.8,174.5 L288.3,171.8 L293.8,170.3 L299.3,172.5 L304.8,169.4 L310.3,164.7 L315.8,164.8 L321.3,164.6 L326.8,164.9 L332.3,159.2 L337.7,158.6 L343.2,159.1 L348.7,159.7 L354.2,146.7 L359.7,134.2 L365.2,129.9 L370.7,127.4 L376.2,111.7 L381.7,115.3 L387.2,103.9 L392.7,104.4 L398.2,116.6 L403.7,114.9 L409.2,122.6 L414.7,122.6 L420.2,106.8 L425.7,106.8 L431.2,97.8 L436.7,82.4 L442.2,78.6 L447.7,75.1 L453.2,72.7 L458.7,72.9 L464.2,77.9 L469.6,96.3 L475.1,109.2 L480.6,84.6 L486.1,98.1 L491.6,93.8 L497.1,89.9 L502.6,78.7 L508.1,71.1 L513.6,59.9 L519.1,46.6 L524.6,40.2 L530.1,27.7 L535.6,57.1 L541.1,55.1 L546.6,27.9 L552.1,47.6 L557.6,51.2 L563.1,49.5 L568.6,56.7 L574.1,86.9 L579.6,67.6 L585.1,74.3 L590.6,85.7 L596.1,95.8 L601.5,87.0 L607.0,87.4 L612.5,114.5 L618.0,109.0 L623.5,95.4 L629.0,114.8 L634.5,121.1 L640.0,115.2 L645.5,115.7 L651.0,108.5 L656.5,121.5 L662.0,116.9" fill="none" stroke="var(--ink)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+      <circle cx="662.0" cy="116.9" r="4" fill="var(--ink)" stroke="var(--surface)" stroke-width="2"/>
+      <text x="668" y="113" font-size="11" font-weight="800" fill="var(--ink)" font-family="inherit">181.6만</text>
+      <text x="668" y="125" font-size="9.5" font-weight="600" fill="var(--muted)" font-family="inherit">7/27 종가</text>
+      <text x="24.5" y="256" font-size="9.5" font-weight="600" fill="var(--muted)" font-family="inherit" text-anchor="middle">02월</text><text x="117.9" y="256" font-size="9.5" font-weight="600" fill="var(--muted)" font-family="inherit" text-anchor="middle">03월</text><text x="233.3" y="256" font-size="9.5" font-weight="600" fill="var(--muted)" font-family="inherit" text-anchor="middle">04월</text><text x="354.2" y="256" font-size="9.5" font-weight="600" fill="var(--muted)" font-family="inherit" text-anchor="middle">05월</text><text x="453.2" y="256" font-size="9.5" font-weight="600" fill="var(--muted)" font-family="inherit" text-anchor="middle">06월</text><text x="568.6" y="256" font-size="9.5" font-weight="600" fill="var(--muted)" font-family="inherit" text-anchor="middle">07월</text>
+      <g fill="var(--accent)" fill-opacity="0.3"><rect x="6.31" y="278.02" width="3.38" height="17.98" rx="0.8"/><rect x="11.81" y="277.67" width="3.38" height="18.33" rx="0.8"/><rect x="17.30" y="274.90" width="3.38" height="21.10" rx="0.8"/><rect x="22.80" y="275.54" width="3.38" height="20.46" rx="0.8"/><rect x="28.29" y="281.87" width="3.38" height="14.13" rx="0.8"/><rect x="33.79" y="285.82" width="3.38" height="10.18" rx="0.8"/><rect x="39.28" y="281.33" width="3.38" height="14.67" rx="0.8"/><rect x="44.78" y="281.04" width="3.38" height="14.96" rx="0.8"/><rect x="50.28" y="284.67" width="3.38" height="11.33" rx="0.8"/><rect x="55.77" y="286.78" width="3.38" height="9.22" rx="0.8"/><rect x="61.27" y="287.62" width="3.38" height="8.38" rx="0.8"/><rect x="66.76" y="283.61" width="3.38" height="12.39" rx="0.8"/><rect x="72.26" y="286.53" width="3.38" height="9.47" rx="0.8"/><rect x="77.76" y="287.20" width="3.38" height="8.80" rx="0.8"/><rect x="83.25" y="282.46" width="3.38" height="13.54" rx="0.8"/><rect x="88.75" y="286.55" width="3.38" height="9.45" rx="0.8"/><rect x="94.24" y="285.01" width="3.38" height="10.99" rx="0.8"/><rect x="99.74" y="286.72" width="3.38" height="9.28" rx="0.8"/><rect x="105.23" y="284.04" width="3.38" height="11.96" rx="0.8"/><rect x="110.73" y="278.71" width="3.38" height="17.29" rx="0.8"/><rect x="116.23" y="277.73" width="3.38" height="18.27" rx="0.8"/><rect x="121.72" y="271.20" width="3.38" height="24.80" rx="0.8"/><rect x="127.22" y="278.73" width="3.38" height="17.27" rx="0.8"/><rect x="132.71" y="285.97" width="3.38" height="10.03" rx="0.8"/><rect x="138.21" y="276.56" width="3.38" height="19.44" rx="0.8"/><rect x="143.70" y="281.79" width="3.38" height="14.21" rx="0.8"/><rect x="149.20" y="285.50" width="3.38" height="10.50" rx="0.8"/><rect x="154.70" y="286.05" width="3.38" height="9.95" rx="0.8"/><rect x="160.19" y="286.23" width="3.38" height="9.77" rx="0.8"/><rect x="165.69" y="285.73" width="3.38" height="10.27" rx="0.8"/><rect x="171.18" y="287.09" width="3.38" height="8.91" rx="0.8"/><rect x="176.68" y="284.34" width="3.38" height="11.66" rx="0.8"/><rect x="182.18" y="287.03" width="3.38" height="8.97" rx="0.8"/><rect x="187.67" y="286.82" width="3.38" height="9.18" rx="0.8"/><rect x="193.17" y="285.52" width="3.38" height="10.48" rx="0.8"/><rect x="198.66" y="284.33" width="3.38" height="11.67" rx="0.8"/><rect x="204.16" y="284.03" width="3.38" height="11.97" rx="0.8"/><rect x="209.65" y="283.51" width="3.38" height="12.49" rx="0.8"/><rect x="215.15" y="283.89" width="3.38" height="12.11" rx="0.8"/><rect x="220.65" y="283.94" width="3.38" height="12.06" rx="0.8"/><rect x="226.14" y="276.72" width="3.38" height="19.28" rx="0.8"/><rect x="231.64" y="279.24" width="3.38" height="16.76" rx="0.8"/><rect x="237.13" y="279.57" width="3.38" height="16.43" rx="0.8"/><rect x="242.63" y="288.15" width="3.38" height="7.85" rx="0.8"/><rect x="248.13" y="287.69" width="3.38" height="8.31" rx="0.8"/><rect x="253.62" y="286.29" width="3.38" height="9.71" rx="0.8"/><rect x="259.12" y="278.01" width="3.38" height="17.99" rx="0.8"/><rect x="264.61" y="282.52" width="3.38" height="13.48" rx="0.8"/><rect x="270.11" y="287.60" width="3.38" height="8.40" rx="0.8"/><rect x="275.60" y="288.58" width="3.38" height="7.42" rx="0.8"/><rect x="281.10" y="283.26" width="3.38" height="12.74" rx="0.8"/><rect x="286.60" y="285.02" width="3.38" height="10.98" rx="0.8"/><rect x="292.09" y="288.23" width="3.38" height="7.77" rx="0.8"/><rect x="297.59" y="286.41" width="3.38" height="9.59" rx="0.8"/><rect x="303.08" y="285.96" width="3.38" height="10.04" rx="0.8"/><rect x="308.58" y="286.57" width="3.38" height="9.43" rx="0.8"/><rect x="314.07" y="288.24" width="3.38" height="7.76" rx="0.8"/><rect x="319.57" y="281.67" width="3.38" height="14.33" rx="0.8"/><rect x="325.07" y="287.62" width="3.38" height="8.38" rx="0.8"/><rect x="330.56" y="283.77" width="3.38" height="12.23" rx="0.8"/><rect x="336.06" y="287.95" width="3.38" height="8.05" rx="0.8"/><rect x="341.55" y="287.95" width="3.38" height="8.05" rx="0.8"/><rect x="347.05" y="287.04" width="3.38" height="8.96" rx="0.8"/><rect x="352.55" y="280.52" width="3.38" height="15.48" rx="0.8"/><rect x="358.04" y="278.23" width="3.38" height="17.77" rx="0.8"/><rect x="363.54" y="280.29" width="3.38" height="15.71" rx="0.8"/><rect x="369.03" y="284.53" width="3.38" height="11.47" rx="0.8"/><rect x="374.53" y="276.08" width="3.38" height="19.92" rx="0.8"/><rect x="380.02" y="271.44" width="3.38" height="24.56" rx="0.8"/><rect x="385.52" y="276.89" width="3.38" height="19.11" rx="0.8"/><rect x="391.02" y="279.82" width="3.38" height="16.18" rx="0.8"/><rect x="396.51" y="275.94" width="3.38" height="20.06" rx="0.8"/><rect x="402.01" y="278.63" width="3.38" height="17.37" rx="0.8"/><rect x="407.50" y="283.74" width="3.38" height="12.26" rx="0.8"/><rect x="413.00" y="281.17" width="3.38" height="14.83" rx="0.8"/><rect x="418.49" y="282.34" width="3.38" height="13.66" rx="0.8"/><rect x="423.99" y="287.60" width="3.38" height="8.40" rx="0.8"/><rect x="429.49" y="282.86" width="3.38" height="13.14" rx="0.8"/><rect x="434.98" y="275.77" width="3.38" height="20.23" rx="0.8"/><rect x="440.48" y="279.30" width="3.38" height="16.70" rx="0.8"/><rect x="445.97" y="273.17" width="3.38" height="22.83" rx="0.8"/><rect x="451.47" y="280.98" width="3.38" height="15.02" rx="0.8"/><rect x="456.97" y="280.36" width="3.38" height="15.64" rx="0.8"/><rect x="462.46" y="285.43" width="3.38" height="10.57" rx="0.8"/><rect x="467.96" y="280.52" width="3.38" height="15.48" rx="0.8"/><rect x="473.45" y="278.29" width="3.38" height="17.71" rx="0.8"/><rect x="478.95" y="280.25" width="3.38" height="15.75" rx="0.8"/><rect x="484.44" y="282.79" width="3.38" height="13.21" rx="0.8"/><rect x="489.94" y="278.24" width="3.38" height="17.76" rx="0.8"/><rect x="495.44" y="281.83" width="3.38" height="14.17" rx="0.8"/><rect x="500.93" y="285.62" width="3.38" height="10.38" rx="0.8"/><rect x="506.43" y="286.23" width="3.38" height="9.77" rx="0.8"/><rect x="511.92" y="285.33" width="3.38" height="10.67" rx="0.8"/><rect x="517.42" y="280.43" width="3.38" height="15.57" rx="0.8"/><rect x="522.92" y="275.96" width="3.38" height="20.04" rx="0.8"/><rect x="528.41" y="282.12" width="3.38" height="13.88" rx="0.8"/><rect x="533.91" y="274.42" width="3.38" height="21.58" rx="0.8"/><rect x="539.40" y="275.93" width="3.38" height="20.07" rx="0.8"/><rect x="544.90" y="277.80" width="3.38" height="18.20" rx="0.8"/><rect x="550.39" y="275.99" width="3.38" height="20.01" rx="0.8"/><rect x="555.89" y="282.02" width="3.38" height="13.98" rx="0.8"/><rect x="561.39" y="282.31" width="3.38" height="13.69" rx="0.8"/><rect x="566.88" y="284.54" width="3.38" height="11.46" rx="0.8"/><rect x="572.38" y="275.40" width="3.38" height="20.60" rx="0.8"/><rect x="577.87" y="274.60" width="3.38" height="21.40" rx="0.8"/><rect x="583.37" y="284.65" width="3.38" height="11.35" rx="0.8"/><rect x="588.86" y="278.98" width="3.38" height="17.02" rx="0.8"/><rect x="594.36" y="277.31" width="3.38" height="18.69" rx="0.8"/><rect x="599.86" y="279.22" width="3.38" height="16.78" rx="0.8"/><rect x="605.35" y="283.06" width="3.38" height="12.94" rx="0.8"/><rect x="610.85" y="274.45" width="3.38" height="21.55" rx="0.8"/><rect x="616.34" y="268.00" width="3.38" height="28.00" rx="0.8"/><rect x="621.84" y="279.80" width="3.38" height="16.20" rx="0.8"/><rect x="627.34" y="280.96" width="3.38" height="15.04" rx="0.8"/><rect x="632.83" y="280.25" width="3.38" height="15.75" rx="0.8"/><rect x="638.33" y="283.57" width="3.38" height="12.43" rx="0.8"/><rect x="643.82" y="283.13" width="3.38" height="12.87" rx="0.8"/><rect x="649.32" y="284.96" width="3.38" height="11.04" rx="0.8"/><rect x="654.81" y="282.77" width="3.38" height="13.23" rx="0.8"/><rect x="660.31" y="285.72" width="3.38" height="10.28" rx="0.8"/></g>
+      <text x="666" y="288" font-size="9.5" font-weight="600" fill="var(--muted)" font-family="inherit">거래량</text>
+    </svg>
+  </div>
+
+  <div class="meter">
+    <div class="meter-top"><span class="meter-lab">RSI (14) · 30 이하 과매도 / 70 이상 과매수</span><span class="meter-val num">42.06</span></div>
+    <div class="rail">
+      <div class="seg" style="left:0%; width:30%; background:var(--accent); opacity:.25; border-radius:999px 0 0 999px"></div>
+      <div class="seg" style="left:70%; width:30%; background:var(--up); opacity:.25; border-radius:0 999px 999px 0"></div>
+      <div class="knob" style="left:42.06%"></div>
+    </div>
+    <div class="scale"><span>0</span><span>30</span><span>70</span><span>100</span></div>
+  </div>
+
+  <div class="meter">
+    <div class="meter-top"><span class="meter-lab">52주 밴드 내 위치 (24.5만 ~ 298.7만원)</span><span class="meter-val num">57.3%</span></div>
+    <div class="rail"><div class="knob" style="left:57.3%"></div></div>
+    <div class="scale"><span class="num">저점 245,000</span><span class="num">고점 2,987,000</span></div>
+  </div>
+
+  <div class="tiles">
+    <div class="tile"><span class="lab">MA5 이격</span><span class="val sm num down">−0.87%</span><span class="sub num">1,832,000</span></div>
+    <div class="tile"><span class="lab">MA20 이격</span><span class="val sm num down">−13.61%</span><span class="sub num">2,102,100</span></div>
+    <div class="tile"><span class="lab">MA60 이격</span><span class="val sm num down">−13.33%</span><span class="sub num">2,095,283</span></div>
+    <div class="tile"><span class="lab">MA120 이격</span><span class="val sm num up">+18.38%</span><span class="sub num">1,533,983</span></div>
+  </div>
+
+  <div class="chips">
+    <span class="chip b"><span class="dot"></span>MA5/MA20 데드크로스 (7/06)</span>
+    <span class="chip b"><span class="dot"></span>MACD 데드크로스 (6/30)</span>
+    <span class="chip w"><span class="dot"></span>MACD 히스토그램 −40,895 · 6일 연속 축소</span>
+    <span class="chip r"><span class="dot"></span>MA60/MA120 정배열 유지</span>
+    <span class="chip"><span class="dot"></span>거래량 383만주 · 20일 평균의 63.4%</span>
+  </div>
+
+  <div class="kv">
+    <div><span class="k">1차 지지선</span><span class="v num">1,678,000 <span style="font-size:12px; color:var(--muted)">−7.6%</span></span></div>
+    <div><span class="k">2차 지지선 (MA120)</span><span class="v num">1,533,983 <span style="font-size:12px; color:var(--muted)">−15.5%</span></span></div>
+    <div><span class="k">1차 저항 (MA 밀집)</span><span class="v num">183.2만~210.2만</span></div>
+    <div><span class="k">2차 저항</span><span class="v num">274.2만~298.7만</span></div>
+  </div>
+  <p class="note">장기 상승 추세(MA60·MA120 정배열)는 살아 있지만 단기·중기는 조정 국면입니다. MACD가 0선 아래에 있어 추세는 아직 약세지만, 히스토그램이 6거래일 연속 줄어드는 것은 하락 힘이 약해지고 있다는 신호입니다.</p>
+</section>
+
+<!-- ⑤ 뉴스 -->
+<section class="card">
+  <div class="sec-h"><span class="sec-n">05</span><h2>최근 뉴스 · 시장 심리</h2></div>
+  <div>
+    <div class="tone-bar">
+      <div style="width:41.7%; background:var(--up); border-radius:999px 0 0 999px"></div>
+      <div style="width:50.0%; background:var(--neutral)"></div>
+      <div style="width:8.3%; background:var(--down); border-radius:0 999px 999px 0"></div>
+    </div>
+    <div class="chips" style="margin-top:9px">
+      <span class="chip r"><span class="dot"></span>긍정 5건</span>
+      <span class="chip"><span class="dot"></span>중립·혼재 6건</span>
+      <span class="chip b"><span class="dot"></span>부정 1건</span>
+    </div>
+  </div>
+
+  <div class="tl">
+    <div class="tl-item"><div class="tl-date">04.23</div><div class="tl-rail"><div class="tl-dot d-pos"></div></div>
+      <div class="tl-body"><div class="tl-t">1분기 실적 사상 최대</div><div class="tl-d">매출 52.58조·영업이익 37.61조로 분기 신기록.</div></div></div>
+    <div class="tl-item"><div class="tl-date">06.초</div><div class="tl-rail"><div class="tl-dot d-pos"></div></div>
+      <div class="tl-body"><div class="tl-t">컴퓨텍스에서 HBM4E·HBF 공개</div><div class="tl-d">차세대 로드맵 선점, 기술 리더십 재확인.</div></div></div>
+    <div class="tl-item"><div class="tl-date">06.26</div><div class="tl-rail"><div class="tl-dot d-neu"></div></div>
+      <div class="tl-body"><div class="tl-t">HBM 쏠림에 D램 품귀</div><div class="tl-d">낸드 가격 추가 상승 전망. 가격은 우호적이나 공급 왜곡 우려 병존.</div></div></div>
+    <div class="tl-item"><div class="tl-date">07.02</div><div class="tl-rail"><div class="tl-dot d-neg"></div></div>
+      <div class="tl-body"><div class="tl-t">하루 −14.6% 급락, 코스피 동반 폭락</div><div class="tl-d">AI 버블 논쟁 촉발. 이번 조정의 출발점.</div></div></div>
+    <div class="tl-item"><div class="tl-date">07.03</div><div class="tl-rail"><div class="tl-dot d-pos"></div></div>
+      <div class="tl-body"><div class="tl-t">급락에도 목표주가 상향</div><div class="tl-d">KB증권 420만원, 상상인증권 380만원으로 상향.</div></div></div>
+    <div class="tl-item"><div class="tl-date">07.08~10</div><div class="tl-rail"><div class="tl-dot d-pos"></div></div>
+      <div class="tl-body"><div class="tl-t">나스닥 ADR 상장(SKHY), 40조원 조달</div><div class="tl-d">상장 첫날 +13%. 대규모 증설 재원 확보.</div></div></div>
+    <div class="tl-item"><div class="tl-date">07.09</div><div class="tl-rail"><div class="tl-dot d-neu"></div></div>
+      <div class="tl-body"><div class="tl-t">미국, 현지 공장 투자 확대 압박</div><div class="tl-d">투자 부담 증가 가능성.</div></div></div>
+    <div class="tl-item"><div class="tl-date">07.15</div><div class="tl-rail"><div class="tl-dot d-neu"></div></div>
+      <div class="tl-body"><div class="tl-t">AI 버블 논쟁 재점화</div><div class="tl-d">BofA는 톱픽 유지, BNK투자증권은 목표주가 185만원으로 하향. 시각차 확대.</div></div></div>
+    <div class="tl-item"><div class="tl-date">07.23</div><div class="tl-rail"><div class="tl-dot d-neu"></div></div>
+      <div class="tl-body"><div class="tl-t">미국 강제노동 관세 12.5%, 메모리는 예외 인정</div><div class="tl-d">당장의 부담은 피했으나 추가 관세 조사는 남아 있음.</div></div></div>
+    <div class="tl-item"><div class="tl-date">07.24</div><div class="tl-rail"><div class="tl-dot d-neu"></div></div>
+      <div class="tl-body"><div class="tl-t">최태원 회장 이혼소송 판결, 재산분할 9,440억원</div><div class="tl-d">그룹 지배구조에 중장기 불확실성.</div></div></div>
+    <div class="tl-item"><div class="tl-date">07.27</div><div class="tl-rail"><div class="tl-dot d-pos"></div></div>
+      <div class="tl-body"><div class="tl-t">오픈AI 스타게이트·앤스로픽과 직접 공급 계약 전환</div><div class="tl-d">엔비디아를 거치지 않는 직납 구조. 고객 집중도 완화 신호.</div></div></div>
+    <div class="tl-item"><div class="tl-date">07.29 예정</div><div class="tl-rail"><div class="tl-dot d-evt"></div></div>
+      <div class="tl-body"><div class="tl-t">2분기 실적 발표</div><div class="tl-d">컨센서스 매출 83.9조·영업이익 64.2조. 이번 리포트 최대 변수.</div></div></div>
+  </div>
+  <p class="note">전반 여론은 긍정 우위지만, 7월 들어 AI 버블 논쟁과 증권사 시각차로 단기 변동성이 크게 확대됐습니다.</p>
+</section>
+
+<!-- ⑥ 리스크 -->
+<section class="card">
+  <div class="sec-h"><span class="sec-n">06</span><h2>리스크 분석</h2><span class="pill">종합 등급 중상</span></div>
+
+  <div class="meter">
+    <div class="meter-top"><span class="meter-lab">종합 리스크 등급 (5단계)</span><span class="meter-val warnc">중상 · 4단계</span></div>
+    <div class="rail"><div class="seg" style="left:0; width:80%; background:var(--warn); border-radius:999px"></div><div class="knob" style="left:80%"></div></div>
+    <div class="scale"><span>낮음</span><span>중간</span><span>높음</span></div>
+  </div>
+
+  <div class="tiles">
+    <div class="tile"><span class="lab">베타 (vs KOSPI, 250일)</span><span class="val num">1.52</span><span class="sub num">상관계수 0.93 · 분산 효과 낮음</span></div>
+    <div class="tile"><span class="lab">연율화 변동성 (60일)</span><span class="val num">110.3<span style="font-size:15px">%</span></span><span class="sub num">KOSPI 67.8%의 1.6배</span></div>
+    <div class="tile"><span class="lab">ATR(14) · 하루 평균 변동폭</span><span class="val sm num">204,000<span style="font-size:14px">원</span></span><span class="sub num">주가의 11.2%</span></div>
+    <div class="tile"><span class="lab">52주 최대 낙폭</span><span class="val sm num down">−39.7%</span><span class="sub num">단 22거래일 만에 발생</span></div>
+  </div>
+
+  <div class="bars">
+    <div class="grp-t">SK하이닉스 vs KOSPI</div>
+    <div class="bar-row wide"><span class="bl">변동성 SK</span><div class="track"><div class="fill r" style="width:100.0%"></div></div><span class="bv num">110.3%</span></div>
+    <div class="bar-row wide"><span class="bl">변동성 KOSPI</span><div class="track"><div class="fill n" style="width:61.5%"></div></div><span class="bv num">67.8%</span></div>
+    <div class="bar-row wide"><span class="bl">1년 수익률 SK</span><div class="track"><div class="fill r" style="width:100.0%"></div></div><span class="bv num">+593.1%</span></div>
+    <div class="bar-row wide"><span class="bl">1년 수익률 KOSPI</span><div class="track"><div class="fill n" style="width:18.6%"></div></div><span class="bv num">+110.5%</span></div>
+  </div>
+
+  <div class="risks">
+    <div class="risk"><div class="stripe s-hi"></div><div class="rn"><span class="rt">이벤트 리스크 · 7/29 실적 발표</span><span class="rd">피크아웃 논란과 가이던스가 좌우하는 단일 최대 변수</span></div><span class="badge b-hi">상</span></div>
+    <div class="risk"><div class="stripe s-hi"></div><div class="rn"><span class="rt">가격 변동성</span><span class="rd">최근 60일 중 48%(29일)가 ±5% 이상 등락</span></div><span class="badge b-hi">상</span></div>
+    <div class="risk"><div class="stripe s-hi"></div><div class="rn"><span class="rt">이익 지속성 · 피크아웃</span><span class="rd">초고마진(76%)의 지속 가능성에 대한 시장 의문</span></div><span class="badge b-hi">중~상</span></div>
+    <div class="risk"><div class="stripe s-mid"></div><div class="rn"><span class="rt">밸류에이션</span><span class="rd">PBR 7.83배, TTM PER은 업종 평균 소폭 상회</span></div><span class="badge b-mid">중</span></div>
+    <div class="risk"><div class="stripe s-mid"></div><div class="rn"><span class="rt">산업 수급</span><span class="rd">2027~28년 3사 증설분 출회 시 공급 과잉 가능성</span></div><span class="badge b-mid">중</span></div>
+    <div class="risk"><div class="stripe s-mid"></div><div class="rn"><span class="rt">경쟁 기술 추격</span><span class="rd">삼성·마이크론의 HBM4 진입 속도</span></div><span class="badge b-mid">중</span></div>
+    <div class="risk"><div class="stripe s-mid"></div><div class="rn"><span class="rt">고객 집중</span><span class="rd">엔비디아 비중 72%→63%로 완화 중이나 여전히 높음</span></div><span class="badge b-mid">중</span></div>
+    <div class="risk"><div class="stripe s-mid"></div><div class="rn"><span class="rt">정책 · 지정학</span><span class="rd">대중 수출규제, 추가 관세 조사, 미국 현지 투자 압박</span></div><span class="badge b-mid">중</span></div>
+    <div class="risk"><div class="stripe s-mid"></div><div class="rn"><span class="rt">수급 · 투자심리</span><span class="rd">외국인 소진율 55.17%→52.44%, 1년간 2.7%p 순유출</span></div><span class="badge b-mid">중</span></div>
+    <div class="risk"><div class="stripe s-mid"></div><div class="rn"><span class="rt">지배구조</span><span class="rd">그룹 총수 재산분할 판결에 따른 중장기 불확실성</span></div><span class="badge b-mid">중(중장기)</span></div>
+    <div class="risk"><div class="stripe s-lo"></div><div class="rn"><span class="rt">재무 건전성</span><span class="rd">순현금 상태, 부채비율 35.56%, FCF 사상 최대</span></div><span class="badge b-lo">하</span></div>
+    <div class="risk"><div class="stripe s-lo"></div><div class="rn"><span class="rt">유동성</span><span class="rd">20일 평균 거래대금 12.3조원, 체결 리스크 사실상 없음</span></div><span class="badge b-lo">하</span></div>
+    <div class="risk"><div class="stripe s-lo"></div><div class="rn"><span class="rt">희석 리스크</span><span class="rd">ADR 상장 관련 지분 희석 영향은 정보 부족으로 판단 보류</span></div><span class="badge b-lo">정보 부족</span></div>
+  </div>
+  <p class="note">회사 자체의 재무 리스크는 낮습니다. 문제는 가격 리스크입니다. 변동성 110%, 베타 1.52, KOSPI 상관계수 0.93이라는 조합은 시장이 흔들릴 때 더 크게 흔들리고 분산 효과도 거의 없다는 뜻입니다. 리스크 분석 결과는 실적 발표 전 신규 대량 진입 자제, 포지션 축소, 손절 기준 사전 설정을 대응 방안으로 제시했습니다.</p>
+</section>
+
+<!-- ⑦ 종합 -->
+<section class="card">
+  <div class="sec-h"><span class="sec-n">07</span><h2>종합 정리</h2></div>
+  <div class="two">
+    <div class="col pos">
+      <h3>긍정 요인</h3>
+      <ul>
+        <li>HBM 점유율 58%로 세계 1위, HBM4에서도 60% 안팎 우위 전망</li>
+        <li>2026 1Q 영업이익률 71.5%, 2Q 컨센서스 76.3%의 압도적 수익성</li>
+        <li>FY2026 추정 PER 6.00배, EV/EBITDA 3.78배로 이익 기준 밸류 부담 완화</li>
+        <li>순현금 상태(순부채비율 −8.44%)와 분기 FCF 18.7조원 사상 최대</li>
+        <li>2026년 D램·낸드 모두 수요가 공급을 상회하는 타이트한 수급</li>
+        <li>나스닥 ADR로 40조원 조달, 증설 재원 확보</li>
+        <li>오픈AI·앤스로픽 직접 공급 전환으로 고객 다변화 진행</li>
+        <li>컨센서스 목표주가 362.6만원, 현재가 대비 +99.7%</li>
+      </ul>
+    </div>
+    <div class="col neg">
+      <h3>부정 요인</h3>
+      <ul>
+        <li>7/29 2분기 실적 발표라는 단일 최대 이벤트 리스크가 임박</li>
+        <li>연율 변동성 110.3%, 베타 1.52, 하루 평균 변동폭이 주가의 11.2%</li>
+        <li>6월 고점 대비 −39.2%, 최대 낙폭이 22거래일 만에 발생한 전례</li>
+        <li>MA5/MA20·MACD 모두 데드크로스, 단기~중기 조정 국면</li>
+        <li>PBR 7.83배, TTM PER은 업종 평균(16.89배)을 소폭 상회</li>
+        <li>2027~28년 3사 동시 증설에 따른 공급 과잉 재발 우려</li>
+        <li>AI 버블 논쟁으로 증권사 목표주가가 185만~420만원까지 갈림</li>
+        <li>외국인 순유출(소진율 −2.7%p)과 그룹 지배구조 불확실성</li>
+      </ul>
+    </div>
+  </div>
+  <div class="disc">본 리포트는 정보 제공을 목적으로 하며 투자 조언이 아닙니다. 투자 결정과 그 책임은 투자자 본인에게 있습니다. 본 리포트는 매수·매도·보유 등 어떠한 투자 의견도 제시하지 않으며, 5개 분석 단계의 결과를 긍정·부정 요인으로 정리하는 데 그칩니다.</div>
+  <p class="srcs">데이터 출처: 네이버증권 일봉·재무제표, WISEfn 컨센서스, 증권사 리포트, 국내외 언론 보도. 2026 1분기는 확정 실적, 2분기는 컨센서스 추정치입니다. 전년 동기 수치는 제시된 YoY 증가율로부터 역산한 값입니다.</p>
+</section>
+
+<footer>작성 2026.07.27 · SK하이닉스(000660) · 산업 / 재무 / 기술 / 뉴스 / 리스크 5단계 분석 종합</footer>
+
+</div>
+
+<script>
+(function(){
+  var btn=document.getElementById('shareBtn'), panel=document.getElementById('sharePanel');
+  function closeAll(){ panel.classList.remove('open'); btn.setAttribute('aria-expanded','false'); }
+  btn.addEventListener('click', function(e){
+    e.stopPropagation();
+    var open=panel.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open?'true':'false');
+  });
+  document.addEventListener('click', function(e){ if(!panel.contains(e.target) && e.target!==btn) closeAll(); });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeAll(); });
+
+  function toggle(itemId, bodyId){
+    var it=document.getElementById(itemId), bd=document.getElementById(bodyId);
+    it.addEventListener('click', function(){
+      var open=bd.classList.toggle('open');
+      it.setAttribute('aria-expanded', open?'true':'false');
+    });
+  }
+  toggle('miMail','bdMail'); toggle('miKakao','bdKakao');
+
+  var SUMMARY='SK하이닉스(000660) 2026.07.27 기준 1,816,000원(+3.24%).\n'
+    + 'HBM 점유율 58%로 세계 1위, 2026 1Q 영업이익률 71.5%로 사상 최대 실적 국면.\n'
+    + '다만 6월 고점 대비 -39.2% 조정, 연율 변동성 110%로 가격 리스크 큼. 7/29 2분기 실적 발표가 최대 변수.';
+
+  // 메일
+  var input=document.getElementById('mailTo'), link=document.getElementById('mailLink');
+  function buildMail(){
+    var to=input.value.trim();
+    if(!to || !input.checkValidity()){
+      link.setAttribute('href','#'); link.setAttribute('aria-disabled','true'); return;
+    }
+    var subject=encodeURIComponent('SK하이닉스 투자 컨설팅 리포트 - 2026-07-27');
+    var body=encodeURIComponent(SUMMARY + '\n\n리포트 링크: ' + window.location.href);
+    link.setAttribute('href', 'mailto:' + to + '?subject=' + subject + '&body=' + body);
+    link.setAttribute('aria-disabled','false');
+  }
+  input.addEventListener('input', buildMail);
+
+  // 카카오
+  var ta=document.getElementById('kkText'), copyBtn=document.getElementById('kkCopy'), shareBtn2=document.getElementById('kkShare');
+  ta.value = '[SK하이닉스 투자 컨설팅 리포트 · 2026.07.27]\n' + SUMMARY + '\n\n' + window.location.href;
+  copyBtn.addEventListener('click', function(){
+    ta.focus(); ta.select(); ta.setSelectionRange(0, ta.value.length);
+    var ok=false;
+    try{ ok=document.execCommand('copy'); }catch(err){ ok=false; }
+    copyBtn.textContent = ok ? '복사됨!' : '직접 선택해 복사해 주세요';
+    setTimeout(function(){ copyBtn.textContent='복사'; }, 1800);
+  });
+  if(navigator.share){
+    shareBtn2.style.display='inline-flex';
+    shareBtn2.addEventListener('click', function(){
+      navigator.share({title:'SK하이닉스 투자 컨설팅 리포트', text:ta.value}).catch(function(){});
+    });
+  }
+})();
+</script>

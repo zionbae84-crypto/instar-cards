@@ -1,0 +1,5 @@
+[
+  {"company":"삼성전자","code":"005930 · KOSPI","date":"2026-07-24","price":"249,500원","change":"-7.59%","risk":"상","file":"reports/samsung-2026-07-24.html"},
+  {"company":"SK하이닉스","code":"000660 · KOSPI","date":"2026-07-27","price":"1,816,000원","change":"+3.24%","risk":"중상","file":"reports/skhynix-2026-07-27.html"},
+  {"company":"엔비디아","code":"NVDA · NASDAQ","date":"2026-07-27","price":"$196.51","change":"-4.99%","risk":"중상","file":"reports/nvda-2026-07-27.html"}
+]

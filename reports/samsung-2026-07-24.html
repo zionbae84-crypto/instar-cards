@@ -1,0 +1,693 @@
+<title>삼성전자(005930) 투자 컨설팅 리포트 · 2026-07-24</title>
+<style>
+  :root{
+    --bg:#F7F8FA; --surface:#FFFFFF; --surface-2:#F2F4F6; --ink:#191F28; --muted:#8B95A1;
+    --accent:#3182F6; --accent-soft:#EBF2FE; --up:#F04452; --down:#3182F6; --line:#E5E8EB;
+    --up-soft:#FEECEE; --warn:#FF9F1C; --warn-soft:#FFF3E0; --shadow:0 1px 3px rgba(0,0,0,.04),0 8px 24px rgba(0,0,0,.05);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#16181C; --surface:#202124; --surface-2:#26282C; --ink:#F2F3F5; --muted:#8B95A1;
+      --accent:#4593FC; --accent-soft:#1D2A3D; --up:#FF5D6C; --down:#4593FC; --line:#2E3136;
+      --up-soft:#3A2124; --warn:#FFB454; --warn-soft:#3A2E1C; --shadow:0 1px 3px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#16181C; --surface:#202124; --surface-2:#26282C; --ink:#F2F3F5; --muted:#8B95A1;
+    --accent:#4593FC; --accent-soft:#1D2A3D; --up:#FF5D6C; --down:#4593FC; --line:#2E3136;
+    --up-soft:#3A2124; --warn:#FFB454; --warn-soft:#3A2E1C; --shadow:0 1px 3px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);
+  }
+  :root[data-theme="light"]{
+    --bg:#F7F8FA; --surface:#FFFFFF; --surface-2:#F2F4F6; --ink:#191F28; --muted:#8B95A1;
+    --accent:#3182F6; --accent-soft:#EBF2FE; --up:#F04452; --down:#3182F6; --line:#E5E8EB;
+    --up-soft:#FEECEE; --warn:#FF9F1C; --warn-soft:#FFF3E0; --shadow:0 1px 3px rgba(0,0,0,.04),0 8px 24px rgba(0,0,0,.05);
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    background:var(--bg); color:var(--ink);
+    font-family:"Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    -webkit-font-smoothing:antialiased; line-height:1.55; letter-spacing:-0.01em;
+    font-variant-numeric:tabular-nums;
+  }
+  .wrap{max-width:760px; margin:0 auto; padding:28px 18px 72px; display:flex; flex-direction:column; gap:14px;}
+  h1,h2,h3,p,ul,ol,figure{margin:0;}
+  ul{padding:0; list-style:none;}
+  .num{font-variant-numeric:tabular-nums;}
+
+  /* ---------- header ---------- */
+  .hdr{display:flex; flex-direction:column; gap:6px; padding:6px 4px 2px;}
+  .hdr .eyebrow{font-size:12px; font-weight:600; color:var(--muted); letter-spacing:.06em;}
+  .hdr h1{font-size:26px; font-weight:800; letter-spacing:-0.035em; text-wrap:balance;}
+  .hdr .sub{font-size:13px; color:var(--muted); font-weight:500;}
+
+  /* ---------- share ---------- */
+  .sharebar{position:relative; display:flex; justify-content:flex-end; padding:0 4px;}
+  .pill{border:0; cursor:pointer; font:inherit; font-weight:700; font-size:13px;
+    background:var(--accent-soft); color:var(--accent); padding:9px 18px; border-radius:999px;}
+  .pill:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
+  .panel{position:absolute; top:46px; right:4px; z-index:40; width:min(340px,calc(100vw - 40px));
+    background:var(--surface); border-radius:18px; box-shadow:var(--shadow); padding:8px; display:none; flex-direction:column; gap:2px;}
+  .panel.open{display:flex;}
+  .opt{border:0; width:100%; text-align:left; background:transparent; color:var(--ink); font:inherit;
+    font-weight:600; font-size:14px; padding:13px 14px; border-radius:12px; cursor:pointer;}
+  .opt:hover{background:var(--surface-2);}
+  .opt:focus-visible{outline:2px solid var(--accent); outline-offset:-2px;}
+  .drawer{display:none; padding:2px 14px 14px; flex-direction:column; gap:8px;}
+  .drawer.open{display:flex;}
+  .drawer input, .drawer textarea{
+    width:100%; font:inherit; font-size:13px; color:var(--ink); background:var(--surface-2);
+    border:0; border-radius:12px; padding:11px 13px; resize:none;}
+  .drawer input:focus-visible, .drawer textarea:focus-visible{outline:2px solid var(--accent);}
+  .drawer textarea{height:112px; line-height:1.5;}
+  .rowbtn{display:flex; gap:8px; align-items:center;}
+  .send{display:inline-block; text-decoration:none; background:var(--accent); color:#fff; font-weight:700;
+    font-size:13px; padding:10px 20px; border-radius:999px;}
+  .send:focus-visible{outline:2px solid var(--ink); outline-offset:2px;}
+  .ghost{border:0; cursor:pointer; font:inherit; font-weight:700; font-size:13px;
+    background:var(--surface-2); color:var(--ink); padding:10px 18px; border-radius:999px;}
+  .hint{font-size:11.5px; color:var(--muted); line-height:1.5;}
+
+  /* ---------- cards ---------- */
+  .card{background:var(--surface); border-radius:20px; padding:24px; box-shadow:var(--shadow);
+    display:flex; flex-direction:column; gap:16px;}
+  .sec-label{font-size:12px; font-weight:700; color:var(--accent); letter-spacing:.04em;}
+  h2{font-size:19px; font-weight:800; letter-spacing:-0.03em;}
+  h3{font-size:13px; font-weight:700; color:var(--muted);}
+  .lede{font-size:14.5px; color:var(--ink); line-height:1.65;}
+  .note{font-size:12.5px; color:var(--muted); line-height:1.6;}
+
+  /* hero */
+  .hero{background:var(--surface); border-radius:20px; padding:26px 24px; box-shadow:var(--shadow);
+    display:flex; flex-direction:column; gap:4px;}
+  .hero .lbl{font-size:12.5px; color:var(--muted); font-weight:600;}
+  .price{font-size:56px; font-weight:800; letter-spacing:-0.045em; line-height:1.05;}
+  .price small{font-size:24px; font-weight:700; margin-left:2px;}
+  .chg{font-size:15px; font-weight:700; color:var(--down);}
+  .hero .band{margin-top:14px; display:flex; flex-direction:column; gap:7px;}
+  .track{position:relative; height:8px; border-radius:999px; background:var(--surface-2);}
+  .track .fill{position:absolute; left:0; top:0; bottom:0; border-radius:999px; background:var(--accent);}
+  .track .dot{position:absolute; top:50%; width:14px; height:14px; margin:-7px 0 0 -7px; border-radius:50%;
+    background:var(--accent); box-shadow:0 0 0 3px var(--surface);}
+  .bandnums{display:flex; justify-content:space-between; font-size:11.5px; color:var(--muted); font-weight:600;}
+
+  /* stat tiles */
+  .tiles{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px;}
+  .tile{background:var(--surface); border-radius:18px; padding:18px 18px 16px; box-shadow:var(--shadow);
+    display:flex; flex-direction:column; gap:3px;}
+  .tile .k{font-size:12px; color:var(--muted); font-weight:600;}
+  .tile .v{font-size:30px; font-weight:800; letter-spacing:-0.04em; line-height:1.15;}
+  .tile .v span{font-size:15px; font-weight:700;}
+  .tile .d{font-size:11.5px; color:var(--muted); font-weight:500;}
+  .v.up{color:var(--up);} .v.down{color:var(--down);} .v.warn{color:var(--warn);}
+
+  /* bars */
+  .bars{display:flex; flex-direction:column; gap:11px;}
+  .bar{display:grid; grid-template-columns:96px 1fr auto; align-items:center; gap:10px;}
+  .bar .nm{font-size:12.5px; font-weight:600; color:var(--ink); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  .bar .rail{height:12px; background:var(--surface-2); border-radius:999px; overflow:hidden;}
+  .bar .rail i{display:block; height:100%; border-radius:999px; background:var(--accent);}
+  .bar .rail i.red{background:var(--up);} .bar .rail i.dim{background:var(--muted); opacity:.45;}
+  .bar .rail i.warn{background:var(--warn);}
+  .bar .vl{font-size:12.5px; font-weight:700; min-width:58px; text-align:right;}
+  .bar.me .nm{color:var(--accent); font-weight:800;}
+
+  /* diverging ladder */
+  .lad{display:flex; flex-direction:column; gap:8px;}
+  .lrow{display:grid; grid-template-columns:82px 1fr 62px; align-items:center; gap:9px;}
+  .lrow .nm{font-size:12px; font-weight:600;}
+  .lrow .zone{position:relative; height:14px; background:var(--surface-2); border-radius:6px;}
+  .lrow .zone::before{content:""; position:absolute; left:50%; top:-2px; bottom:-2px; width:2px; margin-left:-1px; background:var(--line);}
+  .lrow .zone i{position:absolute; top:2px; bottom:2px; border-radius:4px;}
+  .lrow .zone i.pos{left:50%; background:var(--up);}
+  .lrow .zone i.neg{right:50%; background:var(--accent);}
+  .lrow .pc{font-size:12px; font-weight:700; text-align:right;}
+  .lrow .pc.up{color:var(--up);} .lrow .pc.dn{color:var(--accent);}
+  .lrow .px{font-size:11px; color:var(--muted); font-weight:600;}
+
+  /* chips */
+  .chips{display:flex; flex-wrap:wrap; gap:7px;}
+  .chip{font-size:12px; font-weight:700; padding:6px 13px; border-radius:999px;
+    background:var(--surface-2); color:var(--ink);}
+  .chip.blue{background:var(--accent-soft); color:var(--accent);}
+  .chip.red{background:var(--up-soft); color:var(--up);}
+  .chip.warn{background:var(--warn-soft); color:var(--warn);}
+
+  /* gauge */
+  .gauges{display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:14px;}
+  .gauge{display:flex; flex-direction:column; gap:6px;}
+  .gauge .top{display:flex; justify-content:space-between; align-items:baseline;}
+  .gauge .gn{font-size:12.5px; font-weight:700; color:var(--muted);}
+  .gauge .gv{font-size:22px; font-weight:800; letter-spacing:-0.03em;}
+  .gscale{position:relative; height:8px; border-radius:999px;
+    background:linear-gradient(90deg,var(--accent) 0%,var(--surface-2) 45%,var(--surface-2) 65%,var(--up) 100%);}
+  .gscale .mk{position:absolute; top:-4px; width:4px; height:16px; border-radius:3px; background:var(--ink); margin-left:-2px;}
+  .gticks{display:flex; justify-content:space-between; font-size:10.5px; color:var(--muted); font-weight:600;}
+
+  /* timeline */
+  .sent{display:flex; height:10px; border-radius:999px; overflow:hidden; gap:2px; background:transparent;}
+  .sent i{display:block;}
+  .sentleg{display:flex; gap:14px; font-size:11.5px; color:var(--muted); font-weight:600; flex-wrap:wrap;}
+  .sentleg b{display:inline-block; width:8px; height:8px; border-radius:50%; margin-right:5px; vertical-align:middle;}
+  .tl{position:relative; display:flex; flex-direction:column; gap:0; padding-left:18px;}
+  .tl::before{content:""; position:absolute; left:4px; top:8px; bottom:8px; width:2px; background:var(--line);}
+  .ti{position:relative; padding:9px 0 9px 12px; display:flex; flex-direction:column; gap:2px;}
+  .ti::before{content:""; position:absolute; left:-18px; top:15px; width:10px; height:10px; border-radius:50%;
+    background:var(--muted); box-shadow:0 0 0 3px var(--surface);}
+  .ti.pos::before{background:var(--up);} .ti.neg::before{background:var(--accent);}
+  .ti .dt{font-size:11px; font-weight:700; color:var(--muted); letter-spacing:.02em;}
+  .ti .hl{font-size:13.5px; font-weight:600; line-height:1.5;}
+
+  /* risk stripes */
+  .risks{display:flex; flex-direction:column; gap:9px;}
+  .risk{display:grid; grid-template-columns:1fr auto; gap:10px; align-items:center;
+    background:var(--surface-2); border-radius:14px; padding:13px 15px; position:relative; overflow:hidden;}
+  .risk::before{content:""; position:absolute; left:0; top:0; bottom:0; width:5px; background:var(--muted); opacity:.35;}
+  .risk.hi::before{background:var(--up); opacity:1;}
+  .risk.mid::before{background:var(--warn); opacity:1;}
+  .risk.lo::before{background:var(--accent); opacity:.55;}
+  .risk .t{font-size:13.5px; font-weight:700; padding-left:6px;}
+  .risk .d{font-size:11.5px; color:var(--muted); padding-left:6px; line-height:1.5;}
+  .sev{font-size:11px; font-weight:800; padding:5px 11px; border-radius:999px; white-space:nowrap;}
+  .sev.hi{background:var(--up-soft); color:var(--up);}
+  .sev.mid{background:var(--warn-soft); color:var(--warn);}
+  .sev.lo{background:var(--accent-soft); color:var(--accent);}
+
+  .gradebox{background:var(--up-soft); border-radius:18px; padding:20px 22px; display:flex;
+    align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;}
+  .gradebox .g{font-size:40px; font-weight:800; color:var(--up); letter-spacing:-0.04em; line-height:1.1;}
+  .gradebox .gt{font-size:12px; font-weight:700; color:var(--up); opacity:.85;}
+  .gradebox .gd{font-size:12.5px; color:var(--ink); opacity:.85; max-width:330px; line-height:1.55;}
+
+  /* two col */
+  .two{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+  @media (max-width:560px){ .two{grid-template-columns:1fr;} .price{font-size:46px;} .bar{grid-template-columns:78px 1fr auto;} }
+  .col{background:var(--surface-2); border-radius:16px; padding:18px; display:flex; flex-direction:column; gap:10px;}
+  .col h3{font-size:13px; font-weight:800;}
+  .col.p h3{color:var(--up);} .col.n h3{color:var(--accent);}
+  .col li{font-size:13px; line-height:1.6; padding-left:14px; position:relative;}
+  .col li::before{content:""; position:absolute; left:0; top:8px; width:5px; height:5px; border-radius:50%; background:var(--muted); opacity:.6;}
+  .col.p li::before{background:var(--up); opacity:1;} .col.n li::before{background:var(--accent); opacity:1;}
+
+  .kv{display:grid; grid-template-columns:1fr auto; gap:6px 12px; font-size:13px;}
+  .kv dt{color:var(--muted); font-weight:500;}
+  .kv dd{margin:0; font-weight:700; text-align:right;}
+
+  .scrollx{overflow-x:auto;}
+  .disc{font-size:11.5px; color:var(--muted); line-height:1.6; background:var(--surface-2);
+    border-radius:14px; padding:14px 16px;}
+  footer{text-align:center; font-size:11.5px; color:var(--muted); padding:6px 0 0;}
+
+  @media (prefers-reduced-motion:reduce){ *{transition:none!important; animation:none!important;} }
+
+  @media print{
+    body{background:#fff;}
+    .sharebar, .panel{display:none!important;}
+    .card,.hero,.tile{box-shadow:none; border:1px solid #E5E8EB; page-break-inside:avoid;}
+    .wrap{max-width:100%; padding:0;}
+    .risk,.two,.tl{page-break-inside:avoid;}
+  }
+</style>
+
+<div class="wrap">
+
+  <header class="hdr">
+    <div class="eyebrow">기업분석 리포트 · KOSPI 005930</div>
+    <h1>삼성전자</h1>
+    <div class="sub">분석 기준일 2026년 7월 24일 (최신 거래일 종가 기준)</div>
+  </header>
+
+  <div class="sharebar">
+    <button class="pill" id="shareBtn" aria-expanded="false" aria-controls="sharePanel">공유</button>
+    <div class="panel" id="sharePanel" role="dialog" aria-label="리포트 공유">
+      <button class="opt" id="optMail" aria-expanded="false" aria-controls="mailDrawer">메일로 보내기</button>
+      <div class="drawer" id="mailDrawer">
+        <input type="email" id="mailTo" placeholder="받는사람 이메일 주소" autocomplete="email" />
+        <div class="rowbtn">
+          <a class="send" id="mailLink" href="mailto:">보내기</a>
+        </div>
+        <p class="hint">클릭하면 메일 작성창이 열리며, 직접 보내기를 눌러야 전달됩니다. 자동 발송되지 않습니다.</p>
+      </div>
+
+      <button class="opt" id="optKakao" aria-expanded="false" aria-controls="kakaoDrawer">카카오톡으로 공유</button>
+      <div class="drawer" id="kakaoDrawer">
+        <textarea id="kakaoText" readonly></textarea>
+        <div class="rowbtn">
+          <button class="ghost" id="copyBtn">복사</button>
+          <button class="ghost" id="osShareBtn" style="display:none;">다른 앱으로 공유</button>
+        </div>
+        <p class="hint">복사한 내용을 카카오톡 채팅방에 붙여넣어 공유하세요.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== 1. 요약 ========== -->
+  <section class="hero">
+    <div class="lbl">2026-07-24 종가</div>
+    <div class="price num">249,500<small>원</small></div>
+    <div class="chg num">-20,500원 (-7.59%)</div>
+    <div class="band">
+      <div class="track">
+        <div class="fill" style="width: 59.5%"></div>
+        <div class="dot" style="left: 59.5%"></div>
+      </div>
+      <div class="bandnums">
+        <span class="num">52주 최저 65,500원</span>
+        <span>52주 밴드 내 59.5%</span>
+        <span class="num">52주 최고 374,500원</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="tiles">
+    <div class="tile"><div class="k">2026 2Q 영업이익</div><div class="v num up">89.4<span>조원</span></div><div class="d num">전년 대비 +1,810%</div></div>
+    <div class="tile"><div class="k">PER (TTM)</div><div class="v num">20.17<span>배</span></div><div class="d num">업종평균 18.37배</div></div>
+    <div class="tile"><div class="k">RSI (14)</div><div class="v num">40.95</div><div class="d">중립~약세, 과매도 미도달</div></div>
+    <div class="tile"><div class="k">52주 고점 대비</div><div class="v num down">-33.4<span>%</span></div><div class="d num">고점 374,500원 (6/19)</div></div>
+    <div class="tile"><div class="k">종합 리스크</div><div class="v up">높음</div><div class="d">6개 항목 중 2개 '상'</div></div>
+    <div class="tile"><div class="k">연환산 변동성 (1M)</div><div class="v num up">95.4<span>%</span></div><div class="d">대형주 정상의 약 3배</div></div>
+  </div>
+
+  <section class="card">
+    <p class="lede">역대 최대 실적(2Q 영업이익 89.4조원)과 브로드컴 292조원 규모 MOU라는 강한 펀더멘털 호재가 나온 날, 주가는 오히려 7.59% 급락했습니다. 리스크 분석 결과 이 급락의 대부분은 같은 날 KOSPI가 -5.7% 빠진 <b>시장 전체 매크로 충격</b>이 베타(1.2~1.5)로 증폭된 것으로, 삼성전자 고유 악재보다는 시장 리스크가 주원인입니다.</p>
+    <div class="chips">
+      <span class="chip red">실적 서프라이즈</span>
+      <span class="chip red">D램·낸드 점유율 1위</span>
+      <span class="chip blue">단중기 이동평균 역배열</span>
+      <span class="chip blue">기관 순매도 1위</span>
+      <span class="chip warn">파운드리 격차 확대</span>
+      <span class="chip warn">미국 반도체 관세</span>
+    </div>
+  </section>
+
+  <!-- ========== 2. 산업 ========== -->
+  <section class="card">
+    <div class="sec-label">산업 개요</div>
+    <h2>메모리는 압도적 1위, 파운드리·HBM은 추격자</h2>
+    <p class="lede">2026년 AI발 메모리 슈퍼사이클로 D램 매출이 사상 최고치(2026 1Q 970억달러, 전분기 대비 +80%)를 기록했습니다. 삼성은 D램·낸드에서 1위지만, 돈이 몰리는 HBM과 파운드리에서는 명확한 2위입니다.</p>
+
+    <div>
+      <h3>D램 점유율</h3>
+      <div class="bars" style="margin-top:10px;">
+        <div class="bar me"><span class="nm">삼성전자</span><span class="rail"><i class="red" style="width: 100.0%"></i></span><span class="vl num">38%</span></div>
+        <div class="bar"><span class="nm">SK하이닉스</span><span class="rail"><i style="width: 76.3%"></i></span><span class="vl num">29%</span></div>
+        <div class="bar"><span class="nm">중국 CXMT</span><span class="rail"><i class="dim" style="width: 21.1%"></i></span><span class="vl num">8%</span></div>
+      </div>
+      <p class="note" style="margin-top:8px;">2위와 9%p 격차로 1위. 낸드도 29%로 1위. 다만 CXMT가 4위까지 올라와 범용 D램 저가 경쟁 우려가 있습니다.</p>
+    </div>
+
+    <div>
+      <h3>HBM 점유율</h3>
+      <div class="bars" style="margin-top:10px;">
+        <div class="bar"><span class="nm">SK하이닉스</span><span class="rail"><i style="width: 100.0%"></i></span><span class="vl num">58%</span></div>
+        <div class="bar me"><span class="nm">삼성전자</span><span class="rail"><i class="red" style="width: 36.2%"></i></span><span class="vl num">21%</span></div>
+      </div>
+      <p class="note" style="margin-top:8px;">AI 서버 수익성의 핵심인 HBM에서는 SK하이닉스가 압도적 1위. 삼성은 공동 2위이며, UBS는 2027년까지 격차가 좁혀질 것으로 봅니다.</p>
+    </div>
+
+    <div>
+      <h3>파운드리 점유율</h3>
+      <div class="bars" style="margin-top:10px;">
+        <div class="bar"><span class="nm">TSMC</span><span class="rail"><i style="width: 100.0%"></i></span><span class="vl num">72.3%</span></div>
+        <div class="bar me"><span class="nm">삼성전자</span><span class="rail"><i class="red" style="width: 9.0%"></i></span><span class="vl num">6.5%</span></div>
+      </div>
+      <p class="note" style="margin-top:8px;">1위와의 격차가 59.9%p에서 65.8%p로 오히려 벌어졌습니다. 다만 2나노 수율이 20%에서 55%로 개선됐고 테슬라 AI6 칩 22조원을 수주해 반전 여지는 남아 있습니다.</p>
+    </div>
+
+    <div class="two">
+      <div class="col">
+        <h3>스마트폰 (점유율 1위 탈환)</h3>
+        <div class="bars">
+          <div class="bar me"><span class="nm">삼성전자</span><span class="rail"><i class="red" style="width: 100.0%"></i></span><span class="vl num">24%</span></div>
+          <div class="bar"><span class="nm">애플</span><span class="rail"><i style="width: 83.3%"></i></span><span class="vl num">20%</span></div>
+        </div>
+        <p class="note">단, 시장 자체는 메모리 가격 급등에 따른 원가 부담으로 -11% 역성장 중입니다.</p>
+      </div>
+      <div class="col">
+        <h3>디스플레이 (전 부문 1위)</h3>
+        <div class="bars">
+          <div class="bar"><span class="nm">모니터 OLED</span><span class="rail"><i class="red" style="width: 100.0%"></i></span><span class="vl num">79%</span></div>
+          <div class="bar"><span class="nm">노트북 OLED</span><span class="rail"><i class="red" style="width: 89.9%"></i></span><span class="vl num">71%</span></div>
+          <div class="bar"><span class="nm">중소형 OLED</span><span class="rail"><i class="red" style="width: 56.5%"></i></span><span class="vl num">44.6%</span></div>
+        </div>
+        <p class="note">삼성디스플레이는 IT용 OLED에서 독보적 지위를 유지하고 있습니다.</p>
+      </div>
+    </div>
+
+    <div class="chips">
+      <span class="chip warn">2027년 이후 경쟁사 증설 → 공급과잉 전환 우려</span>
+      <span class="chip warn">메모리 가격 급등이 세트(모바일) 마진 압박</span>
+    </div>
+  </section>
+
+  <!-- ========== 3. 재무 ========== -->
+  <section class="card">
+    <div class="sec-label">재무 분석</div>
+    <h2>반도체가 이익의 90%를 끌어올린 분기</h2>
+
+    <div class="tiles">
+      <div class="tile" style="box-shadow:none; background:var(--surface-2);"><div class="k">2026 2Q 매출 (잠정)</div><div class="v num">171<span>조원</span></div><div class="d">분기 기준</div></div>
+      <div class="tile" style="box-shadow:none; background:var(--surface-2);"><div class="k">2026 2Q 영업이익</div><div class="v num up">89.4<span>조원</span></div><div class="d">충당금 반영 전 경상 약 106조</div></div>
+      <div class="tile" style="box-shadow:none; background:var(--surface-2);"><div class="k">2026E ROE 컨센서스</div><div class="v num up">54.5<span>%</span></div><div class="d num">FY2025 지배주주 10.9%</div></div>
+    </div>
+
+    <div>
+      <h3>2026 2Q 영업이익 — 컨센서스 대비</h3>
+      <div class="bars" style="margin-top:10px;">
+        <div class="bar me"><span class="nm">실제(잠정)</span><span class="rail"><i class="red" style="width: 100.0%"></i></span><span class="vl num">89.4조</span></div>
+        <div class="bar"><span class="nm">컨센서스</span><span class="rail"><i class="dim" style="width: 94.4%"></i></span><span class="vl num">84.4조</span></div>
+      </div>
+      <p class="note" style="margin-top:8px;">DS(반도체) 부문이 전사 영업이익의 90% 이상을 견인했고, DX(완제품)는 부품가 상승으로 부진했습니다. DS 특별성과급 충당금 약 17조원이 반영된 수치입니다.</p>
+    </div>
+
+    <div>
+      <h3>밸류에이션 — PER 비교</h3>
+      <div class="bars" style="margin-top:10px;">
+        <div class="bar"><span class="nm">TTM (현재)</span><span class="rail"><i class="warn" style="width: 100.0%"></i></span><span class="vl num">20.17배</span></div>
+        <div class="bar"><span class="nm">업종 평균</span><span class="rail"><i class="dim" style="width: 91.1%"></i></span><span class="vl num">18.37배</span></div>
+        <div class="bar"><span class="nm">2026E 컨센</span><span class="rail"><i style="width: 26.5%"></i></span><span class="vl num">5.35배</span></div>
+      </div>
+      <p class="note" style="margin-top:8px;">지금 실적 기준으로는 업종 평균보다 비싸지만(PBR 3.47배도 히스토리컬 상단), 2026년 컨센서스가 실현되면 PER 5.0~5.35배로 저평가 구간에 들어섭니다. 즉 현재 주가는 <b>극단적 고성장 컨센서스(매출 +119.6%, 영업이익 +778.9%)의 실현 여부에 걸려 있습니다.</b></p>
+    </div>
+
+    <div class="two">
+      <div class="col">
+        <h3>재무 건전성 — 매우 견조</h3>
+        <dl class="kv">
+          <dt>부채비율</dt><dd class="num">30%</dd>
+          <dt>유동비율</dt><dd class="num">200%대</dd>
+          <dt>이자보상배율</dt><dd class="num">72배</dd>
+          <dt>순현금</dt><dd>보유</dd>
+          <dt>FY2025 영업현금흐름</dt><dd class="num">85.3조원</dd>
+          <dt>FY2025 FCF</dt><dd class="num">37.8조원</dd>
+        </dl>
+      </div>
+      <div class="col">
+        <h3>주주환원 · 시장 컨센서스</h3>
+        <dl class="kv">
+          <dt>배당수익률</dt><dd class="num">0.67%</dd>
+          <dt>배당성향</dt><dd class="num">25.1%</dd>
+          <dt>PBR</dt><dd class="num">3.47배</dd>
+          <dt>목표주가 컨센서스</dt><dd class="num">513,958원</dd>
+          <dt>현재가 대비</dt><dd class="num" style="color:var(--up)">+106%</dd>
+          <dt>투자의견 점수</dt><dd class="num">4.04 / 5.0</dd>
+        </dl>
+        <p class="note">목표주가는 7월 24일 급락 이전 데이터라 후행 가능성이 있습니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 4. 기술적 ========== -->
+  <section class="card">
+    <div class="sec-label">기술적 분석</div>
+    <h2>단기는 역배열, 장기 추세선은 아직 살아 있다</h2>
+    <p class="note">technical-analyst가 생성한 차트 이미지 파일은 전달되지 않아, 아래 지표와 가격 레벨을 시각화해 대체했습니다.</p>
+
+    <div class="gauges">
+      <div class="gauge">
+        <div class="top"><span class="gn">RSI (14)</span><span class="gv num">40.95</span></div>
+        <div class="gscale"><span class="mk" style="left: 40.95%"></span></div>
+        <div class="gticks"><span>0 과매도</span><span>50</span><span>100 과매수</span></div>
+      </div>
+      <div class="gauge">
+        <div class="top"><span class="gn">52주 밴드 내 위치</span><span class="gv num">59.5%</span></div>
+        <div class="gscale"><span class="mk" style="left: 59.5%"></span></div>
+        <div class="gticks"><span class="num">65,500</span><span>중간</span><span class="num">374,500</span></div>
+      </div>
+    </div>
+
+    <div class="chips">
+      <span class="chip blue">MA5·20·60 아래 (단중기 역배열)</span>
+      <span class="chip red">MA120 위 (장기 상승추세 유지)</span>
+      <span class="chip blue">MACD 데드크로스 지속 (6/23~)</span>
+      <span class="chip">히스토그램 -3,121 · 마이너스 폭 축소 중</span>
+      <span class="chip">거래량 26.2M주 (20일 평균의 91%)</span>
+    </div>
+
+    <div>
+      <h3>현재가 기준 지지·저항 레벨</h3>
+      <div class="lad" style="margin-top:12px;">
+        <div class="lrow"><span class="nm">52주 최고가<br><span class="px num">374,500</span></span><span class="zone"><i class="pos" style="width: 50.0%"></i></span><span class="pc up num">+50.10%</span></div>
+        <div class="lrow"><span class="nm">MA60<br><span class="px num">295,442</span></span><span class="zone"><i class="pos" style="width: 18.38%"></i></span><span class="pc up num">+18.41%</span></div>
+        <div class="lrow"><span class="nm">MA20<br><span class="px num">284,800</span></span><span class="zone"><i class="pos" style="width: 14.12%"></i></span><span class="pc up num">+14.15%</span></div>
+        <div class="lrow"><span class="nm">MA5<br><span class="px num">256,600</span></span><span class="zone"><i class="pos" style="width: 2.84%"></i></span><span class="pc up num">+2.85%</span></div>
+        <div class="lrow"><span class="nm" style="color:var(--accent); font-weight:800;">현재가<br><span class="px num" style="color:var(--accent)">249,500</span></span><span class="zone"></span><span class="pc num">0.00%</span></div>
+        <div class="lrow"><span class="nm">1차 지지<br><span class="px num">247,000</span></span><span class="zone"><i class="neg" style="width: 2.0%"></i></span><span class="pc dn num">-1.00%</span></div>
+        <div class="lrow"><span class="nm">MA120 (핵심)<br><span class="px num">242,383</span></span><span class="zone"><i class="neg" style="width: 2.85%"></i></span><span class="pc dn num">-2.85%</span></div>
+        <div class="lrow"><span class="nm">2차 지지<br><span class="px num">240,000</span></span><span class="zone"><i class="neg" style="width: 3.8%"></i></span><span class="pc dn num">-3.81%</span></div>
+        <div class="lrow"><span class="nm">4차 지지<br><span class="px num">226,000</span></span><span class="zone"><i class="neg" style="width: 9.4%"></i></span><span class="pc dn num">-9.42%</span></div>
+      </div>
+      <p class="note" style="margin-top:10px;">일중 변동폭은 247,000~266,500원. 위쪽 첫 관문은 MA5(256,600원)이고, 아래쪽 최대 관건은 <b>MA120 핵심밴드 242,000~244,000원</b>입니다. 이 구간을 지키면 장기 상승추세 내 조정, 이탈하면 220,000~226,000원까지 열립니다. 52주 최저가(65,500원) 대비로는 여전히 +280.9%입니다.</p>
+    </div>
+  </section>
+
+  <!-- ========== 5. 뉴스 ========== -->
+  <section class="card">
+    <div class="sec-label">최근 뉴스 · 시장 심리</div>
+    <h2>호재는 쌓이는데 주가는 반응하지 않는 구간</h2>
+
+    <div style="display:flex; flex-direction:column; gap:8px;">
+      <div class="sent">
+        <i style="width: 50.0%; background:var(--up); border-radius:999px 0 0 999px;"></i>
+        <i style="width: 41.7%; background:var(--accent);"></i>
+        <i style="width: 8.3%; background:var(--muted); opacity:.5; border-radius:0 999px 999px 0;"></i>
+      </div>
+      <div class="sentleg">
+        <span><b style="background:var(--up)"></b>긍정 6건 (50.0%)</span>
+        <span><b style="background:var(--accent)"></b>부정 5건 (41.7%)</span>
+        <span><b style="background:var(--muted); opacity:.5"></b>중립 1건 (8.3%)</span>
+      </div>
+    </div>
+
+    <div class="tl">
+      <div class="ti pos"><span class="dt">2026-03</span><span class="hl">엔비디아 Grok3 4나노 파운드리 생산 — 대형 고객사 확보</span></div>
+      <div class="ti pos"><span class="dt">2026-05</span><span class="hl">앤트로픽 로직칩 수주 협의 진행</span></div>
+      <div class="ti pos"><span class="dt">2026-06-12</span><span class="hl">구글, TPU 일부 물량 삼성 파운드리 위탁 검토</span></div>
+      <div class="ti pos"><span class="dt">2026-07-07</span><span class="hl">2분기 잠정실적 역대 최대 발표(컨센서스 상회) — 그러나 시장은 'sell the news'로 반응</span></div>
+      <div class="ti neg"><span class="dt">2026-07 중순</span><span class="hl">목표주가 하향 리포트 323건이 상향 249건을 연중 처음으로 역전 (키움 43만 → 39만원 등)</span></div>
+      <div class="ti neg"><span class="dt">2026-07-16</span><span class="hl">한국은행 기준금리 인상 2.50% → 2.75%</span></div>
+      <div class="ti pos"><span class="dt">2026-07 중</span><span class="hl">D램 최대 20% 가격 인상 협상설 — 하반기 실적 기대 요인</span></div>
+      <div class="ti pos"><span class="dt">2026-07-24</span><span class="hl">브로드컴과 5년 2,000억달러(약 292조원) 전략적 MOU 체결 — 최대 호재</span></div>
+      <div class="ti neg"><span class="dt">2026-07-24</span><span class="hl">중동 지정학 긴장으로 유가 100달러 근접, 美 10년물 국채금리 4.7%대 · 알파벳 실적발 기술주 조정</span></div>
+      <div class="ti neg"><span class="dt">2026-07-24</span><span class="hl">주가 7.59% 급락, 기관 순매도 1위(8,588억원)</span></div>
+      <div class="ti neg"><span class="dt">상시 리스크</span><span class="hl">트럼프 행정부 반도체 232조 관세(25~100% 거론) 잠재 · 원화 강세 전환</span></div>
+      <div class="ti"><span class="dt">상시 · 중립</span><span class="hl">넷리스트 등 미국 내 HBM·특허 소송 다수 — 영향은 경미한 수준</span></div>
+    </div>
+
+    <p class="note">이재용 회장의 미국 순방·AI 서밋 참석 등 대외 행보도 이어지고 있습니다. 종합하면 <b>펀더멘털은 강한 호재, 단기 주가와 투심은 매크로·밸류에이션 부담</b>이라는 혼재 국면입니다.</p>
+  </section>
+
+  <!-- ========== 6. 리스크 ========== -->
+  <section class="card">
+    <div class="sec-label">리스크 분석</div>
+    <h2>종합 리스크 등급</h2>
+
+    <div class="gradebox">
+      <div>
+        <div class="gt">RISK GRADE</div>
+        <div class="g">높음 (High)</div>
+      </div>
+      <p class="gd">재무 리스크만 제외하면 '매우 높음'에 해당하나, 부채비율 30%·순현금 보유 등 압도적 재무건전성이 유일한 완충재로 작용해 한 단계 하향 조정했습니다.</p>
+    </div>
+
+    <div class="risks">
+      <div class="risk hi">
+        <div><div class="t">시장 · 가격 변동성</div><div class="d">발생가능성 상 · 이미 현실화. 1M 연환산 변동성 95.4%, 1년 최대낙폭 -32.7%</div></div>
+        <span class="sev hi">상</span>
+      </div>
+      <div class="risk hi">
+        <div><div class="t">실적 · 밸류에이션</div><div class="d">발생가능성 상 · 영향 중. Forward PER 4.3~5.35배와 TTM 20배의 괴리는 극단적 컨센서스 실현에 베팅한 결과</div></div>
+        <span class="sev hi">상</span>
+      </div>
+      <div class="risk mid">
+        <div><div class="t">규제 · 지정학</div><div class="d">발생가능성 중~상 · 영향 중. 미국 반도체 관세, 중동 지정학, 원화 강세 전환</div></div>
+        <span class="sev mid">중~상</span>
+      </div>
+      <div class="risk mid">
+        <div><div class="t">산업 · 경쟁</div><div class="d">발생가능성 중 · 영향 중. 파운드리 격차 확대, HBM 열위, 중국 CXMT 추격</div></div>
+        <span class="sev mid">중</span>
+      </div>
+      <div class="risk mid">
+        <div><div class="t">이벤트 · 뉴스</div><div class="d">발생가능성 중 · 영향 상. 애널리스트 심리 역전, 기관 순매도, 호재에 대한 무반응</div></div>
+        <span class="sev mid">중</span>
+      </div>
+      <div class="risk lo">
+        <div><div class="t">재무</div><div class="d">발생가능성 하 · 영향 하. 순현금·이자보상배율 72배 — 유일한 명확한 완충재</div></div>
+        <span class="sev lo">하</span>
+      </div>
+    </div>
+
+    <div>
+      <h3>연환산 변동성 추이 (기간별)</h3>
+      <div class="bars" style="margin-top:10px;">
+        <div class="bar"><span class="nm">최근 1개월</span><span class="rail"><i class="red" style="width: 100.0%"></i></span><span class="vl num">95.4%</span></div>
+        <div class="bar"><span class="nm">최근 3개월</span><span class="rail"><i class="red" style="width: 97.9%"></i></span><span class="vl num">93.4%</span></div>
+        <div class="bar"><span class="nm">최근 1년</span><span class="rail"><i class="warn" style="width: 68.1%"></i></span><span class="vl num">65.0%</span></div>
+        <div class="bar"><span class="nm">최근 2년</span><span class="rail"><i class="warn" style="width: 54.6%"></i></span><span class="vl num">52.1%</span></div>
+        <div class="bar"><span class="nm">대형주 정상</span><span class="rail"><i class="dim" style="width: 31.4%"></i></span><span class="vl num">25~35%</span></div>
+      </div>
+      <p class="note" style="margin-top:8px;">변동성이 갈수록 커져 대형주 정상 범위의 약 3배입니다. ±5% 이상 움직인 날이 252일 중 50일(19.8%)에 달합니다.</p>
+    </div>
+
+    <div>
+      <h3>베타 (시장 민감도)</h3>
+      <div class="bars" style="margin-top:10px;">
+        <div class="bar"><span class="nm">5년</span><span class="rail"><i style="width: 100.0%"></i></span><span class="vl num">1.48</span></div>
+        <div class="bar"><span class="nm">상방 베타</span><span class="rail"><i class="red" style="width: 87.2%"></i></span><span class="vl num">1.29</span></div>
+        <div class="bar"><span class="nm">1년</span><span class="rail"><i style="width: 85.8%"></i></span><span class="vl num">1.27</span></div>
+        <div class="bar"><span class="nm">2년</span><span class="rail"><i style="width: 84.5%"></i></span><span class="vl num">1.25</span></div>
+        <div class="bar"><span class="nm">하방 베타</span><span class="rail"><i class="dim" style="width: 79.1%"></i></span><span class="vl num">1.17</span></div>
+      </div>
+      <p class="note" style="margin-top:8px;">KOSPI와의 상관계수 0.92~0.95. 7월 24일 -7.59% 급락의 대부분은 <b>같은 날 KOSPI가 -5.7% 빠진 데 따른 베타 증폭분</b>으로, 삼성전자 고유 리스크보다 시장 전체 매크로 리스크가 주원인입니다. KOSPI 자체도 고점 대비 -26.6% 조정 중입니다.</p>
+    </div>
+
+    <div class="two">
+      <div class="col">
+        <h3>수급 신호</h3>
+        <dl class="kv">
+          <dt>외국인 지분율 (현재)</dt><dd class="num">46.76%</dd>
+          <dt>6개월 전</dt><dd class="num">51.86%</dd>
+          <dt>변화</dt><dd class="num" style="color:var(--accent)">-5.10%p</dd>
+          <dt>7/24 기관 순매도</dt><dd class="num">8,588억원</dd>
+        </dl>
+      </div>
+      <div class="col">
+        <h3>핵심 모니터링 포인트</h3>
+        <ul style="display:flex; flex-direction:column; gap:6px;">
+          <li>MA120 핵심밴드 242,000~244,000원 이탈 여부 (최우선)</li>
+          <li>KOSPI 지수 방향</li>
+          <li>외국인 지분율 추이</li>
+          <li>3분기 컨센서스 수정 방향</li>
+          <li>HBM 점유율 변화</li>
+          <li>미국 반도체 관세 확정 여부</li>
+          <li>브로드컴 MOU의 본계약 전환 시점</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 7. 종합 ========== -->
+  <section class="card">
+    <div class="sec-label">종합 정리</div>
+    <h2>긍정 요인과 부정 요인</h2>
+
+    <div class="two">
+      <div class="col p">
+        <h3>긍정 요인</h3>
+        <ul style="display:flex; flex-direction:column; gap:8px;">
+          <li>2026 2Q 영업이익 89.4조원(전년 +1,810%)으로 컨센서스 84.4조원 상회</li>
+          <li>D램 38%·낸드 29%로 점유율 1위, 2위와 9%p 격차</li>
+          <li>브로드컴과 5년 2,000억달러(약 292조원) 전략적 MOU 체결</li>
+          <li>2나노 수율 20% → 55% 개선, 테슬라 AI6 22조원 수주</li>
+          <li>구글 TPU·엔비디아·앤트로픽 등 파운드리 고객 저변 확대</li>
+          <li>부채비율 30%, 순현금, 이자보상배율 72배 — 최상급 재무건전성</li>
+          <li>2026E 컨센서스 실현 시 PER 5.0~5.35배로 저평가 전환</li>
+          <li>주가는 MA120 위, 장기 상승추세는 아직 유효</li>
+        </ul>
+      </div>
+      <div class="col n">
+        <h3>부정 요인</h3>
+        <ul style="display:flex; flex-direction:column; gap:8px;">
+          <li>7/24 -7.59% 급락, 52주 고점 대비 -33.4%</li>
+          <li>단중기 이동평균 역배열 + MACD 데드크로스 지속</li>
+          <li>PER(TTM) 20.17배·PBR 3.47배로 현재 실적 기준 고평가</li>
+          <li>2026 컨센서스(영업이익 +778.9%)의 실현 가능성 불확실</li>
+          <li>HBM 21% vs SK하이닉스 58%, 파운드리 격차 65.8%p로 확대</li>
+          <li>중국 CXMT 급성장에 따른 범용 D램 저가 경쟁</li>
+          <li>미국 반도체 관세(25~100% 거론), 중동 지정학, 원화 강세</li>
+          <li>목표주가 하향 리포트 우위 역전, 외국인 지분율 -5.1%p</li>
+          <li>2027년 이후 경쟁사 증설로 인한 공급과잉 전환 논의</li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="lede">요약하면, <b>실적과 사업 경쟁력은 역대 최고 수준이지만 주가에는 이미 매우 공격적인 미래 실적 가정이 반영돼 있고, 여기에 매크로 충격이 겹친 국면</b>입니다. 앞으로의 방향은 MA120 지지선(242,000~244,000원) 방어 여부와 3분기 컨센서스 수정 방향에서 먼저 드러날 가능성이 큽니다.</p>
+
+    <p class="disc">본 리포트는 정보 제공을 목적으로 하며 투자 조언이 아닙니다. 투자 결정과 그 책임은 투자자 본인에게 있습니다.</p>
+  </section>
+
+  <footer>삼성전자(005930) · 분석 기준일 2026-07-24 · 5개 분석 에이전트 결과 종합</footer>
+</div>
+
+<script>
+(function(){
+  var btn = document.getElementById('shareBtn');
+  var panel = document.getElementById('sharePanel');
+  var optMail = document.getElementById('optMail');
+  var optKakao = document.getElementById('optKakao');
+  var mailDrawer = document.getElementById('mailDrawer');
+  var kakaoDrawer = document.getElementById('kakaoDrawer');
+  var mailTo = document.getElementById('mailTo');
+  var mailLink = document.getElementById('mailLink');
+  var kakaoText = document.getElementById('kakaoText');
+  var copyBtn = document.getElementById('copyBtn');
+  var osShareBtn = document.getElementById('osShareBtn');
+
+  var SUBJECT = '삼성전자 투자 컨설팅 리포트 - 2026-07-24';
+  function summary(){
+    return [
+      '삼성전자(005930) 투자 컨설팅 리포트 · 2026-07-24',
+      '종가 249,500원 (-20,500원, -7.59%) / PER(TTM) 20.17배 / RSI 40.95 / 종합 리스크 등급: 높음',
+      '2Q 영업이익 89.4조원 역대 최대와 브로드컴 292조 MOU에도, KOSPI -5.7% 매크로 충격에 동반 급락. MA120(242,383원) 지지 여부가 관건.',
+      window.location.href
+    ].join('\n');
+  }
+
+  function closePanel(){
+    panel.classList.remove('open');
+    btn.setAttribute('aria-expanded','false');
+    mailDrawer.classList.remove('open'); optMail.setAttribute('aria-expanded','false');
+    kakaoDrawer.classList.remove('open'); optKakao.setAttribute('aria-expanded','false');
+  }
+
+  btn.addEventListener('click', function(e){
+    e.stopPropagation();
+    var open = panel.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    if(open){ kakaoText.value = summary(); updateMail(); }
+  });
+
+  panel.addEventListener('click', function(e){ e.stopPropagation(); });
+
+  optMail.addEventListener('click', function(){
+    var open = mailDrawer.classList.toggle('open');
+    optMail.setAttribute('aria-expanded', open ? 'true':'false');
+    if(open){ kakaoDrawer.classList.remove('open'); optKakao.setAttribute('aria-expanded','false'); mailTo.focus(); }
+  });
+
+  optKakao.addEventListener('click', function(){
+    var open = kakaoDrawer.classList.toggle('open');
+    optKakao.setAttribute('aria-expanded', open ? 'true':'false');
+    if(open){ mailDrawer.classList.remove('open'); optMail.setAttribute('aria-expanded','false'); kakaoText.value = summary(); }
+  });
+
+  function updateMail(){
+    var addr = mailTo.value.trim();
+    var body = encodeURIComponent(summary());
+    var subj = encodeURIComponent(SUBJECT);
+    // 수신자 주소는 인코딩하지 않는다 (@가 %40이 되면 메일 클라이언트가 인식하지 못함)
+    mailLink.href = 'mailto:' + (mailTo.checkValidity() ? addr : '') + '?subject=' + subj + '&body=' + body;
+  }
+  mailTo.addEventListener('input', updateMail);
+  updateMail();
+
+  copyBtn.addEventListener('click', function(){
+    kakaoText.focus();
+    kakaoText.select();
+    var ok = false;
+    try { ok = document.execCommand('copy'); } catch(e) { ok = false; }
+    copyBtn.textContent = ok ? '복사됨!' : '직접 복사해주세요';
+    setTimeout(function(){ copyBtn.textContent = '복사'; }, 1600);
+  });
+
+  if (navigator.share) {
+    osShareBtn.style.display = 'inline-block';
+    osShareBtn.addEventListener('click', function(){
+      navigator.share({ title: SUBJECT, text: summary() }).catch(function(){});
+    });
+  }
+
+  document.addEventListener('click', closePanel);
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closePanel(); });
+})();
+</script>
