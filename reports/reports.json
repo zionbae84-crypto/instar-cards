@@ -18,6 +18,15 @@
     "file": "reports/skhynix-2026-07-28.html"
   },
   {
+    "company": "한화오션",
+    "code": "042660 · KOSPI",
+    "date": "2026-07-28",
+    "price": "88,800원",
+    "change": "+1.02%",
+    "risk": "중상",
+    "file": "reports/hanwha-ocean-2026-07-28.html"
+  },
+  {
     "company": "SK하이닉스",
     "code": "000660 · KOSPI",
     "date": "2026-07-27",
