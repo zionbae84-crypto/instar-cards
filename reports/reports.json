@@ -1,5 +1,38 @@
 [
-  {"company":"삼성전자","code":"005930 · KOSPI","date":"2026-07-24","price":"249,500원","change":"-7.59%","risk":"상","file":"reports/samsung-2026-07-24.html"},
-  {"company":"SK하이닉스","code":"000660 · KOSPI","date":"2026-07-27","price":"1,816,000원","change":"+3.24%","risk":"중상","file":"reports/skhynix-2026-07-27.html"},
-  {"company":"엔비디아","code":"NVDA · NASDAQ","date":"2026-07-27","price":"$196.51","change":"-4.99%","risk":"중상","file":"reports/nvda-2026-07-27.html"}
+  {
+    "company": "삼성전자",
+    "code": "005930 · KOSPI",
+    "date": "2026-07-24",
+    "price": "249,500원",
+    "change": "-7.59%",
+    "risk": "상",
+    "file": "reports/samsung-2026-07-24.html"
+  },
+  {
+    "company": "SK하이닉스",
+    "code": "000660 · KOSPI",
+    "date": "2026-07-27",
+    "price": "1,816,000원",
+    "change": "+3.24%",
+    "risk": "중상",
+    "file": "reports/skhynix-2026-07-27.html"
+  },
+  {
+    "company": "엔비디아",
+    "code": "NVDA · NASDAQ",
+    "date": "2026-07-27",
+    "price": "$196.51",
+    "change": "-4.99%",
+    "risk": "중상",
+    "file": "reports/nvda-2026-07-27.html"
+  },
+  {
+    "company": "현대자동차",
+    "code": "005380 · KOSPI",
+    "date": "2026-07-28",
+    "price": "364,000원",
+    "change": "-9.68%",
+    "risk": "상",
+    "file": "reports/hyundai-2026-07-28.html"
+  }
 ]
