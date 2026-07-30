@@ -43,5 +43,14 @@
     "change": "-8.78%",
     "risk": "중상",
     "file": "reports/hanwha-ocean-2026-07-28.html"
+  },
+  {
+    "company": "메타 (Meta)",
+    "code": "META · NASDAQ",
+    "date": "2026-07-30",
+    "price": "$585.61",
+    "change": "-1.31% (시간외 -7%대)",
+    "risk": "중상",
+    "file": "reports/meta-2026-07-30.html"
   }
 ]
