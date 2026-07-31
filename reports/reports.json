@@ -61,5 +61,14 @@
     "change": "+19.43%",
     "risk": "중상",
     "file": "reports/ls-electric-2026-07-31.html"
+  },
+  {
+    "company": "아마존 (Amazon)",
+    "code": "AMZN · NASDAQ",
+    "date": "2026-07-31",
+    "price": "$235.50",
+    "change": "+3.90% (실적후 프리 +11%)",
+    "risk": "중상",
+    "file": "reports/amazon-2026-07-31.html"
   }
 ]
