@@ -52,5 +52,14 @@
     "change": "-1.31% (시간외 -7%대)",
     "risk": "중상",
     "file": "reports/meta-2026-07-30.html"
+  },
+  {
+    "company": "LS일렉트릭",
+    "code": "010120 · KOSPI",
+    "date": "2026-07-31",
+    "price": "179,500원",
+    "change": "+19.43%",
+    "risk": "중상",
+    "file": "reports/ls-electric-2026-07-31.html"
   }
 ]

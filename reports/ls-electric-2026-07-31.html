@@ -1,0 +1,935 @@
+<title>LS일렉트릭 (010120) 투자 컨설팅 리포트 · 2026-07-31</title>
+<style>
+:root{
+  --bg:#F7F8FA; --surface:#FFFFFF; --surface-2:#F2F4F6; --ink:#191F28; --muted:#8B95A1;
+  --accent:#3182F6; --accent-soft:#EBF2FE; --up:#F04452; --down:#3182F6; --line:#E5E8EB;
+  --up-soft:#FDECEE; --warn:#FF9500; --warn-soft:#FFF3E0; --neutral:#B0B8C1; --neutral-soft:#F2F4F6;
+  --good:#00B26B; --good-soft:#E5F7EF;
+  --shadow:0 1px 2px rgba(0,0,0,.04), 0 6px 20px rgba(0,0,0,.05);
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#16181C; --surface:#202124; --surface-2:#26282C; --ink:#F2F3F5; --muted:#8B95A1;
+    --accent:#4593FC; --accent-soft:#1D2A3D; --up:#FF5D6C; --down:#4593FC; --line:#2E3136;
+    --up-soft:#3A2126; --warn:#FFA726; --warn-soft:#3A2E1A; --neutral:#5A6169; --neutral-soft:#2A2D31;
+    --good:#2ECC8F; --good-soft:#17372B;
+    --shadow:0 1px 2px rgba(0,0,0,.3), 0 6px 20px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#16181C; --surface:#202124; --surface-2:#26282C; --ink:#F2F3F5; --muted:#8B95A1;
+  --accent:#4593FC; --accent-soft:#1D2A3D; --up:#FF5D6C; --down:#4593FC; --line:#2E3136;
+  --up-soft:#3A2126; --warn:#FFA726; --warn-soft:#3A2E1A; --neutral:#5A6169; --neutral-soft:#2A2D31;
+  --good:#2ECC8F; --good-soft:#17372B;
+  --shadow:0 1px 2px rgba(0,0,0,.3), 0 6px 20px rgba(0,0,0,.35);
+}
+:root[data-theme="light"]{
+  --bg:#F7F8FA; --surface:#FFFFFF; --surface-2:#F2F4F6; --ink:#191F28; --muted:#8B95A1;
+  --accent:#3182F6; --accent-soft:#EBF2FE; --up:#F04452; --down:#3182F6; --line:#E5E8EB;
+  --up-soft:#FDECEE; --warn:#FF9500; --warn-soft:#FFF3E0; --neutral:#B0B8C1; --neutral-soft:#F2F4F6;
+  --good:#00B26B; --good-soft:#E5F7EF;
+  --shadow:0 1px 2px rgba(0,0,0,.04), 0 6px 20px rgba(0,0,0,.05);
+}
+*{box-sizing:border-box;}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:"Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased;
+  font-variant-numeric:tabular-nums;
+}
+.wrap{max-width:760px; margin:0 auto; padding:2rem 1.25rem 5rem; display:flex; flex-direction:column; gap:2.75rem;}
+h1,h2,h3{margin:0; text-wrap:balance; letter-spacing:-0.02em;}
+p{margin:0;}
+a{color:var(--accent);}
+.num{font-variant-numeric:tabular-nums;}
+
+/* header */
+.hdr{display:flex; flex-direction:column; gap:.75rem; padding-top:.5rem;}
+.hdr .eyebrow{font-size:.8125rem; font-weight:700; color:var(--muted); letter-spacing:.06em;}
+.hdr h1{font-size:2.125rem; font-weight:800; line-height:1.22;}
+.hdr .sub{font-size:.9375rem; color:var(--muted);}
+.pill{display:inline-flex; align-items:center; gap:.375rem; border-radius:999px; padding:.3125rem .75rem;
+  font-size:.8125rem; font-weight:700; background:var(--surface-2); color:var(--muted);}
+.pill.blue{background:var(--accent-soft); color:var(--accent);}
+.pill.red{background:var(--up-soft); color:var(--up);}
+.pill.warn{background:var(--warn-soft); color:var(--warn);}
+.pill.good{background:var(--good-soft); color:var(--good);}
+.pillrow{display:flex; flex-wrap:wrap; gap:.5rem;}
+
+/* share */
+.share-zone{position:relative;}
+.share-btn{border:0; cursor:pointer; border-radius:999px; padding:.625rem 1.25rem; font-size:.9375rem;
+  font-weight:700; background:var(--accent); color:#fff; font-family:inherit;}
+.share-btn:focus-visible{outline:3px solid var(--accent); outline-offset:2px;}
+.share-panel{display:none; position:absolute; z-index:30; top:calc(100% + .5rem); left:0;
+  width:min(420px,calc(100vw - 2.5rem)); background:var(--surface); border-radius:18px;
+  box-shadow:var(--shadow); padding:.5rem; flex-direction:column; gap:.25rem;}
+.share-panel.open{display:flex;}
+.share-item{border-radius:14px; overflow:hidden;}
+.share-head{width:100%; text-align:left; border:0; background:transparent; color:var(--ink); font-family:inherit;
+  font-size:.9375rem; font-weight:600; padding:.875rem 1rem; cursor:pointer; border-radius:14px;}
+.share-head:hover{background:var(--surface-2);}
+.share-head:focus-visible{outline:3px solid var(--accent); outline-offset:-3px;}
+.share-body{display:none; flex-direction:column; gap:.5rem; padding:.25rem 1rem 1rem;}
+.share-body.open{display:flex;}
+.share-body input, .share-body textarea{
+  width:100%; font-family:inherit; font-size:.875rem; color:var(--ink); background:var(--surface-2);
+  border:0; border-radius:12px; padding:.75rem .875rem; resize:vertical;}
+.share-body input:focus-visible, .share-body textarea:focus-visible{outline:2px solid var(--accent); outline-offset:0;}
+.share-note{font-size:.75rem; color:var(--muted); line-height:1.5;}
+.mini-btn{display:inline-flex; align-items:center; justify-content:center; align-self:flex-start;
+  border:0; cursor:pointer; font-family:inherit; font-size:.875rem; font-weight:700; text-decoration:none;
+  border-radius:999px; padding:.5rem 1.125rem; background:var(--accent); color:#fff;}
+.mini-btn.ghost{background:var(--surface-2); color:var(--ink);}
+.mini-btn:focus-visible{outline:3px solid var(--accent); outline-offset:2px;}
+.btnrow{display:flex; gap:.5rem; flex-wrap:wrap;}
+
+/* section */
+section{display:flex; flex-direction:column; gap:1.25rem;}
+.sec-head{display:flex; flex-direction:column; gap:.25rem;}
+.sec-head .kicker{font-size:.75rem; font-weight:700; color:var(--accent); letter-spacing:.08em;}
+.sec-head h2{font-size:1.5rem; font-weight:800;}
+.lede{font-size:.9375rem; color:var(--muted); line-height:1.65;}
+
+/* cards */
+.card{background:var(--surface); border-radius:20px; padding:1.5rem; box-shadow:var(--shadow);
+  display:flex; flex-direction:column; gap:1rem;}
+.card.flat{background:var(--surface-2); box-shadow:none;}
+.card h3{font-size:1.0625rem; font-weight:700;}
+.card .cap{font-size:.8125rem; color:var(--muted);}
+
+/* hero stat */
+.hero{background:var(--surface); border-radius:24px; padding:1.75rem 1.5rem; box-shadow:var(--shadow);
+  display:flex; flex-direction:column; gap:.375rem;}
+.hero .label{font-size:.8125rem; color:var(--muted); font-weight:600;}
+.hero .big{font-size:3.75rem; font-weight:800; line-height:1.05; letter-spacing:-0.04em;}
+.hero .chg{font-size:1.0625rem; font-weight:700; color:var(--up);}
+.hero .foot{font-size:.8125rem; color:var(--muted); margin-top:.25rem;}
+
+/* stat grid */
+.stats{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:.75rem;}
+.stat{background:var(--surface); border-radius:18px; padding:1.125rem 1.25rem; box-shadow:var(--shadow);
+  display:flex; flex-direction:column; gap:.25rem;}
+.stat .k{font-size:.75rem; color:var(--muted); font-weight:600;}
+.stat .v{font-size:1.75rem; font-weight:800; letter-spacing:-0.03em; line-height:1.15;}
+.stat .v.sm{font-size:1.375rem;}
+.stat .n{font-size:.75rem; color:var(--muted);}
+.stat .v.red{color:var(--up);} .stat .v.blue{color:var(--down);} .stat .v.warn{color:var(--warn);}
+.stat .v.good{color:var(--good);}
+
+/* bars */
+.bars{display:flex; flex-direction:column; gap:.75rem;}
+.bar-row{display:grid; grid-template-columns:88px 1fr auto; align-items:center; gap:.75rem;}
+.bar-row .bl{font-size:.8125rem; color:var(--muted); font-weight:600;}
+.track{background:var(--surface-2); border-radius:999px; height:14px; overflow:hidden;}
+.card.flat .track{background:var(--bg);}
+.fill{height:100%; border-radius:999px; background:var(--accent); display:block;}
+.fill.red{background:var(--up);} .fill.warn{background:var(--warn);}
+.fill.mute{background:var(--neutral);} .fill.good{background:var(--good);}
+.fill.soft{background:var(--accent-soft);}
+.bar-row .bv{font-size:.8125rem; font-weight:700; min-width:74px; text-align:right;}
+.bar-row .bv.red{color:var(--up);} .bar-row .bv.blue{color:var(--down);}
+.self{font-weight:800;}
+
+/* meter */
+.meter{display:flex; flex-direction:column; gap:.5rem;}
+.meter .mtrack{position:relative; height:10px; border-radius:999px;
+  background:linear-gradient(90deg,var(--down) 0%,var(--neutral) 50%,var(--up) 100%); opacity:.9;}
+.meter .mtrack.plain{background:var(--surface-2);}
+.meter .knob{position:absolute; top:50%; width:16px; height:16px; border-radius:50%;
+  background:var(--surface); box-shadow:0 0 0 3px var(--ink); transform:translate(-50%,-50%);}
+.meter .mlabels{display:flex; justify-content:space-between; font-size:.6875rem; color:var(--muted);}
+
+/* timeline */
+.tl{position:relative; display:flex; flex-direction:column; gap:1.125rem; padding-left:1.5rem;}
+.tl::before{content:""; position:absolute; left:5px; top:6px; bottom:6px; width:2px; background:var(--line);}
+.tl-item{position:relative; display:flex; flex-direction:column; gap:.25rem;}
+.tl-item::before{content:""; position:absolute; left:-1.5rem; top:6px; width:12px; height:12px;
+  border-radius:50%; background:var(--neutral); box-shadow:0 0 0 3px var(--bg);}
+.tl-item.pos::before{background:var(--up);} .tl-item.neg::before{background:var(--down);}
+.tl-item.key::before{width:16px; height:16px; left:calc(-1.5rem - 2px); top:4px;}
+.tl-date{font-size:.75rem; font-weight:700; color:var(--muted); letter-spacing:.02em;}
+.tl-title{font-size:.9688rem; font-weight:700; line-height:1.4;}
+.tl-desc{font-size:.875rem; color:var(--muted); line-height:1.6;}
+.tl-item.key .tl-title{font-size:1.0625rem;}
+.tl-flag{display:inline-flex; align-self:flex-start; margin-top:.125rem;}
+.senti{display:flex; height:10px; border-radius:999px; overflow:hidden; gap:2px; background:transparent;}
+.senti span{display:block;}
+
+/* risk */
+.risk-row{display:flex; flex-direction:column; gap:.5rem; padding:1.125rem 1.25rem;
+  background:var(--surface); border-radius:18px; box-shadow:var(--shadow); position:relative;
+  overflow:hidden; padding-left:1.5rem;}
+.risk-row::before{content:""; position:absolute; left:0; top:0; bottom:0; width:6px;}
+.risk-row.hi::before{background:var(--up);}
+.risk-row.mid::before{background:var(--warn);}
+.risk-row.lo::before{background:var(--neutral);}
+.risk-top{display:flex; align-items:center; justify-content:space-between; gap:.75rem; flex-wrap:wrap;}
+.risk-name{font-size:1rem; font-weight:700;}
+.risk-body{font-size:.875rem; color:var(--muted); line-height:1.6;}
+.risk-body b{color:var(--ink); font-weight:600;}
+
+/* two col */
+.two{display:grid; grid-template-columns:1fr 1fr; gap:.75rem;}
+@media (max-width:600px){ .two{grid-template-columns:1fr;} .hero .big{font-size:3rem;} }
+.pn-card{background:var(--surface); border-radius:20px; padding:1.375rem 1.25rem; box-shadow:var(--shadow);
+  display:flex; flex-direction:column; gap:.75rem;}
+.pn-card h3{font-size:.9375rem; font-weight:800;}
+.pn-card.plus h3{color:var(--up);} .pn-card.minus h3{color:var(--down);}
+.pn-list{display:flex; flex-direction:column; gap:.625rem; font-size:.875rem; line-height:1.55;}
+.pn-list div{padding-left:.875rem; position:relative; color:var(--ink);}
+.pn-list div::before{content:""; position:absolute; left:0; top:.5rem; width:5px; height:5px; border-radius:50%;}
+.pn-card.plus .pn-list div::before{background:var(--up);}
+.pn-card.minus .pn-list div::before{background:var(--down);}
+
+/* ladder */
+.ladder{position:relative; height:440px; background:var(--surface-2); border-radius:16px;}
+.lv{position:absolute; left:12px; right:12px; display:flex; align-items:center; gap:.5rem; transform:translateY(50%);}
+.lv .line{flex:1; height:2px; background:var(--line);}
+.lv .tag{font-size:.75rem; font-weight:700; padding:.25rem .625rem; border-radius:999px;
+  background:var(--surface); color:var(--muted); white-space:nowrap; box-shadow:var(--shadow);}
+.lv.res .line{background:var(--up); opacity:.35;} .lv.res .tag{color:var(--up);}
+.lv.sup .line{background:var(--down); opacity:.35;} .lv.sup .tag{color:var(--down);}
+.lv.now .line{background:var(--ink); opacity:.5; height:3px;}
+.lv.now .tag{background:var(--ink); color:var(--bg); font-weight:800;}
+
+/* table */
+.tblwrap{overflow-x:auto; border-radius:16px;}
+table{border-collapse:collapse; width:100%; font-size:.8438rem; min-width:420px; background:var(--surface);}
+th,td{padding:.75rem .875rem; text-align:right; white-space:nowrap;}
+th:first-child, td:first-child{text-align:left;}
+thead th{font-size:.75rem; color:var(--muted); font-weight:700; background:var(--surface-2);}
+tbody tr + tr td{border-top:1px solid var(--line);}
+tbody td{font-weight:600;}
+
+.kv{display:flex; flex-direction:column; gap:.625rem;}
+.kv-row{display:flex; justify-content:space-between; gap:1rem; font-size:.875rem;}
+.kv-row .k{color:var(--muted);}
+.kv-row .v{font-weight:700;}
+
+.note{font-size:.75rem; color:var(--muted); line-height:1.6;}
+.disclaimer{background:var(--surface-2); border-radius:16px; padding:1.125rem 1.25rem;
+  font-size:.8125rem; color:var(--muted); line-height:1.65;}
+
+.chips{display:flex; flex-wrap:wrap; gap:.5rem;}
+.chip{display:inline-flex; align-items:center; gap:.375rem; border-radius:999px; padding:.4375rem .8125rem;
+  font-size:.8125rem; font-weight:700; background:var(--surface-2); color:var(--muted);}
+.chip b{color:var(--ink);}
+.chip.red{background:var(--up-soft); color:var(--up);} .chip.red b{color:var(--up);}
+.chip.blue{background:var(--accent-soft); color:var(--accent);} .chip.blue b{color:var(--accent);}
+.chip.warn{background:var(--warn-soft); color:var(--warn);} .chip.warn b{color:var(--warn);}
+
+.grp{font-size:.8125rem; font-weight:700; color:var(--ink); margin-top:.25rem;}
+.grp span{color:var(--muted); font-weight:400;}
+.watch{display:flex; flex-direction:column; gap:.75rem;}
+.watch div{display:flex; align-items:flex-start; gap:.625rem; font-size:.875rem; line-height:1.55;}
+.wn{flex:0 0 auto; width:22px; height:22px; border-radius:50%; background:var(--accent-soft); color:var(--accent);
+  font-size:.75rem; font-weight:800; display:inline-flex; align-items:center; justify-content:center; margin-top:.1rem;}
+
+@media print{
+  body{background:#fff;}
+  .share-zone{display:none !important;}
+  .wrap{max-width:none; padding:0; gap:1.5rem;}
+  .card,.stat,.hero,.risk-row,.pn-card{box-shadow:none; border:1px solid #E5E8EB; page-break-inside:avoid;}
+  section{page-break-inside:avoid;}
+  .tl-item{page-break-inside:avoid;}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none !important; transition:none !important;}}
+</style>
+
+<div class="wrap">
+
+<header class="hdr">
+  <div class="eyebrow">투자 컨설팅 리포트 · 2026-07-31 기준</div>
+  <h1>LS일렉트릭<br>전력 슈퍼사이클의 후발 주자</h1>
+  <p class="sub">010120 · KOSPI · 전력기기 / 산업자동화 (구 LS산전)</p>
+  <div class="pillrow">
+    <span class="pill blue">시가총액 26.9조원</span>
+    <span class="pill red">당일 +19.43%</span>
+    <span class="pill warn">종합 리스크 중상</span>
+  </div>
+</header>
+
+<div class="share-zone">
+  <button class="share-btn" id="shareBtn" aria-expanded="false" aria-controls="sharePanel">공유</button>
+  <div class="share-panel" id="sharePanel">
+    <div class="share-item">
+      <button class="share-head" data-target="mailBody">메일로 보내기</button>
+      <div class="share-body" id="mailBody">
+        <input type="email" id="mailTo" placeholder="받는 사람 이메일 주소" autocomplete="email">
+        <a class="mini-btn" id="mailLink" href="mailto:">보내기</a>
+        <p class="share-note">클릭하면 메일 작성창이 열리며, 직접 보내기를 눌러야 전달됩니다. 자동 발송되지 않습니다.</p>
+      </div>
+    </div>
+    <div class="share-item">
+      <button class="share-head" data-target="kakaoBody">카카오톡으로 공유</button>
+      <div class="share-body" id="kakaoBody">
+        <textarea id="kakaoText" rows="7" readonly></textarea>
+        <div class="btnrow">
+          <button class="mini-btn" id="copyBtn" type="button">복사</button>
+          <button class="mini-btn ghost" id="nativeShareBtn" type="button" hidden>다른 앱으로 공유</button>
+        </div>
+        <p class="share-note">복사한 내용을 카카오톡 채팅방에 붙여넣어 공유하세요.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section id="summary">
+  <div class="sec-head">
+    <div class="kicker">01 · SUMMARY</div>
+    <h2>한눈에 보기</h2>
+  </div>
+
+  <div class="hero">
+    <div class="label">현재가 (2026-07-31 종가)</div>
+    <div class="big">179,500<span style="font-size:1.5rem; font-weight:700; letter-spacing:0;">원</span></div>
+    <div class="chg">+29,200원 (+19.43%)</div>
+    <div class="foot">52주 최고 335,000원 대비 −46.4% · 52주 최저 50,600원 대비 +254.7%</div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="k">시가총액</div><div class="v">26.9조</div><div class="n">원</div></div>
+    <div class="stat"><div class="k">PER (TTM)</div><div class="v red">79.85</div><div class="n">배 · 2Q 반영 시 약 70배</div></div>
+    <div class="stat"><div class="k">추정 PER (2026E)</div><div class="v red">50.00</div><div class="n">배 · 동일업종 36.05배</div></div>
+    <div class="stat"><div class="k">PBR</div><div class="v red">12.91</div><div class="n">배 · 3사 중 최고</div></div>
+    <div class="stat"><div class="k">ROE (TTM)</div><div class="v">17.29</div><div class="n">% · 3사 중 최저</div></div>
+    <div class="stat"><div class="k">RSI (14)</div><div class="v warn">44.85</div><div class="n">중립 구간</div></div>
+    <div class="stat"><div class="k">종합 리스크</div><div class="v warn sm">중상</div><div class="n">Medium-High</div></div>
+    <div class="stat"><div class="k">수주잔고</div><div class="v">7.0조</div><div class="n">원 · YoY +81.5%</div></div>
+  </div>
+
+  <div class="card">
+    <h3>지금 이 종목의 상태</h3>
+    <p class="lede">2026년 2분기 매출·영업이익 모두 분기 사상 최대를 기록했고 수주잔고는 1년 만에 81.5% 늘었습니다. 반면 주가는 5월 고점에서 46% 하락한 뒤 7월 31일 하루에만 19.4% 급반등해, 실적 방향과 주가 방향이 따로 움직이는 구간입니다.</p>
+    <div class="chips">
+      <span class="chip red">2Q 영업이익 <b>+64.4%</b></span>
+      <span class="chip red">신규수주 <b>2조835억</b></span>
+      <span class="chip blue">1개월 수익률 <b>−36.9%</b></span>
+      <span class="chip warn">연율변동성 <b>85.2%</b></span>
+      <span class="chip warn">MA 역배열</span>
+    </div>
+  </div>
+
+  <div class="card flat">
+    <h3>기간 수익률</h3>
+    <div class="bars">
+      <div class="bar-row"><span class="bl">1개월</span><span class="track"><span class="fill" style="width: 24.1%"></span></span><span class="bv blue">−36.9%</span></div>
+      <div class="bar-row"><span class="bl">3개월</span><span class="track"><span class="fill" style="width: 30.0%"></span></span><span class="bv blue">−45.9%</span></div>
+      <div class="bar-row"><span class="bl">6개월</span><span class="track"><span class="fill red" style="width: 21.4%"></span></span><span class="bv red">+32.8%</span></div>
+      <div class="bar-row"><span class="bl">1년</span><span class="track"><span class="fill red" style="width: 100.0%"></span></span><span class="bv red">+153.0%</span></div>
+    </div>
+    <p class="note">막대 길이는 절대값 기준(최대 153.0%). 빨강은 상승, 파랑은 하락을 뜻합니다. 1년 성과는 크게 앞서지만 최근 3개월은 반토막 가까운 조정을 거쳤습니다.</p>
+  </div>
+</section>
+
+<section id="industry">
+  <div class="sec-head">
+    <div class="kicker">02 · INDUSTRY</div>
+    <h2>산업 개요</h2>
+  </div>
+  <p class="lede">미국 전력망 노후 교체 수요와 AI 데이터센터 전력 급증이 겹치며 전력기기 산업은 슈퍼사이클 국면입니다. 다만 LS일렉트릭은 국내 3사 중 초고압 변압기 비중과 수익성에서 후발 주자입니다.</p>
+
+  <div class="card">
+    <h3>수요를 끌어올리는 세 가지 숫자</h3>
+    <div class="bars">
+      <div class="bar-row"><span class="bl">2024년</span><span class="track"><span class="fill soft" style="width: 21.8%"></span></span><span class="bv">24GW</span></div>
+      <div class="bar-row"><span class="bl">2030년(E)</span><span class="track"><span class="fill" style="width: 100.0%"></span></span><span class="bv">110GW</span></div>
+    </div>
+    <p class="cap">미국 데이터센터 전력용량 전망 · IEA는 2030년 글로벌 데이터센터 전력소비를 945TWh로 추정</p>
+    <div class="bars" style="margin-top:.25rem;">
+      <div class="bar-row"><span class="bl">2025년</span><span class="track"><span class="fill soft" style="width: 30.8%"></span></span><span class="bv">200억$</span></div>
+      <div class="bar-row"><span class="bl">2030년(E)</span><span class="track"><span class="fill" style="width: 100.0%"></span></span><span class="bv">650억$</span></div>
+    </div>
+    <p class="cap">미국 전력기기 시장 규모 전망 · 5년간 3.25배</p>
+    <div class="bars" style="margin-top:.25rem;">
+      <div class="bar-row"><span class="bl">2025년</span><span class="track"><span class="fill soft" style="width: 93.3%"></span></span><span class="bv">650억$</span></div>
+      <div class="bar-row"><span class="bl">2026년</span><span class="track"><span class="fill" style="width: 100.0%"></span></span><span class="bv">697억$</span></div>
+    </div>
+    <p class="cap">글로벌 변압기 시장 · 2026~31년 연평균 성장률(CAGR) 7.2% 전망</p>
+  </div>
+
+  <div class="card">
+    <h3>국내 3사 수익성 비교 <span class="cap">2025년 영업이익률</span></h3>
+    <div class="bars">
+      <div class="bar-row"><span class="bl">HD현대일렉</span><span class="track"><span class="fill mute" style="width: 100.0%"></span></span><span class="bv">24.4%</span></div>
+      <div class="bar-row"><span class="bl">효성중공업</span><span class="track"><span class="fill mute" style="width: 51.2%"></span></span><span class="bv">12.5%</span></div>
+      <div class="bar-row"><span class="bl self">LS일렉트릭</span><span class="track"><span class="fill" style="width: 35.2%"></span></span><span class="bv">8.6%</span></div>
+    </div>
+    <p class="cap">LS일렉트릭의 마진 버퍼가 3사 중 가장 얇습니다. 원자재·관세 부담이 커질 때 이익 훼손에 더 민감한 구조입니다.</p>
+  </div>
+
+  <div class="card">
+    <h3>수주잔고 규모 <span class="cap">2026년 1분기 기준</span></h3>
+    <div class="bars">
+      <div class="bar-row"><span class="bl">효성중공업</span><span class="track"><span class="fill mute" style="width: 100.0%"></span></span><span class="bv">20.2조</span></div>
+      <div class="bar-row"><span class="bl">HD현대일렉</span><span class="track"><span class="fill mute" style="width: 57.4%"></span></span><span class="bv">11.6조</span></div>
+      <div class="bar-row"><span class="bl self">LS일렉트릭</span><span class="track"><span class="fill" style="width: 27.9%"></span></span><span class="bv">5.64조</span></div>
+    </div>
+    <p class="cap">LS일렉트릭 수주잔고는 전년 대비 11.1% 늘었지만 절대 규모는 3사 중 가장 작습니다. 다만 2분기 말 기준으로는 7.0조원까지 확대됐습니다(YoY +81.5%).</p>
+  </div>
+
+  <div class="card flat">
+    <h3>체질 개선의 방향</h3>
+    <div class="bars">
+      <div class="bar-row"><span class="bl">이전</span><span class="track"><span class="fill soft" style="width: 75.8%"></span></span><span class="bv">41.7%</span></div>
+      <div class="bar-row"><span class="bl">현재</span><span class="track"><span class="fill" style="width: 100.0%"></span></span><span class="bv">55.0%</span></div>
+    </div>
+    <p class="cap">전력사업 수주잔고 내 초고압 변압기 비중 — 고부가 제품으로 무게중심 이동</p>
+    <div class="bars" style="margin-top:.25rem;">
+      <div class="bar-row"><span class="bl">기존</span><span class="track"><span class="fill soft" style="width: 25.0%"></span></span><span class="bv">2,000억</span></div>
+      <div class="bar-row"><span class="bl">확대 후</span><span class="track"><span class="fill" style="width: 100.0%"></span></span><span class="bv">8,000억</span></div>
+    </div>
+    <p class="cap">부산공장 154~550kV급 생산능력(연간) — 4배 증설 투자</p>
+  </div>
+
+  <div class="card">
+    <h3>경쟁 지형</h3>
+    <div class="kv">
+      <div class="kv-row"><span class="k">HD현대일렉트릭</span><span class="v">초고압 변압기 중심 · 북미 수주비중 69.2%</span></div>
+      <div class="kv-row"><span class="k">효성중공업</span><span class="v">국내 수주잔고 1위 · 미국 765kV 시장 1위</span></div>
+      <div class="kv-row"><span class="k">일진전기</span><span class="v">중견 · 초고압 변압기 + 케이블 겸업</span></div>
+      <div class="kv-row"><span class="k">글로벌 상위 5사</span><span class="v">Hitachi Energy · Siemens Energy · GE Vernova 등 절반 과점</span></div>
+      <div class="kv-row"><span class="k">LS일렉트릭 강점</span><span class="v">자동화(PLC·인버터) 국내 1위 / 글로벌 점유율 5~8%</span></div>
+    </div>
+    <p class="note">산업 측 리스크: 미국 철강·알루미늄 관세 25%, 은·구리 등 원자재 가격 상승, 환율 변동성, peer 대비 낮은 수출 비중, 밸류에이션 부담(2026E EPS 기준 PER 69배까지 상승했다는 평가도 존재).</p>
+  </div>
+</section>
+
+<section id="financials">
+  <div class="sec-head">
+    <div class="kicker">03 · FINANCIALS</div>
+    <h2>재무 분석</h2>
+  </div>
+  <p class="lede">매출은 3년 연속 늘었고 2026년은 컨센서스 기준 6.5조원으로 점프합니다. 영업이익률도 처음으로 두 자릿수(11.03%) 진입이 예상되지만, 부채비율은 3년 연속 오르고 당좌비율은 100% 아래로 내려왔습니다.</p>
+
+  <div class="card">
+    <h3>연간 매출 <span class="cap">단위: 억원</span></h3>
+    <div class="bars">
+      <div class="bar-row"><span class="bl">2023</span><span class="track"><span class="fill soft" style="width: 65.1%"></span></span><span class="bv">42,305</span></div>
+      <div class="bar-row"><span class="bl">2024</span><span class="track"><span class="fill soft" style="width: 70.1%"></span></span><span class="bv">45,518</span></div>
+      <div class="bar-row"><span class="bl">2025</span><span class="track"><span class="fill" style="width: 76.4%"></span></span><span class="bv">49,658</span></div>
+      <div class="bar-row"><span class="bl">2026E</span><span class="track"><span class="fill red" style="width: 100.0%"></span></span><span class="bv red">64,979</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>연간 영업이익 <span class="cap">단위: 억원</span></h3>
+    <div class="bars">
+      <div class="bar-row"><span class="bl">2023</span><span class="track"><span class="fill soft" style="width: 45.3%"></span></span><span class="bv">3,249</span></div>
+      <div class="bar-row"><span class="bl">2024</span><span class="track"><span class="fill soft" style="width: 54.4%"></span></span><span class="bv">3,897</span></div>
+      <div class="bar-row"><span class="bl">2025</span><span class="track"><span class="fill" style="width: 59.5%"></span></span><span class="bv">4,264</span></div>
+      <div class="bar-row"><span class="bl">2026E</span><span class="track"><span class="fill red" style="width: 100.0%"></span></span><span class="bv red">7,165</span></div>
+    </div>
+  </div>
+
+  <div class="card flat">
+    <h3>영업이익률 추이 <span class="cap">단위: %</span></h3>
+    <div class="bars">
+      <div class="bar-row"><span class="bl">2023</span><span class="track"><span class="fill soft" style="width: 69.6%"></span></span><span class="bv">7.68%</span></div>
+      <div class="bar-row"><span class="bl">2024</span><span class="track"><span class="fill soft" style="width: 77.6%"></span></span><span class="bv">8.56%</span></div>
+      <div class="bar-row"><span class="bl">2025</span><span class="track"><span class="fill" style="width: 77.9%"></span></span><span class="bv">8.59%</span></div>
+      <div class="bar-row"><span class="bl">2026E</span><span class="track"><span class="fill red" style="width: 100.0%"></span></span><span class="bv red">11.03%</span></div>
+    </div>
+    <p class="note">2026E는 증권사 컨센서스 추정치이며 확정 실적이 아닙니다.</p>
+  </div>
+
+  <div class="card">
+    <h3>2026년 2분기 실적 <span class="cap">7월 23일 발표 · 분기 사상 최대</span></h3>
+    <div class="stats">
+      <div class="stat flat" style="box-shadow:none; background:var(--surface-2);"><div class="k">매출</div><div class="v sm red">1조5,770억</div><div class="n">YoY +32.2%</div></div>
+      <div class="stat flat" style="box-shadow:none; background:var(--surface-2);"><div class="k">영업이익</div><div class="v sm red">1,785억</div><div class="n">YoY +64.4%</div></div>
+      <div class="stat flat" style="box-shadow:none; background:var(--surface-2);"><div class="k">순이익</div><div class="v sm red">1,158억</div><div class="n">YoY +72.2%</div></div>
+    </div>
+    <p class="cap">컨센서스 대비 &mdash; 아래 세 묶음은 각각 별개의 비교입니다. 막대 길이는 같은 묶음 안에서만 비교하세요(각 묶음의 큰 값 = 100%).</p>
+    <p class="grp">매출 <span>단위: 억원</span></p>
+    <div class="bars">
+      <div class="bar-row"><span class="bl">컨센서스</span><span class="track"><span class="fill mute" style="width: 95.0%"></span></span><span class="bv">14,974</span></div>
+      <div class="bar-row"><span class="bl self">실제</span><span class="track"><span class="fill red" style="width: 100.0%"></span></span><span class="bv red">15,770</span></div>
+    </div>
+    <p class="grp">영업이익 <span>단위: 억원</span></p>
+    <div class="bars">
+      <div class="bar-row"><span class="bl">컨센서스</span><span class="track"><span class="fill mute" style="width: 90.0%"></span></span><span class="bv">1,607</span></div>
+      <div class="bar-row"><span class="bl self">실제</span><span class="track"><span class="fill red" style="width: 100.0%"></span></span><span class="bv red">1,785</span></div>
+    </div>
+    <p class="grp">순이익 <span>단위: 억원</span></p>
+    <div class="bars">
+      <div class="bar-row"><span class="bl">컨센서스</span><span class="track"><span class="fill mute" style="width: 100.0%"></span></span><span class="bv">1,205</span></div>
+      <div class="bar-row"><span class="bl self">실제</span><span class="track"><span class="fill" style="width: 96.1%"></span></span><span class="bv blue">1,158</span></div>
+    </div>
+    <p class="note">매출·영업이익은 컨센서스를 웃돌았으나 순이익은 소폭 하회했습니다. 신규수주 2조835억원(분기 최대), 수주잔고 6조9,998억원(YoY +81.5%), 초고압 변압기 매출 YoY +91.2%, 북미 매출 분기 약 4,000억원으로 역대 최대. 연간 수주 가이던스는 4조원에서 6~6.5조원으로 상향됐습니다.</p>
+  </div>
+
+  <div class="card">
+    <h3>밸류에이션 <span class="cap">peer 대비 프리미엄</span></h3>
+    <p class="cap">추정 PER (2026E 컨센서스 기준)</p>
+    <div class="bars">
+      <div class="bar-row"><span class="bl self">LS일렉트릭</span><span class="track"><span class="fill red" style="width: 100.0%"></span></span><span class="bv red">50.00배</span></div>
+      <div class="bar-row"><span class="bl">동일업종</span><span class="track"><span class="fill mute" style="width: 72.1%"></span></span><span class="bv">36.05배</span></div>
+      <div class="bar-row"><span class="bl">효성중공업</span><span class="track"><span class="fill mute" style="width: 58.0%"></span></span><span class="bv">29.00배</span></div>
+      <div class="bar-row"><span class="bl">HD현대일렉</span><span class="track"><span class="fill mute" style="width: 52.0%"></span></span><span class="bv">26.00배</span></div>
+    </div>
+    <p class="cap" style="margin-top:.5rem;">PBR</p>
+    <div class="bars">
+      <div class="bar-row"><span class="bl self">LS일렉트릭</span><span class="track"><span class="fill red" style="width: 100.0%"></span></span><span class="bv red">12.91배</span></div>
+      <div class="bar-row"><span class="bl">HD현대일렉</span><span class="track"><span class="fill mute" style="width: 91.4%"></span></span><span class="bv">11.80배</span></div>
+      <div class="bar-row"><span class="bl">효성중공업</span><span class="track"><span class="fill mute" style="width: 70.5%"></span></span><span class="bv">9.10배</span></div>
+    </div>
+    <p class="cap" style="margin-top:.5rem;">ROE (TTM)</p>
+    <div class="bars">
+      <div class="bar-row"><span class="bl">HD현대일렉</span><span class="track"><span class="fill mute" style="width: 100.0%"></span></span><span class="bv">43.90%</span></div>
+      <div class="bar-row"><span class="bl">효성중공업</span><span class="track"><span class="fill mute" style="width: 52.8%"></span></span><span class="bv">23.16%</span></div>
+      <div class="bar-row"><span class="bl self">LS일렉트릭</span><span class="track"><span class="fill" style="width: 39.4%"></span></span><span class="bv blue">17.29%</span></div>
+    </div>
+    <p class="note">3사 중 ROE는 가장 낮은데 PER·PBR은 가장 높습니다. 자기자본 대비 벌어들이는 이익은 적은데 주가는 더 비싸게 매겨져 있다는 뜻으로, 실적이 기대만큼 따라오지 못하면 조정 압력이 커지는 구조입니다.</p>
+  </div>
+
+  <div class="tblwrap">
+    <table>
+      <thead><tr><th>지표</th><th>LS일렉트릭</th><th>HD현대일렉</th><th>효성중공업</th></tr></thead>
+      <tbody>
+        <tr><td>현재가</td><td>179,500원</td><td>679,000원</td><td>2,353,000원</td></tr>
+        <tr><td>시가총액</td><td>26.9조원</td><td>24.6조원</td><td>21.8조원</td></tr>
+        <tr><td>PER (TTM)</td><td>79.85배</td><td>31.25배</td><td>43.26배</td></tr>
+        <tr><td>추정 PER (2026E)</td><td>50.00배</td><td>26.00배</td><td>29.00배</td></tr>
+        <tr><td>PBR</td><td>12.91배</td><td>11.80배</td><td>9.10배</td></tr>
+        <tr><td>ROE (TTM)</td><td>17.29%</td><td>43.90%</td><td>23.16%</td></tr>
+        <tr><td>배당수익률</td><td>0.33%</td><td>1.04%</td><td>0.32%</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">peer 수치는 직전 발표 분기 기준. LS일렉트릭 PER(TTM) 79.85배는 2분기 실적 미반영 값으로, 반영 시 약 70배 수준으로 낮아지는 것으로 추정됩니다.</p>
+
+  <div class="card">
+    <h3>재무건전성 <span class="cap">3년 추이</span></h3>
+    <p class="cap">부채비율 (%) — 낮을수록 안정</p>
+    <div class="bars">
+      <div class="bar-row"><span class="bl">2023</span><span class="track"><span class="fill soft" style="width: 77.0%"></span></span><span class="bv">116.52%</span></div>
+      <div class="bar-row"><span class="bl">2024</span><span class="track"><span class="fill warn" style="width: 90.8%"></span></span><span class="bv">137.30%</span></div>
+      <div class="bar-row"><span class="bl">2025</span><span class="track"><span class="fill red" style="width: 100.0%"></span></span><span class="bv red">151.24%</span></div>
+    </div>
+    <p class="cap" style="margin-top:.5rem;">당좌비율 (%) — 100% 아래면 단기 지급여력 주의</p>
+    <div class="bars">
+      <div class="bar-row"><span class="bl">2023</span><span class="track"><span class="fill" style="width: 100.0%"></span></span><span class="bv">105.19%</span></div>
+      <div class="bar-row"><span class="bl">2024</span><span class="track"><span class="fill warn" style="width: 93.8%"></span></span><span class="bv warn">98.70%</span></div>
+      <div class="bar-row"><span class="bl">2025</span><span class="track"><span class="fill red" style="width: 83.9%"></span></span><span class="bv red">88.22%</span></div>
+    </div>
+    <div class="chips">
+      <span class="chip good">유보율 <b>1,302.52%</b></span>
+      <span class="chip">2026년 1분기 기준</span>
+    </div>
+    <p class="note">부채비율 상승과 당좌비율 하락은 증설 투자 확대 국면에서 흔히 나타나는 패턴이지만, 3년 연속 같은 방향이라는 점은 계속 확인이 필요합니다. 유보율 1,300%대와 견조한 이익창출력이 완충 역할을 합니다.</p>
+  </div>
+
+  <div class="card flat">
+    <h3>그 밖의 특이사항</h3>
+    <div class="kv">
+      <div class="kv-row"><span class="k">IBK투자증권 목표주가</span><span class="v">128,000원 → 280,000원 상향</span></div>
+      <div class="kv-row"><span class="k">미국 생산거점</span><span class="v">유타주 · 텍사스주(배스트럽) 투자 확대</span></div>
+      <div class="kv-row"><span class="k">해외법인 성장</span><span class="v">스페인 +21% · 중동 +42% · 베트남 +34%</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="technical">
+  <div class="sec-head">
+    <div class="kicker">04 · TECHNICAL</div>
+    <h2>기술적 분석</h2>
+  </div>
+  <p class="lede">현재가는 MA5만 웃돌고 MA20·MA60·MA120은 모두 밑돕니다. 전형적인 역배열 구조에서 나온 단기 반등으로, 추세 전환으로 확정하기에는 이릅니다.</p>
+
+  <div class="card">
+    <h3>이동평균선 대비 위치</h3>
+    <div class="chips">
+      <span class="chip red">MA5 173,820 <b>+3.3%</b></span>
+      <span class="chip blue">MA20 192,335 <b>−6.7%</b></span>
+      <span class="chip blue">MA120 199,387 <b>−10.0%</b></span>
+      <span class="chip blue">MA60 233,012 <b>−23.0%</b></span>
+    </div>
+    <p class="cap">가격 수준 비교 (막대 길이는 MA60=233,012원 기준 100%)</p>
+    <div class="bars">
+      <div class="bar-row"><span class="bl">MA5</span><span class="track"><span class="fill mute" style="width: 74.6%"></span></span><span class="bv">173,820</span></div>
+      <div class="bar-row"><span class="bl self">현재가</span><span class="track"><span class="fill red" style="width: 77.0%"></span></span><span class="bv red">179,500</span></div>
+      <div class="bar-row"><span class="bl">MA20</span><span class="track"><span class="fill mute" style="width: 82.5%"></span></span><span class="bv">192,335</span></div>
+      <div class="bar-row"><span class="bl">MA120</span><span class="track"><span class="fill mute" style="width: 85.6%"></span></span><span class="bv">199,387</span></div>
+      <div class="bar-row"><span class="bl">MA60</span><span class="track"><span class="fill mute" style="width: 100.0%"></span></span><span class="bv">233,012</span></div>
+    </div>
+    <p class="note">MA5-MA20 데드크로스가 7월 7일 이후 3주 넘게 이어지고 있습니다. 중기 이동평균(MA60)까지는 23% 거리로, 회복해야 할 구간이 넓습니다.</p>
+  </div>
+
+  <div class="card">
+    <h3>가격대 지도 <span class="cap">지지선 · 저항선</span></h3>
+    <div class="ladder">
+      <div class="lv res" style="bottom: 84.8%"><span class="line"></span><span class="tag">저항 245,000~276,500</span></div>
+      <div class="lv res" style="bottom: 63.1%"><span class="line"></span><span class="tag">저항 226,000</span></div>
+      <div class="lv res" style="bottom: 52.8%"><span class="line"></span><span class="tag">저항 209,500</span></div>
+      <div class="lv res" style="bottom: 42.1%"><span class="line"></span><span class="tag">1차 저항 192,335 (MA20)</span></div>
+      <div class="lv now" style="bottom: 34.1%"><span class="line"></span><span class="tag">현재가 179,500</span></div>
+      <div class="lv sup" style="bottom: 32.5%"><span class="tag">1차 지지 176,500~177,600</span><span class="line"></span></div>
+      <div class="lv sup" style="bottom: 15.1%"><span class="tag">2차 지지 148,000~150,300</span><span class="line"></span></div>
+      <div class="lv sup" style="bottom: 7.8%"><span class="tag">3차 지지 130,000~145,000</span><span class="line"></span></div>
+    </div>
+    <p class="note">세로 위치는 125,000~285,000원 구간을 실제 비율대로 매핑한 값입니다. 현재가는 1차 지지선(176,500~177,600원) 바로 위에 붙어 있고, 위로는 MA20인 192,335원이 첫 관문입니다.</p>
+  </div>
+
+  <div class="two">
+    <div class="card">
+      <h3>RSI (14)</h3>
+      <div class="hero" style="box-shadow:none; background:transparent; padding:0;">
+        <div class="big" style="font-size:3rem; color:var(--warn);">44.85</div>
+      </div>
+      <div class="meter">
+        <div class="mtrack">
+          <span class="knob" style="left: 44.85%"></span>
+        </div>
+        <div class="mlabels"><span>0 과매도</span><span>50</span><span>과매수 100</span></div>
+      </div>
+      <p class="cap">직전 저점 35.87 근접 후 반등한 중립 구간. 과매도·과매수 어느 쪽도 아닙니다.</p>
+    </div>
+    <div class="card">
+      <h3>52주 밴드 내 위치</h3>
+      <div class="hero" style="box-shadow:none; background:transparent; padding:0;">
+        <div class="big" style="font-size:3rem;">45.3<span style="font-size:1.25rem;">%</span></div>
+      </div>
+      <div class="meter">
+        <div class="mtrack plain">
+          <span class="knob" style="left: 45.3%"></span>
+        </div>
+        <div class="mlabels"><span>50,600</span><span>179,500</span><span>335,000</span></div>
+      </div>
+      <p class="cap">1년 최저·최고 사이 정확히 중단. 고점 대비 −46.4%, 저점 대비 +254.7%.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>MACD</h3>
+    <div class="chips">
+      <span class="chip blue">MACD <b>−14,047</b></span>
+      <span class="chip blue">Signal <b>−12,259</b></span>
+      <span class="chip warn">데드크로스 지속</span>
+    </div>
+    <p class="cap">히스토그램 음(−)의 폭 변화 — 절대값 기준</p>
+    <div class="bars">
+      <div class="bar-row"><span class="bl">직전</span><span class="track"><span class="fill" style="width: 100.0%"></span></span><span class="bv blue">−2,839</span></div>
+      <div class="bar-row"><span class="bl">현재</span><span class="track"><span class="fill" style="width: 63.0%"></span></span><span class="bv blue">−1,788</span></div>
+    </div>
+    <p class="note">MACD가 시그널선 아래에 머무는 데드크로스는 이어지고 있지만, 마이너스 폭이 −2,839에서 −1,788로 줄며 하락 압력은 약해지는 모습입니다.</p>
+  </div>
+
+  <div class="card flat">
+    <h3>당일 수급과 캔들</h3>
+    <div class="kv">
+      <div class="kv-row"><span class="k">고가 / 저가</span><span class="v">184,800원 / 165,400원</span></div>
+      <div class="kv-row"><span class="k">거래량</span><span class="v">886,427주</span></div>
+      <div class="kv-row"><span class="k">20일 평균 대비</span><span class="v" style="color:var(--warn);">0.91배 (평균 이하)</span></div>
+    </div>
+    <p class="note">종합 판단: 하락추세 안에서 나온 단기 기술적 반등 국면입니다. 거래량이 평균을 밑돈 채 오른 점이 반등의 힘을 제한적으로 보게 하는 근거이며, MA20(192,335원)~209,500원 구간을 거래량과 함께 넘기는지가 다음 관찰 포인트입니다.</p>
+  </div>
+
+  <p class="note">참고: 본 리포트에는 별도의 캔들차트 이미지가 포함되지 않았습니다. 위 지표값은 2026-07-31 종가 기준 산출치이며, 차트 이미지 대신 수치 기반 시각화로 대체했습니다.</p>
+</section>
+
+<section id="news">
+  <div class="sec-head">
+    <div class="kicker">05 · NEWS</div>
+    <h2>최근 뉴스와 시장 심리</h2>
+  </div>
+  <p class="lede">2026년 상반기 뉴스 흐름은 대형 수주와 사상 최대 실적이라는 강한 호재, 그리고 5월 공시 정정 사태라는 신뢰도 이슈가 뒤섞인 구조입니다.</p>
+
+  <div class="card flat">
+    <h3>아래 타임라인 11건의 성격</h3>
+    <div class="senti">
+      <span style="width: 72.7%; background:var(--up);"></span>
+      <span style="width: 18.2%; background:var(--down);"></span>
+      <span style="width: 9.1%; background:var(--neutral);"></span>
+    </div>
+    <div class="chips">
+      <span class="chip red">긍정 <b>8건 · 72.7%</b></span>
+      <span class="chip blue">부정 <b>2건 · 18.2%</b></span>
+      <span class="chip">중립 <b>1건 · 9.1%</b></span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="tl">
+      <div class="tl-item pos">
+        <div class="tl-date">2026-04-13 ~ 04-14</div>
+        <div class="tl-title">액면분할 후 거래재개 첫날 +16%, 52주 신고가</div>
+        <div class="tl-desc">액면가 5,000원 → 1,000원(5:1) 분할. 북미 빅테크向 전력설비 1,703억원 공급계약과 부산 초고압변압기 공장 3배 증설 소식이 겹치며 급등했습니다.</div>
+      </div>
+      <div class="tl-item pos">
+        <div class="tl-date">2026-05-20</div>
+        <div class="tl-title">미국 데이터센터向 마이크로그리드 배전반 약 960억원 수주</div>
+        <div class="tl-desc">2분기 중 빅테크向 배전기기 약 1,050억원 규모 계약도 추가로 확보했습니다.</div>
+      </div>
+      <div class="tl-item neg key">
+        <div class="tl-date">2026-05-27 ~ 05-29 · 핵심 부정 이벤트</div>
+        <div class="tl-title">모회사 (주)LS 분기보고서 정정 — 수주 수치 99% 하향</div>
+        <div class="tl-desc">LS일렉트릭 &lsquo;기타&rsquo; 부문 수주총액이 2조3,782억원에서 238억원으로, 수주잔고가 1조5,445억원에서 154억원으로 정정됐습니다(각각 −99%). 회사는 단순 기재오류로 설명했으나 3거래일 연속 급락(5/28 −7.46%)했고, 시장에서는 공시 신뢰성과 내부 검증체계에 대한 우려가 제기됐습니다.</div>
+        <div class="tl-flag"><span class="pill blue">공시 신뢰성 이슈</span></div>
+      </div>
+      <div class="tl-item pos">
+        <div class="tl-date">2026-06-01</div>
+        <div class="tl-title">대신증권, 2026년 수주 예상치 5~6조원대로 상향</div>
+      </div>
+      <div class="tl-item pos">
+        <div class="tl-date">2026-06-04</div>
+        <div class="tl-title">한국투자증권 &ldquo;주가 하락은 매수 기회&rdquo; 의견 제시</div>
+      </div>
+      <div class="tl-item pos">
+        <div class="tl-date">2026-07-02</div>
+        <div class="tl-title">천안사업장, 세계 최초 100% 직류(DC) 배전 &lsquo;DC팩토리&rsquo; 가동</div>
+        <div class="tl-desc">데이터센터·재생에너지 연계 DC 전력 기술의 레퍼런스 확보 성격입니다.</div>
+      </div>
+      <div class="tl-item pos">
+        <div class="tl-date">2026-07-20</div>
+        <div class="tl-title">KB증권 목표주가 26만원 → 28만원 상향</div>
+      </div>
+      <div class="tl-item pos key">
+        <div class="tl-date">2026-07-23 · 핵심 이벤트</div>
+        <div class="tl-title">2분기 실적 발표 — 매출 1조5,770억, 영업이익 1,785억 사상 최대</div>
+        <div class="tl-desc">전력사업 매출 1조915억(+34%, 전체의 약 70%, 수출비중 53%), 자동화사업 매출 979억(+14%, 영업이익 94억 +109%). 신규수주 약 2조1,000억원, 수주잔고 약 7조원. 발표 직후 주가는 14% 급등했습니다.</div>
+        <div class="tl-flag"><span class="pill red">분기 사상 최대 실적</span></div>
+      </div>
+      <div class="tl-item neg">
+        <div class="tl-date">2026-07-24 ~ 07-30</div>
+        <div class="tl-title">실적 급등 이후 재차 급락 (7/24 −9.62%)</div>
+        <div class="tl-desc">사상 최대 실적 발표 다음 날부터 하락 전환해 7/28~30까지 추가 하락했습니다. 같은 기간 외국인·기관은 동반 순매도, 개인이 순매수했습니다.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">상시 이슈</div>
+        <div class="tl-title">관세 부담 — 연간 약 600억원 비용 증가 예상</div>
+        <div class="tl-desc">상호관세와 변압기 반덤핑 관세 영향이나 판가 전가가 가능하다는 평가입니다. Section 232 철강관세도 고부가가치 제품 비중이 높아 영향은 제한적으로 봅니다.</div>
+      </div>
+      <div class="tl-item pos">
+        <div class="tl-date">2026-07-31</div>
+        <div class="tl-title">전력기기 섹터 동반 랠리 속 +19.43% 급반등</div>
+        <div class="tl-desc">HD현대일렉 +16.12%, 효성중공업 +24.02%, (주)LS +17.00%가 함께 올라 개별 재료보다 섹터 전체 움직임 성격이 강합니다.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card flat">
+    <h3>증권사 목표주가 <span class="cap">투자의견 매수 유지 기준</span></h3>
+    <div class="kv">
+      <div class="kv-row"><span class="k">한국투자증권</span><span class="v">28.5만원 → 33.0만원 상향</span></div>
+      <div class="kv-row"><span class="k">NH투자증권</span><span class="v">32.5만원</span></div>
+      <div class="kv-row"><span class="k">IBK투자증권</span><span class="v">12.8만원 → 28.0만원 상향</span></div>
+      <div class="kv-row"><span class="k">KB증권</span><span class="v">26.0만원 → 28.0만원 상향</span></div>
+      <div class="kv-row"><span class="k">대신증권</span><span class="v">수주 추정치 상향 (5~6조원대)</span></div>
+    </div>
+    <p class="note">경영진·오너 리스크나 소송 관련 특이사항은 확인되지 않았고 지배구조 변동도 없습니다(LS전선 유상증자는 별개 계열사 이슈). 종합 여론은 &ldquo;강한 실적 모멘텀에 기반한 긍정적 흐름이나, 공시 신뢰도 이슈와 고밸류에이션 부담(PER 60~70배대)이 상존하는 혼재된 낙관&rdquo;으로 요약됩니다. 위 목표주가는 각 증권사의 의견이며 본 리포트의 견해가 아닙니다.</p>
+  </div>
+</section>
+
+<section id="risk">
+  <div class="sec-head">
+    <div class="kicker">06 · RISK</div>
+    <h2>리스크 분석</h2>
+  </div>
+  <p class="lede">사업이 망가질 위험은 낮지만, 투자자가 실제로 부담하는 가격 리스크는 높은 조합입니다. 프리미엄 밸류에이션과 peer 최고 수준의 변동성이 겹칩니다.</p>
+
+  <div class="hero">
+    <div class="label">종합 리스크 등급</div>
+    <div class="big" style="color:var(--warn);">중상</div>
+    <div class="chg" style="color:var(--muted); font-weight:600;">Medium-High</div>
+    <div class="foot">펀더멘털은 견조하나 밸류에이션·변동성 리스크가 등급을 끌어올렸습니다. 5월 공시 신뢰성 이슈가 재발하면 즉시 &lsquo;상&rsquo;으로 상향이 필요합니다.</div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="k">베타 (1년)</div><div class="v">1.10</div><div class="n">WISEfn 52주 1.27</div></div>
+    <div class="stat"><div class="k">연율변동성 1년</div><div class="v warn">85.2%</div><div class="n">KOSPI 50.6%</div></div>
+    <div class="stat"><div class="k">연율변동성 1개월</div><div class="v red">139.4%</div><div class="n">KOSPI 95.4%</div></div>
+    <div class="stat"><div class="k">±7% 이상 변동일</div><div class="v red">37%</div><div class="n">최근 3개월 22/60일</div></div>
+  </div>
+
+  <div class="card">
+    <h3>peer 대비 변동성 <span class="cap">연율화 변동성 1년</span></h3>
+    <div class="bars">
+      <div class="bar-row"><span class="bl self">LS일렉트릭</span><span class="track"><span class="fill red" style="width: 100.0%"></span></span><span class="bv red">85.2%</span></div>
+      <div class="bar-row"><span class="bl">효성중공업</span><span class="track"><span class="fill mute" style="width: 89.8%"></span></span><span class="bv">76.5%</span></div>
+      <div class="bar-row"><span class="bl">HD현대일렉</span><span class="track"><span class="fill mute" style="width: 80.2%"></span></span><span class="bv">68.3%</span></div>
+      <div class="bar-row"><span class="bl">KOSPI</span><span class="track"><span class="fill mute" style="width: 59.4%"></span></span><span class="bv">50.6%</span></div>
+    </div>
+    <p class="cap" style="margin-top:.5rem;">베타 (1년)</p>
+    <div class="bars">
+      <div class="bar-row"><span class="bl self">LS일렉트릭</span><span class="track"><span class="fill red" style="width: 100.0%"></span></span><span class="bv red">1.10</span></div>
+      <div class="bar-row"><span class="bl">효성중공업</span><span class="track"><span class="fill mute" style="width: 95.5%"></span></span><span class="bv">1.05</span></div>
+      <div class="bar-row"><span class="bl">HD현대일렉</span><span class="track"><span class="fill mute" style="width: 88.2%"></span></span><span class="bv">0.97</span></div>
+    </div>
+    <p class="note">직접 산출 베타는 1년 1.10(상관 0.65, R² 0.42), 2년 1.18, 최근 3개월 0.99입니다. 3사 중 변동성·베타 모두 가장 높습니다.</p>
+  </div>
+
+  <div class="card flat">
+    <h3>리스크 매트릭스</h3>
+    <p class="cap">왼쪽 색 띠 — 빨강: 상 / 주황: 중 / 회색: 하</p>
+  </div>
+
+  <div class="risk-row mid">
+    <div class="risk-top"><span class="risk-name">재무 — 레버리지 · 유동성</span><span class="pill warn">중</span></div>
+    <p class="risk-body">부채비율이 3년 연속 상승(<b>116.5% → 151.2%</b>)했고 당좌비율은 100%를 밑도는 <b>88.2%</b>입니다. 다만 유보율 1,300% 이상, ROE 17.29%, 견조한 이익창출력이 완화 요인입니다.</p>
+  </div>
+  <div class="risk-row hi">
+    <div class="risk-top"><span class="risk-name">재무 — 밸류에이션</span><span class="pill red">상</span></div>
+    <p class="risk-body">PBR <b>12.88배</b>, 추정 PER <b>49.64배</b>(리스크 분석 시점의 장중가 179,100원 기준. 종가 179,500원 기준으로는 12.91배 / 50.00배)로 peer(HD현대일렉 26배 / 효성중공업 29배) 대비 뚜렷한 프리미엄입니다. ROE는 3사 중 최저인데 PER·PBR은 최고입니다. 7월 23일 실적 서프라이즈 직후 7월 24일 <b>−9.62%</b> 하락처럼, 좋은 실적에도 주가가 빠지는 패턴이 실제로 관측됐습니다.</p>
+  </div>
+  <div class="risk-row hi">
+    <div class="risk-top"><span class="risk-name">가격 · 변동성</span><span class="pill red">상</span></div>
+    <p class="risk-body">1개월 연율변동성 <b>139.4%</b>로 KOSPI의 1.5배, peer 중 최고입니다. 베타 1.10~1.27, 최근 3개월 중 ±7% 이상 움직인 날이 <b>37%</b>. 역배열 구조와 MACD 데드크로스가 이어지고 있으며, 7월 31일 반등은 평균 이하 거래량 + 섹터 동반 랠리라 추세 전환은 미확정입니다. 저점 대비 +254% 올라 있어 하방 여지도 큽니다.</p>
+  </div>
+  <div class="risk-row mid">
+    <div class="risk-top"><span class="risk-name">산업 · 경쟁</span><span class="pill warn">중</span></div>
+    <p class="risk-body">산업 사이클 자체는 강한 순풍이지만 경쟁 포지션은 열위입니다. 영업이익률 <b>8.6%</b> vs HD현대일렉 24.4% / 효성중공업 12.5%로 마진 버퍼가 가장 얇습니다.</p>
+  </div>
+  <div class="risk-row mid">
+    <div class="risk-top"><span class="risk-name">이벤트 · 거버넌스</span><span class="pill warn">중</span></div>
+    <p class="risk-body">5월 공시 정정 사태(수주잔고 100배 단위 오류)로 공시 신뢰성에 의문이 제기됐습니다. 이후 재발 없이 정상화됐으나 잠재적 재평가 트리거로 남아 있습니다.</p>
+  </div>
+  <div class="risk-row mid">
+    <div class="risk-top"><span class="risk-name">수급</span><span class="pill warn">중</span></div>
+    <p class="risk-body">기관 <b>5거래일 연속 순매도</b>(누적 −39.8만주), 개인 주도 반등은 지속성이 약한 경향이 있습니다. 외국인 지분율은 18.01% → 18.08%로 안정적입니다.</p>
+  </div>
+
+  <div class="card">
+    <h3>모니터링 포인트</h3>
+    <div class="watch">
+      <div><span class="wn">1</span>MA20(192,335원)을 거래량을 동반해 회복하는지</div>
+      <div><span class="wn">2</span>기관·외국인이 순매수로 전환하는지</div>
+      <div><span class="wn">3</span>3분기에도 수주 가이던스(6~6.5조원) 궤도를 유지하는지</div>
+      <div><span class="wn">4</span>부채비율·당좌비율의 방향이 반전되는지</div>
+    </div>
+  </div>
+</section>
+
+<section id="wrapup">
+  <div class="sec-head">
+    <div class="kicker">07 · WRAP-UP</div>
+    <h2>종합 정리</h2>
+  </div>
+  <p class="lede">아래는 다섯 개 분석 영역에서 확인된 사실을 긍정 요인과 부정 요인으로 나눠 정리한 것입니다. 어느 쪽이 더 중요한지에 대한 판단은 담지 않았습니다.</p>
+
+  <div class="two">
+    <div class="pn-card plus">
+      <h3>긍정 요인</h3>
+      <div class="pn-list">
+        <div>2026년 2분기 매출 1조5,770억(+32.2%), 영업이익 1,785억(+64.4%)으로 분기 사상 최대</div>
+        <div>수주잔고 7.0조원, 전년 대비 +81.5%. 연간 수주 가이던스 4조 → 6~6.5조원 상향</div>
+        <div>초고압 변압기 매출 YoY +91.2%, 수주잔고 내 비중 41.7% → 55.0%로 고부가 전환 진행</div>
+        <div>북미 매출 분기 약 4,000억원으로 역대 최대. 미국 유타·텍사스 생산거점 투자 확대</div>
+        <div>산업 자체가 슈퍼사이클 — 미국 전력기기 시장 2025년 200억$ → 2030년 650억$ 전망</div>
+        <div>2026년 예상 영업이익률 11.03%로 첫 두 자릿수 진입 전망</div>
+        <div>부산공장 생산능력 연 2,000억 → 8,000억원 4배 증설, 유보율 1,300%대</div>
+        <div>주요 증권사 목표주가 28만~33만원으로 잇달아 상향</div>
+      </div>
+    </div>
+    <div class="pn-card minus">
+      <h3>부정 요인</h3>
+      <div class="pn-list">
+        <div>ROE는 3사 중 최저(17.29%)인데 PER·PBR은 최고 — 추정 PER 50배, PBR 12.91배</div>
+        <div>영업이익률 8.6%로 HD현대일렉 24.4%, 효성중공업 12.5% 대비 마진 버퍼가 가장 얇음</div>
+        <div>수주잔고 절대 규모는 3사 중 최소(1분기 5.64조 vs 효성 20.2조, HD현대 11.6조)</div>
+        <div>1개월 연율변동성 139.4%, ±7% 이상 변동일이 최근 3개월의 37%</div>
+        <div>MA20·MA60·MA120 모두 하회하는 역배열, MACD 데드크로스 3주 이상 지속</div>
+        <div>5월 공시 정정 사태(수주 수치 −99%)로 제기된 공시 신뢰성 우려가 잔존</div>
+        <div>부채비율 3년 연속 상승(151.24%), 당좌비율 100% 하회(88.22%)</div>
+        <div>기관 5거래일 연속 순매도, 7/31 반등은 평균 이하 거래량 + 섹터 동반 랠리 성격</div>
+        <div>미국 관세로 연간 약 600억원 비용 증가 예상, 원자재(은·구리)·환율 변동성 노출</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card flat">
+    <h3>핵심 관전 포인트 한 줄</h3>
+    <p class="lede" style="color:var(--ink);">실적과 수주는 확실히 좋아지고 있고, 밸류에이션과 변동성은 확실히 부담스럽습니다. 이 둘 중 무엇이 먼저 해소되는지가 향후 주가 방향을 가릅니다.</p>
+  </div>
+
+  <div class="disclaimer">
+    본 리포트는 정보 제공을 목적으로 하며 투자 조언이 아닙니다. 투자 결정과 그 책임은 투자자 본인에게 있습니다.<br><br>
+    수치는 2026-07-31 기준으로 수집된 공개 자료를 정리한 것이며, 2026E 실적·목표주가 등 추정치는 증권사 컨센서스로 확정된 값이 아닙니다. 일부 지표는 조회 시점에 따라 소폭 차이가 있을 수 있습니다.
+  </div>
+</section>
+
+</div>
+
+<script>
+(function(){
+  var btn = document.getElementById('shareBtn');
+  var panel = document.getElementById('sharePanel');
+  var zone = btn.closest('.share-zone');
+
+  function closePanel(){
+    panel.classList.remove('open');
+    btn.setAttribute('aria-expanded','false');
+  }
+  btn.addEventListener('click', function(e){
+    e.stopPropagation();
+    var open = panel.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  document.addEventListener('click', function(e){
+    if(!zone.contains(e.target)) closePanel();
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape') closePanel();
+  });
+
+  Array.prototype.forEach.call(document.querySelectorAll('.share-head'), function(h){
+    h.addEventListener('click', function(){
+      var body = document.getElementById(h.getAttribute('data-target'));
+      var willOpen = !body.classList.contains('open');
+      Array.prototype.forEach.call(document.querySelectorAll('.share-body'), function(b){ b.classList.remove('open'); });
+      if(willOpen) body.classList.add('open');
+    });
+  });
+
+  var SUBJECT = 'LS일렉트릭 투자 컨설팅 리포트 - 2026-07-31';
+  function reportUrl(){ return window.location.href; }
+  function summaryLines(){
+    return [
+      'LS일렉트릭 (010120) 투자 컨설팅 리포트 · 2026-07-31',
+      '',
+      '현재가 179,500원 (+19.43%), 시가총액 26.9조원.',
+      '2026년 2분기 매출 1조5,770억(+32.2%), 영업이익 1,785억(+64.4%)으로 분기 사상 최대. 수주잔고 7.0조원(YoY +81.5%).',
+      '다만 추정 PER 50.0배 / PBR 12.91배로 peer 대비 프리미엄이고, 1개월 연율변동성 139.4%. 종합 리스크 등급 중상(Medium-High).',
+      '',
+      '리포트 전문: ' + reportUrl()
+    ].join('\n');
+  }
+
+  var mailTo = document.getElementById('mailTo');
+  var mailLink = document.getElementById('mailLink');
+  function buildMailto(){
+    var addr = mailTo.value.trim();
+    var body = encodeURIComponent(summaryLines());
+    var subj = encodeURIComponent(SUBJECT);
+    // 수신자 주소는 인코딩하지 않는다 (@ 가 %40 으로 바뀌면 메일 클라이언트가 인식하지 못함)
+    mailLink.setAttribute('href', 'mailto:' + (mailTo.checkValidity() ? addr : '') + '?subject=' + subj + '&body=' + body);
+  }
+  mailTo.addEventListener('input', buildMailto);
+  buildMailto();
+
+  var kakaoText = document.getElementById('kakaoText');
+  kakaoText.value = summaryLines();
+
+  var copyBtn = document.getElementById('copyBtn');
+  copyBtn.addEventListener('click', function(){
+    kakaoText.select();
+    kakaoText.setSelectionRange(0, kakaoText.value.length);
+    var ok = false;
+    try { ok = document.execCommand('copy'); } catch(err) { ok = false; }
+    if(ok){
+      var prev = copyBtn.textContent;
+      copyBtn.textContent = '복사됨!';
+      setTimeout(function(){ copyBtn.textContent = prev; }, 1600);
+    }
+  });
+
+  var nativeBtn = document.getElementById('nativeShareBtn');
+  if(navigator.share){
+    nativeBtn.hidden = false;
+    nativeBtn.addEventListener('click', function(){
+      navigator.share({ title: SUBJECT, text: summaryLines() }).catch(function(){});
+    });
+  }
+})();
+</script>
