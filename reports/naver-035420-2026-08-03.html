@@ -1,0 +1,1154 @@
+<title>네이버 (035420) 투자 컨설팅 리포트 · 2026-08-03</title>
+<style>
+:root{
+  --bg:#F7F8FA; --surface:#FFFFFF; --surface-2:#F2F4F6; --ink:#191F28; --muted:#8B95A1;
+  --accent:#3182F6; --accent-soft:#EBF2FE; --up:#F04452; --down:#3182F6; --line:#E5E8EB;
+  --up-soft:#FDECEE; --warn:#FF9500; --warn-soft:#FFF3E0; --neutral:#B0B8C1; --neutral-soft:#F2F4F6;
+  --good:#00B26B; --good-soft:#E5F7EF;
+  --shadow:0 1px 2px rgba(0,0,0,.04), 0 6px 20px rgba(0,0,0,.05);
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#16181C; --surface:#202124; --surface-2:#26282C; --ink:#F2F3F5; --muted:#8B95A1;
+    --accent:#4593FC; --accent-soft:#1D2A3D; --up:#FF5D6C; --down:#4593FC; --line:#2E3136;
+    --up-soft:#3A2126; --warn:#FFA726; --warn-soft:#3A2E1A; --neutral:#5A6169; --neutral-soft:#2A2D31;
+    --good:#2ECC8F; --good-soft:#17372B;
+    --shadow:0 1px 2px rgba(0,0,0,.3), 0 6px 20px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#16181C; --surface:#202124; --surface-2:#26282C; --ink:#F2F3F5; --muted:#8B95A1;
+  --accent:#4593FC; --accent-soft:#1D2A3D; --up:#FF5D6C; --down:#4593FC; --line:#2E3136;
+  --up-soft:#3A2126; --warn:#FFA726; --warn-soft:#3A2E1A; --neutral:#5A6169; --neutral-soft:#2A2D31;
+  --good:#2ECC8F; --good-soft:#17372B;
+  --shadow:0 1px 2px rgba(0,0,0,.3), 0 6px 20px rgba(0,0,0,.35);
+}
+:root[data-theme="light"]{
+  --bg:#F7F8FA; --surface:#FFFFFF; --surface-2:#F2F4F6; --ink:#191F28; --muted:#8B95A1;
+  --accent:#3182F6; --accent-soft:#EBF2FE; --up:#F04452; --down:#3182F6; --line:#E5E8EB;
+  --up-soft:#FDECEE; --warn:#FF9500; --warn-soft:#FFF3E0; --neutral:#B0B8C1; --neutral-soft:#F2F4F6;
+  --good:#00B26B; --good-soft:#E5F7EF;
+  --shadow:0 1px 2px rgba(0,0,0,.04), 0 6px 20px rgba(0,0,0,.05);
+}
+*{box-sizing:border-box;}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:"Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased;
+  font-variant-numeric:tabular-nums;
+}
+.wrap{max-width:760px; margin:0 auto; padding:2rem 1.25rem 5rem; display:flex; flex-direction:column; gap:2.75rem;}
+h1,h2,h3{margin:0; text-wrap:balance; letter-spacing:-0.02em;}
+p{margin:0;}
+a{color:var(--accent);}
+
+/* header */
+.hdr{display:flex; flex-direction:column; gap:.75rem; padding-top:.5rem;}
+.hdr .eyebrow{font-size:.8125rem; font-weight:700; color:var(--muted); letter-spacing:.06em;}
+.hdr h1.title{font-size:2.125rem; font-weight:800; line-height:1.22;}
+.hdr .sub{font-size:.9375rem; color:var(--muted);}
+.pill{display:inline-flex; align-items:center; gap:.375rem; border-radius:999px; padding:.3125rem .75rem;
+  font-size:.8125rem; font-weight:700; background:var(--surface-2); color:var(--muted);}
+.pill.blue{background:var(--accent-soft); color:var(--accent);}
+.pill.red{background:var(--up-soft); color:var(--up);}
+.pill.warn{background:var(--warn-soft); color:var(--warn);}
+.pill.good{background:var(--good-soft); color:var(--good);}
+.pillrow{display:flex; flex-wrap:wrap; gap:.5rem;}
+
+/* share */
+.share-zone{position:relative;}
+.share-btn{border:0; cursor:pointer; border-radius:999px; padding:.625rem 1.25rem; font-size:.9375rem;
+  font-weight:700; background:var(--accent); color:#fff; font-family:inherit;}
+.share-btn:focus-visible{outline:3px solid var(--accent); outline-offset:2px;}
+.share-panel{display:none; position:absolute; z-index:30; top:calc(100% + .5rem); left:0;
+  width:min(420px,calc(100vw - 2.5rem)); background:var(--surface); border-radius:18px;
+  box-shadow:var(--shadow); padding:.5rem; flex-direction:column; gap:.25rem;}
+.share-panel.open{display:flex;}
+.share-item{border-radius:14px; overflow:hidden;}
+.share-head{width:100%; text-align:left; border:0; background:transparent; color:var(--ink); font-family:inherit;
+  font-size:.9375rem; font-weight:600; padding:.875rem 1rem; cursor:pointer; border-radius:14px;}
+.share-head:hover{background:var(--surface-2);}
+.share-head:focus-visible{outline:3px solid var(--accent); outline-offset:-3px;}
+.share-body{display:none; flex-direction:column; gap:.5rem; padding:.25rem 1rem 1rem;}
+.share-body.open{display:flex;}
+.share-body input, .share-body textarea{
+  width:100%; font-family:inherit; font-size:.875rem; color:var(--ink); background:var(--surface-2);
+  border:0; border-radius:12px; padding:.75rem .875rem; resize:vertical;}
+.share-body input:focus-visible, .share-body textarea:focus-visible{outline:2px solid var(--accent); outline-offset:0;}
+.share-note{font-size:.75rem; color:var(--muted); line-height:1.5;}
+.mini-btn{display:inline-flex; align-items:center; justify-content:center; align-self:flex-start;
+  border:0; cursor:pointer; font-family:inherit; font-size:.875rem; font-weight:700; text-decoration:none;
+  border-radius:999px; padding:.5rem 1.125rem; background:var(--accent); color:#fff;}
+.mini-btn.ghost{background:var(--surface-2); color:var(--ink);}
+.mini-btn:focus-visible{outline:3px solid var(--accent); outline-offset:2px;}
+.btnrow{display:flex; gap:.5rem; flex-wrap:wrap;}
+
+/* section */
+section{display:flex; flex-direction:column; gap:1.25rem;}
+.sec-head{display:flex; flex-direction:column; gap:.25rem;}
+.sec-head .kicker{font-size:.75rem; font-weight:700; color:var(--accent); letter-spacing:.08em;}
+.sec-head h2{font-size:1.5rem; font-weight:800;}
+.lede{font-size:.9375rem; color:var(--muted); line-height:1.65;}
+
+/* cards */
+.card{background:var(--surface); border-radius:20px; padding:1.5rem; box-shadow:var(--shadow);
+  display:flex; flex-direction:column; gap:1rem;}
+.card.flat{background:var(--surface-2); box-shadow:none;}
+.card h3{font-size:1.0625rem; font-weight:700;}
+.card .cap{font-size:.8125rem; color:var(--muted);}
+
+/* hero stat */
+.hero{background:var(--surface); border-radius:24px; padding:1.75rem 1.5rem; box-shadow:var(--shadow);
+  display:flex; flex-direction:column; gap:.375rem;}
+.hero .label{font-size:.8125rem; color:var(--muted); font-weight:600;}
+.hero .big{font-size:3.75rem; font-weight:800; line-height:1.05; letter-spacing:-0.04em;}
+.hero .chg{font-size:1.0625rem; font-weight:700; color:var(--down);}
+.hero .foot{font-size:.8125rem; color:var(--muted); margin-top:.25rem;}
+
+/* stat grid */
+.stats{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:.75rem;}
+.stat{background:var(--surface); border-radius:18px; padding:1.125rem 1.25rem; box-shadow:var(--shadow);
+  display:flex; flex-direction:column; gap:.25rem;}
+.stat .k{font-size:.75rem; color:var(--muted); font-weight:600;}
+.stat .v{font-size:1.75rem; font-weight:800; letter-spacing:-0.03em; line-height:1.15;}
+.stat .v.sm{font-size:1.375rem;}
+.stat .n{font-size:.75rem; color:var(--muted);}
+.stat .v.red{color:var(--up);} .stat .v.blue{color:var(--down);} .stat .v.warn{color:var(--warn);}
+.stat .v.good{color:var(--good);}
+
+/* bars */
+.bars{display:flex; flex-direction:column; gap:.75rem;}
+.bar-row{display:grid; grid-template-columns:92px 1fr auto; align-items:center; gap:.75rem;}
+.bar-row .bl{font-size:.8125rem; color:var(--muted); font-weight:600;}
+.track{background:var(--surface-2); border-radius:999px; height:14px; overflow:hidden;}
+.card.flat .track{background:var(--bg);}
+.fill{height:100%; border-radius:999px; background:var(--accent); display:block;}
+.fill.red{background:var(--up);} .fill.warn{background:var(--warn);}
+.fill.mute{background:var(--neutral);} .fill.good{background:var(--good);}
+.fill.soft{background:var(--accent-soft);}
+.bar-row .bv{font-size:.8125rem; font-weight:700; min-width:78px; text-align:right;}
+.bar-row .bv.red{color:var(--up);} .bar-row .bv.blue{color:var(--down);}
+.bar-row .bv.warn{color:var(--warn);}
+.self{font-weight:800; color:var(--ink);}
+
+/* meter */
+.meter{display:flex; flex-direction:column; gap:.5rem;}
+.meter .mtrack{position:relative; height:10px; border-radius:999px;
+  background:linear-gradient(90deg,var(--down) 0%,var(--neutral) 50%,var(--up) 100%); opacity:.9;}
+.meter .mtrack.plain{background:var(--surface-2);}
+.meter .knob{position:absolute; top:50%; width:16px; height:16px; border-radius:50%;
+  background:var(--surface); box-shadow:0 0 0 3px var(--ink); transform:translate(-50%,-50%);}
+.meter .mlabels{display:flex; justify-content:space-between; font-size:.6875rem; color:var(--muted);}
+
+/* timeline */
+.tl{position:relative; display:flex; flex-direction:column; gap:1.125rem; padding-left:1.5rem;}
+.tl::before{content:""; position:absolute; left:5px; top:6px; bottom:6px; width:2px; background:var(--line);}
+.tl-item{position:relative; display:flex; flex-direction:column; gap:.25rem;}
+.tl-item::before{content:""; position:absolute; left:-1.5rem; top:6px; width:12px; height:12px;
+  border-radius:50%; background:var(--neutral); box-shadow:0 0 0 3px var(--bg);}
+.tl-item.pos::before{background:var(--up);} .tl-item.neg::before{background:var(--down);}
+.tl-item.key::before{width:16px; height:16px; left:calc(-1.5rem - 2px); top:4px;}
+.tl-date{font-size:.75rem; font-weight:700; color:var(--muted); letter-spacing:.02em;}
+.tl-title{font-size:.9688rem; font-weight:700; line-height:1.4;}
+.tl-desc{font-size:.875rem; color:var(--muted); line-height:1.6;}
+.tl-item.key .tl-title{font-size:1.0625rem;}
+.tl-flag{display:inline-flex; align-self:flex-start; margin-top:.125rem;}
+.senti{display:flex; height:10px; border-radius:999px; overflow:hidden; gap:2px; background:transparent;}
+.senti span{display:block;}
+
+/* risk */
+.risk-item{display:flex; flex-direction:column; gap:.5rem; padding:1.125rem 1.25rem;
+  background:var(--surface); border-radius:18px; box-shadow:var(--shadow); position:relative;
+  overflow:hidden; padding-left:1.5rem;}
+.risk-item::before{content:""; position:absolute; left:0; top:0; bottom:0; width:6px;}
+.risk-item.hi::before{background:var(--up);}
+.risk-item.mid::before{background:var(--warn);}
+.risk-item.lo::before{background:var(--neutral);}
+.risk-top{display:flex; align-items:center; justify-content:space-between; gap:.75rem; flex-wrap:wrap;}
+.risk-name{font-size:1rem; font-weight:700;}
+.risk-body{font-size:.875rem; color:var(--muted); line-height:1.6;}
+.risk-body b{color:var(--ink); font-weight:600;}
+
+/* two col */
+.two{display:grid; grid-template-columns:1fr 1fr; gap:.75rem;}
+@media (max-width:600px){ .two{grid-template-columns:1fr;} .hero .big{font-size:3rem;} }
+.col{background:var(--surface); border-radius:20px; padding:1.375rem 1.25rem; box-shadow:var(--shadow);
+  display:flex; flex-direction:column; gap:.75rem;}
+.col h3{font-size:.9375rem; font-weight:800;}
+.col.plus h3{color:var(--up);} .col.minus h3{color:var(--down);}
+.pn-list{display:flex; flex-direction:column; gap:.625rem; font-size:.875rem; line-height:1.55;}
+.pn-list li{padding-left:.875rem; position:relative; color:var(--ink); list-style:none;}
+.pn-list li::before{content:""; position:absolute; left:0; top:.5rem; width:5px; height:5px; border-radius:50%;}
+.col.plus .pn-list li::before{background:var(--up);}
+.col.minus .pn-list li::before{background:var(--down);}
+ul.pn-list{margin:0; padding:0;}
+
+/* ladder */
+.ladder{position:relative; height:480px; background:var(--surface-2); border-radius:16px;}
+.lv{position:absolute; left:12px; right:12px; display:flex; align-items:center; gap:.5rem; transform:translateY(50%);}
+.lv .line{flex:1; height:2px; background:var(--line);}
+.lv .tag{font-size:.75rem; font-weight:700; padding:.25rem .625rem; border-radius:999px;
+  background:var(--surface); color:var(--muted); white-space:nowrap; box-shadow:var(--shadow);}
+.lv.res .line{background:var(--up); opacity:.35;} .lv.res .tag{color:var(--up);}
+.lv.sup .line{background:var(--down); opacity:.35;} .lv.sup .tag{color:var(--down);}
+.lv.now .line{background:var(--ink); opacity:.5; height:3px;}
+.lv.now .tag{background:var(--ink); color:var(--bg); font-weight:800;}
+
+/* table */
+.tblwrap{overflow-x:auto; border-radius:16px;}
+table{border-collapse:collapse; width:100%; font-size:.8438rem; min-width:460px; background:var(--surface);}
+th,td{padding:.75rem .875rem; text-align:right; white-space:nowrap;}
+th:first-child, td:first-child{text-align:left;}
+thead th{font-size:.75rem; color:var(--muted); font-weight:700; background:var(--surface-2);}
+tbody tr + tr td{border-top:1px solid var(--line);}
+tbody td{font-weight:600;}
+
+.kv{display:flex; flex-direction:column; gap:.625rem;}
+.kv-row{display:flex; justify-content:space-between; gap:1rem; font-size:.875rem;}
+.kv-row .k{color:var(--muted); flex:0 0 auto;}
+.kv-row .v{font-weight:700; text-align:right;}
+
+.note{font-size:.75rem; color:var(--muted); line-height:1.6;}
+.sec-note{font-size:.9375rem; font-weight:700; line-height:1.6; color:var(--ink);}
+.disclaimer{background:var(--surface-2); border-radius:16px; padding:1.125rem 1.25rem;
+  font-size:.8125rem; color:var(--muted); line-height:1.65;}
+
+.chips{display:flex; flex-wrap:wrap; gap:.5rem;}
+.chip{display:inline-flex; align-items:center; gap:.375rem; border-radius:999px; padding:.4375rem .8125rem;
+  font-size:.8125rem; font-weight:700; background:var(--surface-2); color:var(--muted);}
+.chip b{color:var(--ink);}
+.chip.red{background:var(--up-soft); color:var(--up);} .chip.red b{color:var(--up);}
+.chip.blue{background:var(--accent-soft); color:var(--accent);} .chip.blue b{color:var(--accent);}
+.chip.warn{background:var(--warn-soft); color:var(--warn);} .chip.warn b{color:var(--warn);}
+.chip.good{background:var(--good-soft); color:var(--good);} .chip.good b{color:var(--good);}
+.card.flat .chip{background:var(--surface);}
+
+.grp{font-size:.8125rem; font-weight:700; color:var(--ink); margin-top:.25rem;}
+.grp span{color:var(--muted); font-weight:400;}
+.watch{display:flex; flex-direction:column; gap:.75rem;}
+.watch div{display:flex; align-items:flex-start; gap:.625rem; font-size:.875rem; line-height:1.55;}
+.wn{flex:0 0 auto; width:22px; height:22px; border-radius:50%; background:var(--accent-soft); color:var(--accent);
+  font-size:.75rem; font-weight:800; display:inline-flex; align-items:center; justify-content:center; margin-top:.1rem;}
+.gap{display:flex; flex-direction:column; gap:.5rem;}
+.gap-row{display:flex; gap:.5rem; font-size:.8125rem; color:var(--muted); line-height:1.5;}
+.gap-row b{color:var(--ink); font-weight:700; flex:0 0 auto;}
+
+@media print{
+  body{background:#fff;}
+  .share-zone{display:none !important;}
+  .wrap{max-width:none; padding:0; gap:1.5rem;}
+  .card,.stat,.hero,.risk-item,.col{box-shadow:none; border:1px solid #E5E8EB; page-break-inside:avoid;}
+  section{page-break-inside:avoid;}
+  .tl-item{page-break-inside:avoid;}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none !important; transition:none !important;}}
+</style>
+
+<div class="wrap">
+
+<header class="hdr">
+  <div class="eyebrow">투자 컨설팅 리포트 · 2026-08-03 기준</div>
+  <h1 class="title">네이버<br>싸진 주가, 확정된 AI 청구서</h1>
+  <p class="sub">035420 · KOSPI · NAVER Corporation · 인터넷 플랫폼</p>
+  <div class="pillrow">
+    <span class="pill">종가 207,500원</span>
+    <span class="pill blue">당일 &minus;0.24%</span>
+    <span class="pill">시가총액 32.57조원 · 코스피 21위</span>
+    <span class="pill warn">종합 리스크 중상</span>
+  </div>
+</header>
+
+<div class="share-zone">
+  <button class="share-btn" id="shareBtn" aria-expanded="false" aria-controls="sharePanel">공유</button>
+  <div class="share-panel" id="sharePanel">
+    <div class="share-item">
+      <button class="share-head" data-target="mailBody">메일로 보내기</button>
+      <div class="share-body" id="mailBody">
+        <input type="email" id="mailTo" placeholder="받는 사람 이메일 주소" autocomplete="email">
+        <a class="mini-btn" id="mailLink" href="mailto:">보내기</a>
+        <p class="share-note">클릭하면 메일 작성창이 열리며, 직접 보내기를 눌러야 전달됩니다. 자동 발송되지 않습니다.</p>
+      </div>
+    </div>
+    <div class="share-item">
+      <button class="share-head" data-target="kakaoBody">카카오톡으로 공유</button>
+      <div class="share-body" id="kakaoBody">
+        <textarea id="kakaoText" rows="7" readonly></textarea>
+        <div class="btnrow">
+          <button class="mini-btn" id="copyBtn" type="button">복사</button>
+          <button class="mini-btn ghost" id="nativeShareBtn" type="button" hidden>다른 앱으로 공유</button>
+        </div>
+        <p class="share-note">복사한 내용을 카카오톡 채팅방에 붙여넣어 공유하세요.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section id="summary">
+  <div class="sec-head">
+    <div class="kicker">01 · SUMMARY</div>
+    <h2>한눈에 보기</h2>
+  </div>
+
+  <div class="hero">
+    <div class="label">현재가 (2026-08-03 종가)</div>
+    <div class="big">207,500<span style="font-size:1.5rem; font-weight:700; letter-spacing:0;">원</span></div>
+    <div class="chg">&minus;500원 (&minus;0.24%)</div>
+    <div class="foot">52주 최고 304,000원(2026-06-01) 대비 밴드 하단 &middot; 52주 최저 181,100원(2026-07-14) 위 &middot; 밴드 내 위치 21.5%</div>
+  </div>
+
+  <div class="stats">
+    <div class="stat tile"><div class="k">시가총액</div><div class="v">32.57조</div><div class="n">원 · 코스피 21위</div></div>
+    <div class="stat tile"><div class="k">PER (TTM)</div><div class="v blue">18.01</div><div class="n">배 · 동일업종 21.47배</div></div>
+    <div class="stat tile"><div class="k">추정 PER (2026E)</div><div class="v blue">17.00</div><div class="n">배 · EPS 11,992원</div></div>
+    <div class="stat tile"><div class="k">PBR</div><div class="v blue">1.05</div><div class="n">배 · BPS 196,985원</div></div>
+    <div class="stat tile"><div class="k">ROE (TTM)</div><div class="v warn">6.49</div><div class="n">% · 카카오 4.49%</div></div>
+    <div class="stat tile"><div class="k">RSI (14)</div><div class="v">51.47</div><div class="n">중립 구간</div></div>
+    <div class="stat tile"><div class="k">부채비율</div><div class="v good">45.21</div><div class="n">% · 2026Q1</div></div>
+    <div class="stat tile"><div class="k">종합 리스크</div><div class="v warn sm">중상</div><div class="n">Moderately High</div></div>
+  </div>
+
+  <div class="card">
+    <h3>지금 이 종목의 상태</h3>
+    <p class="sec-note">밸류에이션은 업종 평균보다 낮은데, AI 투자비용은 이미 손익계산서에 들어오기 시작했습니다.</p>
+    <p class="lede">2026년 1분기 매출은 3조2,411억원으로 분기 사상 최대(+16.3% YoY)였지만 영업이익률 16.71%는 최근 5개 분기 중 가장 낮고 순이익은 &minus;31.3% YoY 감소했습니다. 주가는 6월 초 304,000원에서 7월 14일 181,100원까지 되돌린 뒤 현재 그 사이에서 횡보 중입니다.</p>
+    <div class="chips">
+      <span class="chip blue">PER <b>18.01배</b> vs 업종 21.47배</span>
+      <span class="chip red">1Q 매출 <b>+16.3%</b></span>
+      <span class="chip blue">1Q 순이익 <b>&minus;31.3%</b></span>
+      <span class="chip warn">60일 변동성 <b>83.1%</b></span>
+      <span class="chip warn">MA60·120 미회복</span>
+    </div>
+  </div>
+
+  <div class="card flat">
+    <h3>기간 수익률</h3>
+    <div class="bars">
+      <div class="bar-row"><span class="bl">1개월</span><span class="track"><span class="fill red" style="width: 18.6%"></span></span><span class="bv red">+4.52%</span></div>
+      <div class="bar-row"><span class="bl">3개월</span><span class="track"><span class="fill" style="width: 5.8%"></span></span><span class="bv blue">&minus;1.42%</span></div>
+      <div class="bar-row"><span class="bl">6개월</span><span class="track"><span class="fill" style="width: 100.0%"></span></span><span class="bv blue">&minus;24.36%</span></div>
+      <div class="bar-row"><span class="bl">1년</span><span class="track"><span class="fill" style="width: 47.2%"></span></span><span class="bv blue">&minus;11.49%</span></div>
+    </div>
+    <p class="note">막대 길이는 절대값 기준(최대 24.36%). 빨강은 상승, 파랑은 하락입니다. 최근 1개월은 반등했지만 6개월 성과는 여전히 크게 마이너스입니다.</p>
+  </div>
+
+  <div class="card flat">
+    <h3>이 리포트가 다루는 5개 관점</h3>
+    <div class="kv">
+      <div class="kv-row"><span class="k">산업</span><span class="v">검색 점유율 방어 vs 커머스·핀테크 확장</span></div>
+      <div class="kv-row"><span class="k">재무</span><span class="v">매출 3년 연속 두 자릿수 성장, 이익률은 하락 전환</span></div>
+      <div class="kv-row"><span class="k">기술적</span><span class="v">단기 반등 후 숨고르기, 중장기 이평선 미회복</span></div>
+      <div class="kv-row"><span class="k">뉴스</span><span class="v">AI팩토리 14.6조 유치 등 호재 우세, 다만 미확정 변수 다수</span></div>
+      <div class="kv-row"><span class="k">리스크</span><span class="v">재무는 견고, 이벤트·구조적 리스크에 집중</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="industry">
+  <div class="sec-head">
+    <div class="kicker">02 · INDUSTRY</div>
+    <h2>산업 개요</h2>
+  </div>
+  <p class="lede">국내 인터넷·플랫폼 산업은 2025~2026년 &ldquo;AI 전환기&rdquo; 국면입니다. 네이버는 결제·검색에서 1위권을 지키고 있지만, 생성형 AI의 검색 잠식과 이커머스 수익성 열위가 구조적 변수로 지목됩니다.</p>
+
+  <div class="card">
+    <h3>검색 점유율 <span class="cap">조사기관별 편차가 매우 큼</span></h3>
+    <p class="grp">StatCounter 기준 <span>2026년 3월</span></p>
+    <div class="bars">
+      <div class="bar-row"><span class="bl">구글</span><span class="track"><span class="fill mute" style="width: 100.0%"></span></span><span class="bv">46.81%</span></div>
+      <div class="bar-row"><span class="bl self">네이버</span><span class="track"><span class="fill" style="width: 93.9%"></span></span><span class="bv blue">43.96%</span></div>
+    </div>
+    <p class="cap">같은 시점 국내 인터넷트렌드 조사에서는 <b style="color:var(--ink);">네이버 62.86%로 1위</b>로 집계됩니다. 두 수치는 조사 방식이 달라 직접 비교되지 않으며, 산업 분석에서도 &ldquo;조사기관별 편차 매우 큼&rdquo;으로 단서를 달고 있습니다.</p>
+    <p class="note">네이버의 대응 전략은 &lsquo;온서비스 AI&rsquo;(AI브리핑, AI탭)이며, 광고 수익화는 2026년 2~4분기 본격화 예정으로 안내되고 있습니다.</p>
+  </div>
+
+  <div class="card">
+    <h3>사업별 시장 지위</h3>
+    <p class="grp">이커머스 시장점유율 <span>쿠팡·네이버 2강, 합산 약 55%</span></p>
+    <div class="bars">
+      <div class="bar-row"><span class="bl">쿠팡</span><span class="track"><span class="fill mute" style="width: 100.0%"></span></span><span class="bv">약 22%대</span></div>
+      <div class="bar-row"><span class="bl self">네이버</span><span class="track"><span class="fill" style="width: 94.1%"></span></span><span class="bv">20.7%</span></div>
+    </div>
+    <p class="grp">온라인 간편결제 <span>네이버페이 1위</span></p>
+    <div class="bars">
+      <div class="bar-row"><span class="bl self">네이버페이</span><span class="track"><span class="fill" style="width: 100.0%"></span></span><span class="bv">51.5%</span></div>
+      <div class="bar-row"><span class="bl">카카오페이</span><span class="track"><span class="fill mute" style="width: 48.7%"></span></span><span class="bv">25.1%</span></div>
+      <div class="bar-row"><span class="bl">토스페이</span><span class="track"><span class="fill mute" style="width: 25.6%"></span></span><span class="bv">13.2%</span></div>
+    </div>
+    <p class="grp">오프라인 간편결제 <span>네이버페이 2위</span></p>
+    <div class="bars">
+      <div class="bar-row"><span class="bl">삼성페이</span><span class="track"><span class="fill mute" style="width: 100.0%"></span></span><span class="bv">26.1%</span></div>
+      <div class="bar-row"><span class="bl self">네이버페이</span><span class="track"><span class="fill" style="width: 82.4%"></span></span><span class="bv">21.5%</span></div>
+    </div>
+    <p class="grp">국내 퍼블릭 클라우드 <span>2024년 매출 기준 · 네이버 4위</span></p>
+    <div class="bars">
+      <div class="bar-row"><span class="bl">AWS</span><span class="track"><span class="fill mute" style="width: 100.0%"></span></span><span class="bv">22%</span></div>
+      <div class="bar-row"><span class="bl">삼성SDS</span><span class="track"><span class="fill mute" style="width: 51.4%"></span></span><span class="bv">11.3%</span></div>
+      <div class="bar-row"><span class="bl">MS</span><span class="track"><span class="fill mute" style="width: 43.6%"></span></span><span class="bv">9.6%</span></div>
+      <div class="bar-row"><span class="bl self">네이버</span><span class="track"><span class="fill warn" style="width: 22.7%"></span></span><span class="bv warn">5%</span></div>
+    </div>
+    <p class="note">네이버 클라우드 2024년 매출은 3,110억원입니다. 2026년 4월 기준으로는 삼성SDS가 MS를 제치고 2위에 올랐고 네이버는 4위를 유지하고 있습니다. 웹툰엔터테인먼트의 글로벌 MAU는 1.5억명 이상이나, 콘텐츠 부문 <b style="color:var(--ink);">시장점유율 수치는 정보 부족</b>입니다.</p>
+  </div>
+
+  <div class="card">
+    <h3>부문별 2025년 연매출 <span class="cap">구 체계 기준 · 단위: 조원</span></h3>
+    <div class="bars">
+      <div class="bar-row"><span class="bl">서치플랫폼</span><span class="track"><span class="fill" style="width: 100.0%"></span></span><span class="bv">4.17조</span></div>
+      <div class="bar-row"><span class="bl">커머스</span><span class="track"><span class="fill" style="width: 88.5%"></span></span><span class="bv">3.69조</span></div>
+      <div class="bar-row"><span class="bl">콘텐츠</span><span class="track"><span class="fill soft" style="width: 45.6%"></span></span><span class="bv">1.90조</span></div>
+      <div class="bar-row"><span class="bl">핀테크</span><span class="track"><span class="fill soft" style="width: 40.5%"></span></span><span class="bv">1.69조</span></div>
+      <div class="bar-row"><span class="bl">엔터프라이즈</span><span class="track"><span class="fill soft" style="width: 14.1%"></span></span><span class="bv">0.59조</span></div>
+    </div>
+    <p class="cap" style="margin-top:.5rem;">같은 부문의 전년 대비 성장률 (%) — 위 매출 규모와는 별개의 비교입니다</p>
+    <div class="bars">
+      <div class="bar-row"><span class="bl">커머스</span><span class="track"><span class="fill red" style="width: 100.0%"></span></span><span class="bv red">+26.2%</span></div>
+      <div class="bar-row"><span class="bl">핀테크</span><span class="track"><span class="fill mute" style="width: 46.2%"></span></span><span class="bv">+12.1%</span></div>
+      <div class="bar-row"><span class="bl">콘텐츠</span><span class="track"><span class="fill mute" style="width: 21.8%"></span></span><span class="bv">+5.7%</span></div>
+      <div class="bar-row"><span class="bl">서치플랫폼</span><span class="track"><span class="fill mute" style="width: 21.4%"></span></span><span class="bv">+5.6%</span></div>
+      <div class="bar-row"><span class="bl">엔터프라이즈</span><span class="track"><span class="fill mute" style="width: 16.4%"></span></span><span class="bv">+4.3%</span></div>
+    </div>
+    <p class="note">가장 큰 부문(서치플랫폼)이 가장 느리게 자라고, 두 번째로 큰 커머스가 가장 빠르게 자라는 구조입니다. 2026년 1분기부터는 네이버플랫폼 / 파이낸셜플랫폼 / 글로벌도전 3분류 체계로 개편됩니다.</p>
+  </div>
+
+  <div class="card flat">
+    <h3>확장 계획의 숫자</h3>
+    <p class="grp">국내 총 광고비 <span>단위: 조원 · 온라인광고 비중 약 60%</span></p>
+    <div class="bars">
+      <div class="bar-row"><span class="bl">2025년</span><span class="track"><span class="fill soft" style="width: 96.3%"></span></span><span class="bv">17.27조</span></div>
+      <div class="bar-row"><span class="bl">2026년(E)</span><span class="track"><span class="fill" style="width: 100.0%"></span></span><span class="bv">17.94조</span></div>
+    </div>
+    <p class="grp">도착보장(N배송) 커버리지 <span>단위: %</span></p>
+    <div class="bars">
+      <div class="bar-row"><span class="bl">현재</span><span class="track"><span class="fill soft" style="width: 20.0%"></span></span><span class="bv">10%대</span></div>
+      <div class="bar-row"><span class="bl">2026년</span><span class="track"><span class="fill" style="width: 50.0%"></span></span><span class="bv">25%</span></div>
+      <div class="bar-row"><span class="bl">3년 내</span><span class="track"><span class="fill red" style="width: 100.0%"></span></span><span class="bv red">50%+</span></div>
+    </div>
+    <p class="note">이 밖에 배달의민족 지분투자를 검토 중이며(퀵커머스 강화 목적), 두나무(업비트) 편입을 약 20조원 규모로 추진하고 있습니다.</p>
+  </div>
+
+  <div class="card">
+    <h3>경쟁 지형</h3>
+    <div class="kv">
+      <div class="kv-row"><span class="k">카카오</span><span class="v">2025 매출 8.10조 · 영업이익 7,320억(+48%, 역대 최대)<br>2026Q1 매출 1.94조(+11%) · 영업이익 2,114억(+66%)</span></div>
+      <div class="kv-row"><span class="k">쿠팡</span><span class="v">2025 한국법인 매출 45.46조(+18.7%)<br>영업이익 2.29조(+40.9%)</span></div>
+      <div class="kv-row"><span class="k">구글</span><span class="v">AI 검색 주도권 확보가 네이버 최대 위협 요인으로 지목</span></div>
+    </div>
+    <p class="note">쿠팡의 영업이익이 네이버 전사 영업이익을 상회한다는 평가가 존재합니다 — 커머스 수익성에서 열위라는 뜻입니다. 증권가는 2026년을 &ldquo;투자의 해&rdquo;로 규정하고 있으며, 목표주가는 삼성증권 26만원 / KB증권 33만원 / 유진투자 34만원, 컨센서스 평균 약 30~30.2만원으로 제시되고 있습니다. 위 목표주가는 각 증권사의 의견이며 본 리포트의 견해가 아닙니다.</p>
+  </div>
+
+  <div class="two">
+    <div class="card">
+      <h3 style="color:var(--up);">강점 · 기회</h3>
+      <ul class="pn-list">
+        <li>간편결제 온라인 1위(51.5%)</li>
+        <li>검색·커머스·페이·웹툰 생태계 결합력</li>
+        <li>웹툰 글로벌 MAU 1.5억명 이상</li>
+        <li>AI탭·AI브리핑 광고 수익화(2026 2~4분기 예정)</li>
+        <li>두나무 편입 시 20조 금융플랫폼 재편</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 style="color:var(--down);">약점 · 구조적 리스크</h3>
+      <ul class="pn-list">
+        <li>생성형 AI의 검색 잠식 가능성</li>
+        <li>커머스 수익성 쿠팡 대비 열위</li>
+        <li>클라우드 M/S 5%, 4위 열위</li>
+        <li>AI·핀테크·물류 투자 확대로 단기 영업이익 성장 둔화 우려</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="financials">
+  <div class="sec-head">
+    <div class="kicker">03 · FINANCIALS</div>
+    <h2>재무 분석</h2>
+  </div>
+  <p class="lede">매출은 3년 연속 두 자릿수로 늘고 2026년 컨센서스는 13.76조원입니다. 반면 영업이익 증가율은 2024년 +32.9% → 2025년 +11.6% → 2026E +8.1%로 계단식 둔화가 예상되고, 순이익은 2025년부터 이미 감소로 돌아섰습니다.</p>
+
+  <div class="card">
+    <h3>연간 매출 <span class="cap">단위: 억원</span></h3>
+    <div class="bars">
+      <div class="bar-row"><span class="bl">2023</span><span class="track"><span class="fill soft" style="width: 70.3%"></span></span><span class="bv">96,706</span></div>
+      <div class="bar-row"><span class="bl">2024</span><span class="track"><span class="fill soft" style="width: 78.1%"></span></span><span class="bv">107,377</span></div>
+      <div class="bar-row"><span class="bl">2025</span><span class="track"><span class="fill" style="width: 87.5%"></span></span><span class="bv">120,350</span></div>
+      <div class="bar-row"><span class="bl">2026E</span><span class="track"><span class="fill red" style="width: 100.0%"></span></span><span class="bv red">137,570</span></div>
+    </div>
+    <p class="cap">증가율 +11.0% → +12.1% → +14.3%(E)로 오히려 가속</p>
+  </div>
+
+  <div class="card">
+    <h3>연간 영업이익 <span class="cap">단위: 억원</span></h3>
+    <div class="bars">
+      <div class="bar-row"><span class="bl">2023</span><span class="track"><span class="fill soft" style="width: 62.4%"></span></span><span class="bv">14,888</span></div>
+      <div class="bar-row"><span class="bl">2024</span><span class="track"><span class="fill soft" style="width: 82.9%"></span></span><span class="bv">19,793</span></div>
+      <div class="bar-row"><span class="bl">2025</span><span class="track"><span class="fill" style="width: 92.5%"></span></span><span class="bv">22,081</span></div>
+      <div class="bar-row"><span class="bl">2026E</span><span class="track"><span class="fill" style="width: 100.0%"></span></span><span class="bv">23,869</span></div>
+    </div>
+    <p class="cap">증가율 +32.9% → +11.6% → +8.1%(E)로 둔화</p>
+  </div>
+
+  <div class="card">
+    <h3>연간 순이익 <span class="cap">단위: 억원</span></h3>
+    <div class="bars">
+      <div class="bar-row"><span class="bl">2023</span><span class="track"><span class="fill soft" style="width: 51.0%"></span></span><span class="bv">9,850</span></div>
+      <div class="bar-row"><span class="bl">2024</span><span class="track"><span class="fill red" style="width: 100.0%"></span></span><span class="bv red">19,320</span></div>
+      <div class="bar-row"><span class="bl">2025</span><span class="track"><span class="fill" style="width: 94.1%"></span></span><span class="bv blue">18,187</span></div>
+      <div class="bar-row"><span class="bl">2026E</span><span class="track"><span class="fill" style="width: 96.1%"></span></span><span class="bv">18,559</span></div>
+    </div>
+    <p class="note">2024년 +96.1%로 급증한 뒤 2025년 &minus;5.9%로 꺾였고, 2026년 컨센서스도 +2.0% 증가에 그칩니다. 순이익률은 17.99%(2024) → 15.11%(2025) → 13.49%(2026E)로 3년 연속 낮아지는 흐름입니다.</p>
+  </div>
+
+  <div class="card flat">
+    <h3>영업이익률 추이 <span class="cap">단위: %</span></h3>
+    <div class="bars">
+      <div class="bar-row"><span class="bl">2023</span><span class="track"><span class="fill soft" style="width: 83.5%"></span></span><span class="bv">15.39%</span></div>
+      <div class="bar-row"><span class="bl">2024</span><span class="track"><span class="fill" style="width: 100.0%"></span></span><span class="bv">18.43%</span></div>
+      <div class="bar-row"><span class="bl">2025</span><span class="track"><span class="fill" style="width: 99.6%"></span></span><span class="bv">18.35%</span></div>
+    </div>
+    <p class="note">2026년 연간 영업이익률은 제공된 자료에 없어 <b style="color:var(--ink);">정보 부족</b>으로 둡니다. 분기 기준으로는 2026년 1분기 16.71%로 최근 5개 분기 중 최저입니다.</p>
+  </div>
+
+  <div class="card">
+    <h3>분기 실적 흐름 <span class="cap">단위: 억원 · 2026Q2는 컨센서스(8/7 발표 예정)</span></h3>
+    <p class="grp">매출</p>
+    <div class="bars">
+      <div class="bar-row"><span class="bl">2025 Q1</span><span class="track"><span class="fill soft" style="width: 82.8%"></span></span><span class="bv">27,868</span></div>
+      <div class="bar-row"><span class="bl">2025 Q2</span><span class="track"><span class="fill soft" style="width: 86.6%"></span></span><span class="bv">29,151</span></div>
+      <div class="bar-row"><span class="bl">2025 Q3</span><span class="track"><span class="fill soft" style="width: 93.2%"></span></span><span class="bv">31,381</span></div>
+      <div class="bar-row"><span class="bl">2025 Q4</span><span class="track"><span class="fill soft" style="width: 94.9%"></span></span><span class="bv">31,951</span></div>
+      <div class="bar-row"><span class="bl self">2026 Q1</span><span class="track"><span class="fill" style="width: 96.3%"></span></span><span class="bv">32,411</span></div>
+      <div class="bar-row"><span class="bl">2026 Q2E</span><span class="track"><span class="fill mute" style="width: 100.0%"></span></span><span class="bv">33,662</span></div>
+    </div>
+    <p class="grp">영업이익</p>
+    <div class="bars">
+      <div class="bar-row"><span class="bl">2025 Q1</span><span class="track"><span class="fill soft" style="width: 82.8%"></span></span><span class="bv">5,053</span></div>
+      <div class="bar-row"><span class="bl">2025 Q2</span><span class="track"><span class="fill soft" style="width: 85.4%"></span></span><span class="bv">5,216</span></div>
+      <div class="bar-row"><span class="bl">2025 Q3</span><span class="track"><span class="fill soft" style="width: 93.4%"></span></span><span class="bv">5,706</span></div>
+      <div class="bar-row"><span class="bl">2025 Q4</span><span class="track"><span class="fill red" style="width: 100.0%"></span></span><span class="bv red">6,106</span></div>
+      <div class="bar-row"><span class="bl self">2026 Q1</span><span class="track"><span class="fill" style="width: 88.7%"></span></span><span class="bv blue">5,418</span></div>
+      <div class="bar-row"><span class="bl">2026 Q2E</span><span class="track"><span class="fill mute" style="width: 92.6%"></span></span><span class="bv">5,657</span></div>
+    </div>
+    <p class="grp">영업이익률 <span>단위: %</span></p>
+    <div class="bars">
+      <div class="bar-row"><span class="bl">2025 Q1</span><span class="track"><span class="fill soft" style="width: 94.9%"></span></span><span class="bv">18.13%</span></div>
+      <div class="bar-row"><span class="bl">2025 Q2</span><span class="track"><span class="fill soft" style="width: 93.6%"></span></span><span class="bv">17.89%</span></div>
+      <div class="bar-row"><span class="bl">2025 Q3</span><span class="track"><span class="fill soft" style="width: 95.2%"></span></span><span class="bv">18.19%</span></div>
+      <div class="bar-row"><span class="bl">2025 Q4</span><span class="track"><span class="fill red" style="width: 100.0%"></span></span><span class="bv red">19.11%</span></div>
+      <div class="bar-row"><span class="bl self">2026 Q1</span><span class="track"><span class="fill warn" style="width: 87.4%"></span></span><span class="bv warn">16.71%</span></div>
+      <div class="bar-row"><span class="bl">2026 Q2E</span><span class="track"><span class="fill mute" style="width: 87.9%"></span></span><span class="bv">16.80%</span></div>
+    </div>
+    <p class="grp">순이익</p>
+    <div class="bars">
+      <div class="bar-row"><span class="bl">2025 Q1</span><span class="track"><span class="fill soft" style="width: 57.7%"></span></span><span class="bv">4,237</span></div>
+      <div class="bar-row"><span class="bl">2025 Q2</span><span class="track"><span class="fill soft" style="width: 67.7%"></span></span><span class="bv">4,974</span></div>
+      <div class="bar-row"><span class="bl">2025 Q3</span><span class="track"><span class="fill red" style="width: 100.0%"></span></span><span class="bv red">7,347</span></div>
+      <div class="bar-row"><span class="bl">2025 Q4</span><span class="track"><span class="fill" style="width: 22.2%"></span></span><span class="bv blue">1,630</span></div>
+      <div class="bar-row"><span class="bl self">2026 Q1</span><span class="track"><span class="fill" style="width: 39.6%"></span></span><span class="bv blue">2,910</span></div>
+      <div class="bar-row"><span class="bl">2026 Q2E</span><span class="track"><span class="fill mute" style="width: 65.9%"></span></span><span class="bv">4,842</span></div>
+    </div>
+    <p class="note">매출은 6개 분기 연속 최고치를 갱신하는데 영업이익률은 2025년 4분기 19.11%를 정점으로 꺾였습니다. 순이익률은 23.41%(25Q3) → 5.10%(25Q4) → 8.98%(26Q1)로 크게 요동쳤는데, 이 급변동의 <b style="color:var(--ink);">세부 원인은 정보 부족</b>입니다.</p>
+  </div>
+
+  <div class="card">
+    <h3>밸류에이션 <span class="cap">2026-08-03 종가 기준 · 동일업종 WICS 양방향미디어서비스</span></h3>
+    <p class="grp">PER <span>단위: 배</span></p>
+    <div class="bars">
+      <div class="bar-row"><span class="bl">카카오</span><span class="track"><span class="fill mute" style="width: 100.0%"></span></span><span class="bv">33.48</span></div>
+      <div class="bar-row"><span class="bl">동일업종 평균</span><span class="track"><span class="fill mute" style="width: 64.1%"></span></span><span class="bv">21.47</span></div>
+      <div class="bar-row"><span class="bl">디어유</span><span class="track"><span class="fill mute" style="width: 56.5%"></span></span><span class="bv">18.90</span></div>
+      <div class="bar-row"><span class="bl self">네이버</span><span class="track"><span class="fill" style="width: 53.8%"></span></span><span class="bv blue">18.01</span></div>
+      <div class="bar-row"><span class="bl">메쎄이상</span><span class="track"><span class="fill mute" style="width: 23.0%"></span></span><span class="bv">7.71</span></div>
+      <div class="bar-row"><span class="bl">SOOP</span><span class="track"><span class="fill mute" style="width: 14.3%"></span></span><span class="bv">4.78</span></div>
+    </div>
+    <p class="grp">PBR <span>단위: 배</span></p>
+    <div class="bars">
+      <div class="bar-row"><span class="bl">디어유</span><span class="track"><span class="fill mute" style="width: 100.0%"></span></span><span class="bv">2.24</span></div>
+      <div class="bar-row"><span class="bl">메쎄이상</span><span class="track"><span class="fill mute" style="width: 73.7%"></span></span><span class="bv">1.65</span></div>
+      <div class="bar-row"><span class="bl">카카오</span><span class="track"><span class="fill mute" style="width: 63.8%"></span></span><span class="bv">1.43</span></div>
+      <div class="bar-row"><span class="bl self">네이버</span><span class="track"><span class="fill" style="width: 46.9%"></span></span><span class="bv blue">1.05</span></div>
+      <div class="bar-row"><span class="bl">SOOP</span><span class="track"><span class="fill mute" style="width: 44.2%"></span></span><span class="bv">0.99</span></div>
+    </div>
+    <p class="grp">ROE <span>단위: %</span></p>
+    <div class="bars">
+      <div class="bar-row"><span class="bl">SOOP</span><span class="track"><span class="fill mute" style="width: 100.0%"></span></span><span class="bv">24.09%</span></div>
+      <div class="bar-row"><span class="bl">메쎄이상</span><span class="track"><span class="fill mute" style="width: 97.9%"></span></span><span class="bv">23.58%</span></div>
+      <div class="bar-row"><span class="bl">디어유</span><span class="track"><span class="fill mute" style="width: 51.1%"></span></span><span class="bv">12.30%</span></div>
+      <div class="bar-row"><span class="bl self">네이버</span><span class="track"><span class="fill warn" style="width: 26.9%"></span></span><span class="bv warn">6.49%</span></div>
+      <div class="bar-row"><span class="bl">카카오</span><span class="track"><span class="fill mute" style="width: 18.6%"></span></span><span class="bv">4.49%</span></div>
+    </div>
+    <p class="note">네이버는 동일업종 평균과 카카오 대비 PER·PBR이 모두 낮은 저평가 구간에 있습니다. 다만 ROE는 SOOP·메쎄이상·디어유 등 중소형 피어보다 낮습니다. SOOP의 PER 표기치 4.78배는 단순 계산 시 약 21.6배로 나와 불일치하며, <b style="color:var(--ink);">그 원인은 정보 부족(미확인)</b>입니다.</p>
+  </div>
+
+  <div class="tblwrap">
+    <table>
+      <caption class="note" style="text-align:left; padding:.5rem .875rem;">동일업종 비교 · 2026-08-03 / 2026Q1 기준 (단위: 억원)</caption>
+      <thead><tr><th>지표</th><th>네이버</th><th>카카오</th><th>디어유</th><th>SOOP</th><th>메쎄이상</th></tr></thead>
+      <tbody>
+        <tr><td>시가총액</td><td>325,659</td><td>164,788</td><td>4,759</td><td>4,839</td><td>1,329</td></tr>
+        <tr><td>매출(분기)</td><td>32,411</td><td>19,421</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td></tr>
+        <tr><td>영업이익(분기)</td><td>5,418</td><td>2,114</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td></tr>
+        <tr><td>순이익(분기)</td><td>2,910</td><td>2,268</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td></tr>
+        <tr><td>EPS(원)</td><td>1,819.08</td><td>387.83</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td></tr>
+        <tr><td>PER(배)</td><td>18.01</td><td>33.48</td><td>18.90</td><td>4.78</td><td>7.71</td></tr>
+        <tr><td>PBR(배)</td><td>1.05</td><td>1.43</td><td>2.24</td><td>0.99</td><td>1.65</td></tr>
+        <tr><td>ROE(%)</td><td>6.49</td><td>4.49</td><td>12.30</td><td>24.09</td><td>23.58</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">&mdash; 표시는 제공된 자료에 해당 값이 없는 항목(정보 부족)입니다. 참고로 쿠팡(CPNG)은 미국 상장·US-GAAP 기준이라 회계기준이 달라 동일업종 PER 비교가 불가하며, 시가총액 약 293.5억달러, TTM PER 산출불가(순손실), Forward PER 56.48배, PBR 7.52배, ROE(TTM) &minus;3.99%, Debt/Equity 약 137.3%입니다.</p>
+
+  <div class="card">
+    <h3>재무 안정성 <span class="cap">단위: 조원 · 출처 yfinance</span></h3>
+    <p class="grp">영업활동현금흐름(OCF)</p>
+    <div class="bars">
+      <div class="bar-row"><span class="bl">2023</span><span class="track"><span class="fill soft" style="width: 64.7%"></span></span><span class="bv">2.002</span></div>
+      <div class="bar-row"><span class="bl">2024</span><span class="track"><span class="fill soft" style="width: 83.7%"></span></span><span class="bv">2.590</span></div>
+      <div class="bar-row"><span class="bl">2025</span><span class="track"><span class="fill good" style="width: 100.0%"></span></span><span class="bv">3.096</span></div>
+    </div>
+    <p class="grp">설비투자(Capex) <span>절대값 기준</span></p>
+    <div class="bars">
+      <div class="bar-row"><span class="bl">2023</span><span class="track"><span class="fill soft" style="width: 52.5%"></span></span><span class="bv">0.692</span></div>
+      <div class="bar-row"><span class="bl">2024</span><span class="track"><span class="fill soft" style="width: 44.0%"></span></span><span class="bv">0.580</span></div>
+      <div class="bar-row"><span class="bl">2025</span><span class="track"><span class="fill warn" style="width: 100.0%"></span></span><span class="bv warn">1.319</span></div>
+    </div>
+    <p class="grp">잉여현금흐름(FCF)</p>
+    <div class="bars">
+      <div class="bar-row"><span class="bl">2023</span><span class="track"><span class="fill soft" style="width: 65.2%"></span></span><span class="bv">1.310</span></div>
+      <div class="bar-row"><span class="bl">2024</span><span class="track"><span class="fill" style="width: 100.0%"></span></span><span class="bv">2.010</span></div>
+      <div class="bar-row"><span class="bl">2025</span><span class="track"><span class="fill" style="width: 88.4%"></span></span><span class="bv blue">1.776</span></div>
+    </div>
+    <p class="note">영업으로 버는 현금은 계속 늘었지만 2025년 Capex가 전년 대비 2.3배로 급증하면서 FCF는 오히려 줄었습니다. Capex 급증의 <b style="color:var(--ink);">세부 용도는 정보 부족(미확인)</b>입니다.</p>
+  </div>
+
+  <div class="card flat">
+    <h3>순현금 포지션 <span class="cap">2025년 말 · 단위: 조원</span></h3>
+    <div class="bars">
+      <div class="bar-row"><span class="bl">현금+단기투자</span><span class="track"><span class="fill good" style="width: 100.0%"></span></span><span class="bv">8.946</span></div>
+      <div class="bar-row"><span class="bl">총부채</span><span class="track"><span class="fill mute" style="width: 46.6%"></span></span><span class="bv">4.173</span></div>
+    </div>
+    <p class="cap" style="margin-top:.5rem;">부채비율 추이 (%) — 낮을수록 안정</p>
+    <div class="bars">
+      <div class="bar-row"><span class="bl">2023</span><span class="track"><span class="fill mute" style="width: 100.0%"></span></span><span class="bv">47.45%</span></div>
+      <div class="bar-row"><span class="bl">2024</span><span class="track"><span class="fill good" style="width: 87.2%"></span></span><span class="bv">41.36%</span></div>
+      <div class="bar-row"><span class="bl">2025</span><span class="track"><span class="fill good" style="width: 88.3%"></span></span><span class="bv">41.90%</span></div>
+      <div class="bar-row"><span class="bl">2026 Q1</span><span class="track"><span class="fill" style="width: 95.3%"></span></span><span class="bv">45.21%</span></div>
+    </div>
+    <div class="chips">
+      <span class="chip good">순현금 <b>약 4.7조</b></span>
+      <span class="chip good">당좌비율 <b>113.33%</b></span>
+      <span class="chip good">유보율 <b>176,693.81%</b></span>
+      <span class="chip">자기자본 27.582조 (2025)</span>
+    </div>
+    <p class="note">기말 현금성자산은 3.576조(2023) → 4.196조(2024) → 5.984조(2025)로 늘었습니다. 재무 지표 자체는 견고한 편입니다.</p>
+  </div>
+
+  <div class="card">
+    <h3>재무 분석에서 확인되지 않은 항목</h3>
+    <div class="gap">
+      <div class="gap-row"><b>정보 부족</b><span>분기별 순이익률 급변동(2025Q3 23.41% → 2025Q4 5.10% → 2026Q1 8.98%)의 세부 원인</span></div>
+      <div class="gap-row"><b>정보 부족</b><span>2025년 Capex 급증(1.319조)의 세부 용도</span></div>
+      <div class="gap-row"><b>정보 부족</b><span>2025년 배당성향 125.66%(100% 초과)의 배경</span></div>
+      <div class="gap-row"><b>정보 부족</b><span>쿠팡의 동일업종 PER 비교 (회계기준 상이로 산출 불가)</span></div>
+      <div class="gap-row"><b>정보 부족</b><span>SOOP PER 표기치(4.78배)와 단순 계산치(약 21.6배)의 불일치 원인</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="technical">
+  <div class="sec-head">
+    <div class="kicker">04 · TECHNICAL</div>
+    <h2>기술적 분석</h2>
+  </div>
+  <p class="lede">현재가는 단기 이평선(MA5·MA20) 위지만 중장기(MA60·MA120) 아래에 있는 혼조형 배열입니다. 7월 21일 MACD 골든크로스로 반등했으나 히스토그램은 축소 중이고 거래량도 평균의 절반 수준입니다.</p>
+
+  <div class="card">
+    <h3>이동평균선 대비 위치 <span class="cap">MA120 &gt; MA60 &gt; 현재가 &gt; MA5 &gt; MA20</span></h3>
+    <div class="chips">
+      <span class="chip red">MA5 204,340 <b>+1.55%</b></span>
+      <span class="chip red">MA20 198,150 <b>+4.72%</b></span>
+      <span class="chip blue">MA60 212,867 <b>&minus;2.52%</b></span>
+      <span class="chip blue">MA120 218,121 <b>&minus;4.87%</b></span>
+    </div>
+    <p class="cap">현재가와의 이격도 (절대값 기준, 최대 4.87%)</p>
+    <div class="bars">
+      <div class="bar-row"><span class="bl">MA5</span><span class="track"><span class="fill red" style="width: 31.8%"></span></span><span class="bv red">+1.55%</span></div>
+      <div class="bar-row"><span class="bl">MA20</span><span class="track"><span class="fill red" style="width: 96.9%"></span></span><span class="bv red">+4.72%</span></div>
+      <div class="bar-row"><span class="bl">MA60</span><span class="track"><span class="fill" style="width: 51.7%"></span></span><span class="bv blue">&minus;2.52%</span></div>
+      <div class="bar-row"><span class="bl">MA120</span><span class="track"><span class="fill" style="width: 100.0%"></span></span><span class="bv blue">&minus;4.87%</span></div>
+    </div>
+    <p class="note">단기 이평선은 우상향하고 있으나 중장기 이평선은 아직 회복하지 못했습니다. 위로 MA60까지 2.52%, MA120까지 4.87% 거리입니다.</p>
+  </div>
+
+  <div class="card">
+    <h3>가격대 지도 <span class="cap">지지선 · 저항선</span></h3>
+    <div class="ladder">
+      <div class="lv res" style="bottom: 94.2%"><span class="line"></span><span class="tag">3차 저항 234,500</span></div>
+      <div class="lv res" style="bottom: 74.2%"><span class="line"></span><span class="tag">저항 220,000~225,000</span></div>
+      <div class="lv res" style="bottom: 66.9%"><span class="line"></span><span class="tag">2차 저항 MA120 218,121</span></div>
+      <div class="lv res" style="bottom: 57.9%"><span class="line"></span><span class="tag">1차 저항 212,500~213,000 (MA60 212,867)</span></div>
+      <div class="lv now" style="bottom: 49.2%"><span class="line"></span><span class="tag">현재가 207,500</span></div>
+      <div class="lv sup" style="bottom: 30.7%"><span class="tag">1차 지지 194,700 ~ MA20 198,150</span><span class="line"></span></div>
+      <div class="lv sup" style="bottom: 5.2%"><span class="tag">2차 지지 181,100 (52주 최저)</span><span class="line"></span></div>
+    </div>
+    <p class="note">세로 위치는 178,000~238,000원 구간을 실제 비율대로 매핑한 값입니다. 234,500원 위쪽 구간(280,000~304,000원)은 6월 급등 당시의 이례적 구간으로 분류됩니다. 7월 28일부터는 194,700~212,500원 사이에서 횡보 조정 중입니다.</p>
+  </div>
+
+  <div class="two">
+    <div class="card">
+      <h3>RSI (14)</h3>
+      <div class="hero" style="box-shadow:none; background:transparent; padding:0;">
+        <div class="big" style="font-size:3rem;">51.47</div>
+      </div>
+      <div class="meter">
+        <div class="mtrack">
+          <span class="knob" style="left: 51.47%"></span>
+        </div>
+        <div class="mlabels"><span>0 과매도</span><span>50</span><span>과매수 100</span></div>
+      </div>
+      <p class="cap">7/14 저점 28.8(과매도 근접) → 7/27 78.9(과매수 근접) → 중립권 복귀. 3주 만에 양극단을 오갔습니다.</p>
+    </div>
+    <div class="card">
+      <h3>3개월 레인지 내 위치</h3>
+      <div class="hero" style="box-shadow:none; background:transparent; padding:0;">
+        <div class="big" style="font-size:3rem;">49.4<span style="font-size:1.25rem;">%</span></div>
+      </div>
+      <div class="meter">
+        <div class="mtrack plain">
+          <span class="knob" style="left: 49.4%"></span>
+        </div>
+        <div class="mlabels"><span>181,100</span><span>207,500</span><span>234,500</span></div>
+      </div>
+      <p class="cap">6월 스파이크를 제외한 통상 3개월 레인지의 정확히 중간. 52주 밴드(181,100~304,000) 기준으로는 21.5% 지점입니다.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>MACD <span class="cap">7월 21일 골든크로스</span></h3>
+    <div class="chips">
+      <span class="chip blue">MACD <b>&minus;465.27</b></span>
+      <span class="chip blue">Signal <b>&minus;2,511.59</b></span>
+      <span class="chip red">Histogram <b>+2,046.32</b></span>
+      <span class="chip warn">모멘텀 둔화</span>
+    </div>
+    <p class="cap">히스토그램 변화</p>
+    <div class="bars">
+      <div class="bar-row"><span class="bl">7/27 정점</span><span class="track"><span class="fill red" style="width: 100.0%"></span></span><span class="bv red">+4,615</span></div>
+      <div class="bar-row"><span class="bl self">현재</span><span class="track"><span class="fill red" style="width: 44.3%"></span></span><span class="bv red">+2,046</span></div>
+    </div>
+    <p class="note">MACD가 시그널선 위에 있는 골든크로스 상태는 유지되고 있지만, 히스토그램이 정점의 절반 아래로 줄면서 상승 모멘텀은 약해지고 있습니다.</p>
+  </div>
+
+  <div class="card flat">
+    <h3>거래량 <span class="cap">2026-08-03</span></h3>
+    <div class="bars">
+      <div class="bar-row"><span class="bl">20일 평균</span><span class="track"><span class="fill mute" style="width: 100.0%"></span></span><span class="bv">1,216,873주</span></div>
+      <div class="bar-row"><span class="bl self">당일</span><span class="track"><span class="fill warn" style="width: 54.4%"></span></span><span class="bv warn">662,318주</span></div>
+    </div>
+    <p class="note">평균의 약 54% 수준으로 한산합니다. 종합 신호는 <b style="color:var(--ink);">중립(단기 반등 후 숨고르기 국면)</b>입니다. 상승 근거는 MACD 골든크로스·RSI 중립·단기 이평 우상향, 유의 근거는 중장기 이평 미회복·MACD 히스토그램 축소·거래량 위축입니다.</p>
+  </div>
+
+  <p class="note">참고: 본 리포트에는 캔들차트 이미지가 포함되지 않았습니다(차트 파일 미제공). 위 지표값은 2026-08-03 종가 기준이며 일봉 300개(2025-05-13~2026-08-03) 구간에서 산출된 것으로, 차트 이미지 대신 수치 기반 시각화로 대체했습니다.</p>
+</section>
+
+<section id="news">
+  <div class="sec-head">
+    <div class="kicker">05 · NEWS</div>
+    <h2>최근 뉴스와 시장 심리</h2>
+  </div>
+  <p class="lede">최근 3개월(2026년 5월~8월 3일) 여론은 긍정이 우세합니다. 다만 AI 수익화와 두나무 합병 최종 승인이라는 미확정 변수를 안고 있는 &ldquo;혼재적 긍정&rdquo;으로 요약됩니다.</p>
+
+  <div class="card flat">
+    <h3>아래 타임라인 16건의 성격</h3>
+    <div class="senti">
+      <span style="width: 62.5%; background:var(--up);"></span>
+      <span style="width: 6.3%; background:var(--down);"></span>
+      <span style="width: 31.2%; background:var(--neutral);"></span>
+    </div>
+    <div class="chips senti-legend">
+      <span class="chip red">긍정 <b>10건 · 62.5%</b></span>
+      <span class="chip blue">부정 <b>1건 · 6.3%</b></span>
+      <span class="chip">중립 <b>5건 · 31.2%</b></span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="tl timeline">
+      <div class="tl-item">
+        <div class="tl-date">2026-04-30 · 배경</div>
+        <div class="tl-title">1분기 실적 발표 — 매출 3.24조(+16.3%), 영업이익 5,418억(+7.2%)</div>
+        <div class="tl-desc">분기 사상 최대 매출이지만 순이익은 AI 인프라 감가상각 영향으로 감소했습니다. 혼재적 성격이며 긍정이 우세하다는 평가입니다.</div>
+      </div>
+      <div class="tl-item neg">
+        <div class="tl-date">2026-04-30</div>
+        <div class="tl-title">&lsquo;국가대표 AI&rsquo; 1차 평가 탈락, 알리바바 Qwen 모델 이식 의혹 재점화</div>
+        <div class="tl-desc">독자 파운데이션 모델 선정에서 1차 탈락했고, 비전 인코더 코사인 유사도 99.5%라는 이식 의혹이 다시 불거졌습니다.</div>
+        <div class="tl-flag"><span class="pill blue">기술 신뢰 이슈</span></div>
+      </div>
+      <div class="tl-item pos">
+        <div class="tl-date">2026-05-08</div>
+        <div class="tl-title">네이버플러스스토어 MAU 838만명, 역대 최대</div>
+        <div class="tl-desc">3월 777만 → 4월 838만으로 증가. 에이전틱 커머스 경쟁이 본격화되는 국면입니다.</div>
+      </div>
+      <div class="tl-item pos key">
+        <div class="tl-date">2026-05-29 ~ 06-05 · 핵심 이벤트</div>
+        <div class="tl-title">젠슨 황 엔비디아 CEO 방한, 이해진 GIO와 회동 — 주가 약 19% 급등</div>
+        <div class="tl-desc">소버린 AI·피지컬 AI·로보틱스·GPU 6만장 인프라 협력을 논의했습니다. 회동 소식만으로 주가가 약 19% 올랐습니다.</div>
+        <div class="tl-flag"><span class="pill red">강한 긍정</span></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2026-06-08</div>
+        <div class="tl-title">코스피 &minus;8.40% 폭락·서킷브레이커 속 네이버는 +13.89% 반전</div>
+        <div class="tl-desc">VI 발동 후 반전했습니다. 시장 전체 이슈이며 개별 호재는 아닙니다.</div>
+      </div>
+      <div class="tl-item pos">
+        <div class="tl-date">2026-06-09, 07-07</div>
+        <div class="tl-title">목표주가 33만원 신규 제시, KB증권 등 재확인</div>
+        <div class="tl-desc">6개월 평균 목표가는 326,045원으로 집계됩니다. 각 증권사의 의견이며 본 리포트의 견해가 아닙니다.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2026-06-16</div>
+        <div class="tl-title">두나무로부터 네이버페이 지분 179,999주(294억원) 추가 인수</div>
+        <div class="tl-desc">지분율이 34.04%로 확대됐습니다. 지배구조 정비 성격입니다.</div>
+      </div>
+      <div class="tl-item pos">
+        <div class="tl-date">2026-06 중</div>
+        <div class="tl-title">기가와트급 AI 팩토리 구축계획 발표 (1단계 200MW)</div>
+      </div>
+      <div class="tl-item pos">
+        <div class="tl-date">2026-07-16</div>
+        <div class="tl-title">하이퍼클로바X 경량모델 3종 오픈소스 공개</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2026-07-20, 07-29</div>
+        <div class="tl-title">&ldquo;네카오 2분기 맑음이나 AI 수익화가 관건&rdquo; 논조 반복</div>
+      </div>
+      <div class="tl-item pos">
+        <div class="tl-date">2026-07-22</div>
+        <div class="tl-title">이해진 의장, AX부터 국방 분야까지 대외 행보 확대</div>
+      </div>
+      <div class="tl-item pos">
+        <div class="tl-date">2026-07-27</div>
+        <div class="tl-title">네이버-두나무 합병 관련 규제기관 개선 권고</div>
+        <div class="tl-desc">가상자산 대주주 적격성 심사기준에 예외를 마련할 필요성이 제기됐습니다.</div>
+      </div>
+      <div class="tl-item pos key">
+        <div class="tl-date">2026-07-28 · 기간 중 최대 호재</div>
+        <div class="tl-title">엔비디아·브룩필드로부터 총 100억달러(약 14.6조원) AI 팩토리 투자 유치</div>
+        <div class="tl-desc">엔비디아 지분투자 10억달러 + 브룩필드 인프라투자 최대 90억달러 구조이며, 1단계는 200MW 규모입니다.</div>
+        <div class="tl-flag"><span class="pill red">강한 긍정</span></div>
+      </div>
+      <div class="tl-item pos">
+        <div class="tl-date">2026-07-31</div>
+        <div class="tl-title">공정거래위원장 &ldquo;두나무 기업결합 심사 연내 완료&rdquo; 공식화</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2026-08-02</div>
+        <div class="tl-title">네이버·카카오 2분기 실적 발표 8월 7일 예정 예고</div>
+      </div>
+      <div class="tl-item pos">
+        <div class="tl-date">2026-08-03 · 최신</div>
+        <div class="tl-title">2분기 컨센서스 — 매출 3.35~3.37조(+15.0~15.6%), 영업이익 5,674~5,717억(+8.8~9.6%)</div>
+        <div class="tl-desc">GPU 감가상각비·월드컵 중계료·마케팅비 부담으로 영업이익 증가율이 매출 증가율보다 낮을 것으로 전망됩니다. 8월 7일 발표 전 컨센서스 단계이며 확정치가 아닙니다.</div>
+        <div class="tl-flag"><span class="pill">확정 아님</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card flat">
+    <h3>카테고리별 여론</h3>
+    <div class="kv">
+      <div class="kv-row"><span class="k">실적 · 사업</span><span class="v">혼재 — 2분기 컨센서스는 긍정적이나 미확정</span></div>
+      <div class="kv-row"><span class="k">규제 · 정책</span><span class="v">두나무 딜에 우호적인 흐름</span></div>
+      <div class="kv-row"><span class="k">AI · 기술</span><span class="v">Qwen 의혹은 부정, AI팩토리 투자·오픈소스 공개는 강한 긍정</span></div>
+      <div class="kv-row"><span class="k">경쟁 · M&amp;A</span><span class="v">두나무 순항, 카카오와 에이전틱 커머스 경쟁 심화</span></div>
+      <div class="kv-row"><span class="k">주가 · 투자자 동향</span><span class="v">젠슨황 효과 +19% 급등, 목표주가 33만원대 유지</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="risk">
+  <div class="sec-head">
+    <div class="kicker">06 · RISK</div>
+    <h2>리스크 분석</h2>
+  </div>
+  <p class="lede">재무 안정성은 견고하지만 리스크의 성격이 재무가 아닌 구조적·이벤트 영역에 집중돼 있습니다. 베타는 낮은데 실현 변동성은 코스피보다 높은 조합입니다.</p>
+
+  <div class="hero">
+    <div class="label">종합 리스크 등급</div>
+    <div class="big" style="color:var(--warn);">중상</div>
+    <div class="chg" style="color:var(--muted); font-weight:600;">Moderately High</div>
+    <div class="foot">부채비율 45.21%, 순현금 4.7조, 당좌비율 113%, PER 18.01 / PBR 1.05로 재무는 견고합니다. 등급을 끌어올린 것은 검색 점유율의 실시간 훼손 가능성, 아직 기대치 단계인 AI·커머스·핀테크 수익 기여, 그리고 이미 확정된 감가상각 비용입니다.</div>
+  </div>
+
+  <div class="stats">
+    <div class="stat tile"><div class="k">베타 (52주, 주간)</div><div class="v good">0.36</div><div class="n">자체 산출 0.352 일치</div></div>
+    <div class="stat tile"><div class="k">실현변동성 1년</div><div class="v warn">55.9%</div><div class="n">KOSPI 52.6%</div></div>
+    <div class="stat tile"><div class="k">실현변동성 60일</div><div class="v red">83.1%</div><div class="n">20일 76.4%</div></div>
+    <div class="stat tile"><div class="k">MDD (1년)</div><div class="v red">&minus;36.2%</div><div class="n">2026-07-14</div></div>
+    <div class="stat tile"><div class="k">±5% 이상 등락일</div><div class="v red">21.3%</div><div class="n">최근 3개월 13/61일</div></div>
+    <div class="stat tile"><div class="k">52주 밴드 내 위치</div><div class="v warn">21.5%</div><div class="n">하단</div></div>
+    <div class="stat tile"><div class="k">외국인 지분율</div><div class="v sm">34.88%</div><div class="n">유동비율 87.15%</div></div>
+    <div class="stat tile"><div class="k">KOSPI 상관계수</div><div class="v sm">0.454</div><div class="n">일간 베타 0.482</div></div>
+  </div>
+
+  <div class="card">
+    <h3>베타는 낮은데 변동성은 높다 <span class="cap">이 조합이 뜻하는 것</span></h3>
+    <p class="grp">연율 실현 변동성 <span>단위: %</span></p>
+    <div class="bars">
+      <div class="bar-row"><span class="bl self">60일</span><span class="track"><span class="fill red" style="width: 100.0%"></span></span><span class="bv red">83.1%</span></div>
+      <div class="bar-row"><span class="bl self">20일</span><span class="track"><span class="fill red" style="width: 91.9%"></span></span><span class="bv red">76.4%</span></div>
+      <div class="bar-row"><span class="bl self">1년</span><span class="track"><span class="fill warn" style="width: 67.3%"></span></span><span class="bv warn">55.9%</span></div>
+      <div class="bar-row"><span class="bl">KOSPI 1년</span><span class="track"><span class="fill mute" style="width: 63.3%"></span></span><span class="bv">52.6%</span></div>
+    </div>
+    <p class="grp">베타 <span>산출 방식별</span></p>
+    <div class="bars">
+      <div class="bar-row"><span class="bl">일간</span><span class="track"><span class="fill mute" style="width: 100.0%"></span></span><span class="bv">0.482</span></div>
+      <div class="bar-row"><span class="bl">WISEfn 52주</span><span class="track"><span class="fill mute" style="width: 74.7%"></span></span><span class="bv">0.36</span></div>
+      <div class="bar-row"><span class="bl">주간(자체)</span><span class="track"><span class="fill mute" style="width: 73.0%"></span></span><span class="bv">0.352</span></div>
+    </div>
+    <p class="note">베타가 낮은 이유는 시장과 함께 움직이지 않기 때문(KOSPI 상관계수 0.454)이지, 덜 흔들리기 때문이 아닙니다. 실제 실현 변동성은 코스피보다 높습니다. 즉 <b style="color:var(--ink);">체계적 위험은 낮지만 개별 종목 이벤트 리스크가 지배적</b>인 구조입니다.</p>
+  </div>
+
+  <div class="card flat">
+    <h3>6주 만의 라운드트립 <span class="cap">2026-06-02 → 07-14</span></h3>
+    <div class="bars">
+      <div class="bar-row"><span class="bl">6/2 종가</span><span class="track"><span class="fill mute" style="width: 100.0%"></span></span><span class="bv">280,500원</span></div>
+      <div class="bar-row"><span class="bl">7/14 종가</span><span class="track"><span class="fill" style="width: 65.3%"></span></span><span class="bv blue">183,200원</span></div>
+    </div>
+    <p class="note">6주 만에 &minus;34.7%. 6월 1일의 52주 최고 304,000원은 단순 노이즈가 아니라 이벤트 드리븐 오버슈팅과 그 되돌림의 실증 사례로 재해석됩니다.</p>
+  </div>
+
+  <div class="card flat">
+    <h3>리스크 매트릭스</h3>
+    <p class="cap">왼쪽 색 띠 &mdash; 빨강: 상 / 주황: 중 / 회색: 하</p>
+  </div>
+
+  <div class="risk-item hi">
+    <div class="risk-top"><span class="risk-name">산업 — 검색 잠식</span><span class="pill red">상</span></div>
+    <p class="risk-body">StatCounter 기준 2026년 3월 <b>구글 46.81% vs 네이버 43.96%</b>로 역전 집계됐습니다. 다만 국내 인터넷트렌드 기준으로는 네이버 62.86% 1위로, 조사기관별 편차가 매우 큽니다.</p>
+  </div>
+  <div class="risk-item hi">
+    <div class="risk-top"><span class="risk-name">산업 — 커머스 경쟁</span><span class="pill red">상</span></div>
+    <p class="risk-body">쿠팡의 영업이익(2.29조)이 <b>네이버 전사 영업이익을 상회</b>한다는 평가가 존재합니다. 이커머스 M/S는 네이버 20.7%로 쿠팡(약 22%대)에 이은 2위입니다.</p>
+  </div>
+  <div class="risk-item hi">
+    <div class="risk-top"><span class="risk-name">가격 변동성</span><span class="pill red">상</span></div>
+    <p class="risk-body">베타는 0.36으로 낮지만 실현 변동성 1년 <b>55.9%</b>(KOSPI 52.6%), 60일 83.1%, MDD <b>&minus;36.2%</b>, 6주 라운드트립 &minus;34.7%가 근거입니다. 최근 3개월 ±5% 이상 움직인 날이 13/61일(21.3%)입니다.</p>
+  </div>
+  <div class="risk-item hi">
+    <div class="risk-top"><span class="risk-name">이벤트 — 8/7 실적 발표</span><span class="pill red">상 · 임박</span></div>
+    <p class="risk-body">컨센서스 미달 가능성이 열려 있습니다. 2분기 컨센서스는 매출 3.35~3.37조 / 영업이익 5,674~5,717억이며, GPU 감가상각비·월드컵 중계료·마케팅비 부담이 지목됩니다.</p>
+  </div>
+  <div class="risk-item hi">
+    <div class="risk-top"><span class="risk-name">이벤트 — 두나무 편입</span><span class="pill red">상</span></div>
+    <p class="risk-body">공정위 최종 승인이 미확정입니다. 딜 규모 <b>약 20조원</b>은 시가총액 32.57조원 대비 큰 비중이며, 순현금 4.7조로는 현금 충당이 불가해 주식 교환·차입 구조에 따라 부채비율이 달라집니다.</p>
+  </div>
+  <div class="risk-item hi">
+    <div class="risk-top"><span class="risk-name">이벤트 — AI 투자 회수 지연</span><span class="pill red">상</span></div>
+    <p class="risk-body">14.6조원 AI팩토리와 1.32조원 Capex의 감가상각은 <b>확정 비용으로 선반영</b>되는 반면 회수 시점은 미확정입니다. 2026Q1 영업이익률 16.71%(5분기 최저)와 순이익 &minus;31.3% YoY가 이 시차의 초기 신호로 해석됩니다.</p>
+  </div>
+  <div class="risk-item mid">
+    <div class="risk-top"><span class="risk-name">재무 — 수익성 훼손</span><span class="pill warn">중</span></div>
+    <p class="risk-body">영업이익률과 순이익률이 동시에 하락 전환했습니다. 순이익률 17.99%(2024) → 15.11%(2025) → 13.49%(2026E) 흐름입니다.</p>
+  </div>
+  <div class="risk-item mid">
+    <div class="risk-top"><span class="risk-name">재무 — 회계 투명성</span><span class="pill warn">중</span></div>
+    <p class="risk-body">배당성향 125.66%의 배경, Capex 1.32조의 세부 용도, 분기 순이익률 급변동의 원인이 모두 <b>정보 부족(미확인)</b> 상태입니다.</p>
+  </div>
+  <div class="risk-item mid">
+    <div class="risk-top"><span class="risk-name">기술적 추세</span><span class="pill warn">중</span></div>
+    <p class="risk-body">중장기 이평선 미회복(MA60 212,867 / MA120 218,121), MACD 히스토그램 축소, 거래량 위축(20일 평균의 54%)이 겹칩니다.</p>
+  </div>
+  <div class="risk-item mid">
+    <div class="risk-top"><span class="risk-name">산업 — 클라우드 열위</span><span class="pill warn">중</span></div>
+    <p class="risk-body">국내 퍼블릭 클라우드 M/S <b>5%로 4위</b>입니다. 2026년 4월 기준으로도 4위를 유지하고 있습니다.</p>
+  </div>
+  <div class="risk-item mid">
+    <div class="risk-top"><span class="risk-name">규제</span><span class="pill warn">중</span></div>
+    <p class="risk-body">두나무 기업결합 심사가 진행 중입니다. 공정거래위원장이 연내 완료를 공식화했고 규제기관 개선 권고도 나왔으나, 결과는 확정되지 않았습니다.</p>
+  </div>
+  <div class="risk-item mid">
+    <div class="risk-top"><span class="risk-name">평판 · 기술 신뢰</span><span class="pill warn">중</span></div>
+    <p class="risk-body">알리바바 Qwen 모델 이식 의혹(비전 인코더 코사인 유사도 99.5%)이 <b>미해소</b> 상태이며, 국가대표 AI 1차 평가 탈락 이슈도 남아 있습니다.</p>
+  </div>
+  <div class="risk-item lo">
+    <div class="risk-top"><span class="risk-name">재무 — 지급 능력</span><span class="pill">하</span></div>
+    <p class="risk-body">부채비율 45.21%, 당좌비율 113.33%, 순현금 약 4.7조원, 유보율 176,693.81%. 단기 지급 능력에 대한 우려는 낮은 수준입니다.</p>
+  </div>
+
+  <div class="card">
+    <h3>시나리오 지도 <span class="cap">risk-analyst가 제시한 7개 경로</span></h3>
+    <div class="kv">
+      <div class="kv-row"><span class="k">A · 실적 하회</span><span class="v">194,700원 이탈 시 52주 최저 181,100원 재시험</span></div>
+      <div class="kv-row"><span class="k">B · 서프라이즈</span><span class="v">MA60·MA120 돌파 시 추세 전환, 단 거래량 동반 필수</span></div>
+      <div class="kv-row"><span class="k">C · 두나무 무산</span><span class="v">하반기 모멘텀 소멸, 목표주가 30만원대 하향 연쇄 가능</span></div>
+      <div class="kv-row"><span class="k">D · 두나무 승인</span><span class="v">단기 급등 가능하나 통합·자금조달·희석 리스크로 전환</span></div>
+      <div class="kv-row"><span class="k">E · AI 회수 지연</span><span class="v">영업이익률 16%대 고착, ROE 하락 시 PBR 1.0 하회 가능</span></div>
+      <div class="kv-row"><span class="k">F · Qwen 재점화</span><span class="v">AI 서사 훼손, 밸류에이션 프리미엄 직격</span></div>
+      <div class="kv-row"><span class="k">G · 구글 AI 공세</span><span class="v">8/7 실적의 서치플랫폼 매출 성장률이 최우선 확인 지표</span></div>
+    </div>
+    <p class="note">A·C·F는 &ldquo;네이버 AI 전환 서사&rdquo;라는 공통 기반을 공유해 하나가 현실화되면 나머지 할인율도 함께 오르는 동조 하락이 가능합니다. 반대로 B·D도 같은 이유로 동조 상방이 증폭됩니다. 6월 +37% 급등 → 7월 &minus;34.7% 되돌림이 6주 간격으로 연속 발생한 것이 그 실증 사례입니다.</p>
+  </div>
+
+  <div class="card">
+    <h3>모니터링 포인트</h3>
+    <div class="watch">
+      <div><span class="wn">1</span>8월 7일 2분기 실적 — 특히 서치플랫폼 매출 성장률</div>
+      <div><span class="wn">2</span>영업이익률이 16%대에서 더 내려가는지</div>
+      <div><span class="wn">3</span>두나무 기업결합 심사 결과와 대가 지급 구조</div>
+      <div><span class="wn">4</span>194,700원 지지 유지 여부와 MA60(212,867원) 회복 시 거래량 동반 여부</div>
+    </div>
+  </div>
+
+  <div class="card flat">
+    <h3>리스크 분석에서 확인되지 않은 항목</h3>
+    <div class="gap">
+      <div class="gap-row"><b>정보 부족</b><span>배당성향 125.66%의 배경</span></div>
+      <div class="gap-row"><b>정보 부족</b><span>Capex 1.32조의 세부 용도</span></div>
+      <div class="gap-row"><b>정보 부족</b><span>2026Q1 순이익 &minus;31.3% YoY의 세부 원인</span></div>
+      <div class="gap-row"><b>정보 부족</b><span>AI팩토리 1단계 200MW의 수요처·계약 구조</span></div>
+      <div class="gap-row"><b>정보 부족</b><span>Qwen 의혹에 대한 공식 해명 및 제3자 검증</span></div>
+      <div class="gap-row"><b>정보 부족</b><span>두나무 딜의 대가 지급 구조(현금/주식교환/차입 비중)</span></div>
+      <div class="gap-row"><b>정보 부족</b><span>플랫폼 규제 계류 소송·제재 건</span></div>
+      <div class="gap-row"><b>정보 부족</b><span>증권사별 목표주가 개별 수치(일부만 확인)</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="wrapup">
+  <div class="sec-head">
+    <div class="kicker">07 · WRAP-UP</div>
+    <h2>종합 정리</h2>
+  </div>
+  <p class="lede">아래는 다섯 개 분석 영역에서 확인된 사실을 긍정 요인과 부정 요인으로 나눠 정리한 것입니다. 어느 쪽이 더 중요한지에 대한 판단은 담지 않았습니다.</p>
+
+  <div class="two">
+    <div class="col plus">
+      <h3>긍정 요인</h3>
+      <ul class="pn-list">
+        <li>PER 18.01배 / PBR 1.05배로 동일업종 평균(21.47배)과 카카오(33.48배 / 1.43배) 대비 낮은 수준</li>
+        <li>매출 3년 연속 두 자릿수 성장, 2026년 컨센서스 13.76조원(+14.3%)</li>
+        <li>순현금 약 4.7조원, 부채비율 45.21%, 당좌비율 113.33%로 재무 안정성 견고</li>
+        <li>영업활동현금흐름 2.002조 → 2.590조 → 3.096조로 3년 연속 증가</li>
+        <li>온라인 간편결제 M/S 51.5%로 1위, 커머스 부문 2025년 매출 +26.2% 성장</li>
+        <li>엔비디아·브룩필드로부터 100억달러(약 14.6조원) AI팩토리 투자 유치</li>
+        <li>두나무 기업결합 심사가 연내 완료로 공식화되고 규제기관 개선 권고도 확보</li>
+        <li>최근 3개월 뉴스 여론 긍정 62.5%, 목표주가 26만~34만원(컨센서스 평균 약 30~30.2만원) 제시</li>
+        <li>MACD 골든크로스(7/21) 유지, RSI 51.47 중립, 단기 이평선 우상향</li>
+      </ul>
+    </div>
+    <div class="col minus">
+      <h3>부정 요인</h3>
+      <ul class="pn-list">
+        <li>2026Q1 영업이익률 16.71%로 최근 5개 분기 중 최저, 순이익 &minus;31.3% YoY</li>
+        <li>영업이익 증가율 +32.9% → +11.6% → +8.1%(E)로 계단식 둔화</li>
+        <li>ROE 6.49%로 SOOP(24.09%)·메쎄이상(23.58%)·디어유(12.30%) 등 피어보다 낮음</li>
+        <li>2025년 Capex 1.319조로 전년 대비 2.3배 급증, FCF는 2.010조 → 1.776조로 감소</li>
+        <li>StatCounter 기준 검색 점유율이 구글 46.81% vs 네이버 43.96%로 역전 집계</li>
+        <li>커머스 수익성 열위 — 쿠팡 영업이익 2.29조가 네이버 전사 영업이익 상회 평가</li>
+        <li>클라우드 M/S 5%로 4위, 콘텐츠 부문 시장점유율은 정보 부족</li>
+        <li>MDD &minus;36.2%, 6주 만의 &minus;34.7% 라운드트립, 60일 실현변동성 83.1%</li>
+        <li>MA60·MA120 미회복, MACD 히스토그램 축소, 거래량 20일 평균의 54%</li>
+        <li>8/7 실적, 두나무 승인, AI 투자 회수라는 미확정 이벤트 3건이 동시 계류</li>
+        <li>Qwen 모델 이식 의혹 미해소, 국가대표 AI 1차 평가 탈락</li>
+        <li>배당성향 125.66%·Capex 용도·순이익률 급변동 원인 등 회계 관련 정보 부족 항목 다수</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card flat">
+    <h3>양쪽을 한 문장으로</h3>
+    <p class="sec-note">밸류에이션과 재무 안정성은 업종 대비 유리한 위치에 있고, 비용은 이미 확정됐지만 그 비용이 만들어낼 수익은 아직 기대치 단계에 있습니다.</p>
+    <p class="lede">가장 가까운 확인 시점은 2026년 8월 7일 2분기 실적 발표이며, 그중에서도 서치플랫폼 매출 성장률과 영업이익률의 방향이 위 두 축을 동시에 검증하는 지표로 지목됩니다.</p>
+  </div>
+
+  <div class="disclaimer">
+    본 리포트는 정보 제공을 목적으로 하며 투자 조언이 아닙니다. 투자 결정과 그 책임은 투자자 본인에게 있습니다.<br><br>
+    수치는 2026-08-03 기준으로 수집된 공개 자료를 정리한 것이며, 2026E 실적·2026Q2 컨센서스·목표주가 등 추정치는 확정된 값이 아닙니다. 일부 지표는 조회 시점과 조사기관에 따라 차이가 있을 수 있으며, &lsquo;정보 부족&rsquo;으로 표기된 항목은 분석 시점에 확인되지 않은 내용입니다.
+  </div>
+</section>
+
+</div>
+
+<script>
+(function(){
+  var btn = document.getElementById('shareBtn');
+  var panel = document.getElementById('sharePanel');
+  var zone = btn.closest('.share-zone');
+
+  function closePanel(){
+    panel.classList.remove('open');
+    btn.setAttribute('aria-expanded','false');
+  }
+  btn.addEventListener('click', function(e){
+    e.stopPropagation();
+    var open = panel.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  document.addEventListener('click', function(e){
+    if(!zone.contains(e.target)) closePanel();
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape') closePanel();
+  });
+
+  Array.prototype.forEach.call(document.querySelectorAll('.share-head'), function(h){
+    h.addEventListener('click', function(){
+      var body = document.getElementById(h.getAttribute('data-target'));
+      var willOpen = !body.classList.contains('open');
+      Array.prototype.forEach.call(document.querySelectorAll('.share-body'), function(b){ b.classList.remove('open'); });
+      if(willOpen) body.classList.add('open');
+    });
+  });
+
+  var SUBJECT = '네이버 투자 컨설팅 리포트 - 2026-08-03';
+  function reportUrl(){ return window.location.href; }
+  function summaryLines(){
+    return [
+      '네이버 (035420) 투자 컨설팅 리포트 · 2026-08-03',
+      '',
+      '종가 207,500원 (-0.24%), 시가총액 32.57조원.',
+      'PER 18.01배 / PBR 1.05배로 동일업종 평균(21.47배)보다 낮고 순현금 약 4.7조원. 다만 2026Q1 영업이익률 16.71%로 5분기 최저, 순이익 -31.3% YoY.',
+      'AI팩토리 14.6조원 투자 유치는 호재이나 감가상각은 확정 비용, 회수 시점은 미확정. 종합 리스크 등급 중상(Moderately High).',
+      '',
+      '리포트 전문: ' + reportUrl()
+    ].join('\n');
+  }
+
+  var mailTo = document.getElementById('mailTo');
+  var mailLink = document.getElementById('mailLink');
+  function buildMailto(){
+    var addr = mailTo.value.trim();
+    var body = encodeURIComponent(summaryLines());
+    var subj = encodeURIComponent(SUBJECT);
+    // 수신자 주소는 인코딩하지 않는다 (@ 가 %40 으로 바뀌면 메일 클라이언트가 인식하지 못함)
+    mailLink.setAttribute('href', 'mailto:' + (mailTo.checkValidity() ? addr : '') + '?subject=' + subj + '&body=' + body);
+  }
+  mailTo.addEventListener('input', buildMailto);
+  buildMailto();
+
+  var kakaoText = document.getElementById('kakaoText');
+  kakaoText.value = summaryLines();
+
+  var copyBtn = document.getElementById('copyBtn');
+  copyBtn.addEventListener('click', function(){
+    kakaoText.select();
+    kakaoText.setSelectionRange(0, kakaoText.value.length);
+    var ok = false;
+    try { ok = document.execCommand('copy'); } catch(err) { ok = false; }
+    if(ok){
+      var prev = copyBtn.textContent;
+      copyBtn.textContent = '복사됨!';
+      setTimeout(function(){ copyBtn.textContent = prev; }, 1600);
+    }
+  });
+
+  var nativeBtn = document.getElementById('nativeShareBtn');
+  if(navigator.share){
+    nativeBtn.hidden = false;
+    nativeBtn.addEventListener('click', function(){
+      navigator.share({ title: SUBJECT, text: summaryLines() }).catch(function(){});
+    });
+  }
+})();
+</script>

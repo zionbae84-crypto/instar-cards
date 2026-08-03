@@ -1,5 +1,14 @@
 [
   {
+    "company": "네이버 (NAVER)",
+    "code": "035420 · KOSPI",
+    "date": "2026-08-03",
+    "price": "207,500원",
+    "change": "-0.24%",
+    "risk": "중상",
+    "file": "reports/naver-035420-2026-08-03.html"
+  },
+  {
     "company": "현대자동차",
     "code": "005380 · KOSPI",
     "date": "2026-07-28",
