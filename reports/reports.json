@@ -1,5 +1,14 @@
 [
   {
+    "company": "팔란티어 (Palantir)",
+    "code": "PLTR · NASDAQ",
+    "date": "2026-08-05",
+    "price": "$162.66",
+    "change": "+29.45% (Q2 실적후 갭업)",
+    "risk": "상",
+    "file": "reports/palantir-pltr-2026-08-05.html"
+  },
+  {
     "company": "네이버 (NAVER)",
     "code": "035420 · KOSPI",
     "date": "2026-08-03",
