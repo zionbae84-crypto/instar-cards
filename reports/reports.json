@@ -1,5 +1,14 @@
 [
   {
+    "company": "코히런트 (Coherent Corp)",
+    "code": "COHR · NASDAQ",
+    "date": "2026-08-12",
+    "price": "$328.57",
+    "change": "+1.05%",
+    "risk": "상",
+    "file": "reports/coherent-cohr-2026-08-12.html"
+  },
+  {
     "company": "실리콘투",
     "code": "257720 · KOSDAQ",
     "date": "2026-08-12",
