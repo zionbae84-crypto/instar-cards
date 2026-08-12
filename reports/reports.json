@@ -1,5 +1,14 @@
 [
   {
+    "company": "실리콘투",
+    "code": "257720 · KOSDAQ",
+    "date": "2026-08-12",
+    "price": "45,250원",
+    "change": "+12.98%",
+    "risk": "중",
+    "file": "reports/silicon2-257720-2026-08-12.html"
+  },
+  {
     "company": "블룸에너지 (Bloom Energy)",
     "code": "BE · NYSE",
     "date": "2026-08-11",
