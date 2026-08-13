@@ -1,5 +1,14 @@
 [
   {
+    "company": "삼성전기",
+    "code": "009150 · KOSPI",
+    "date": "2026-08-13",
+    "price": "1,503,000원",
+    "change": "+12.58%",
+    "risk": "상",
+    "file": "reports/semco-009150-2026-08-13.html"
+  },
+  {
     "company": "코히런트 (Coherent Corp)",
     "code": "COHR · NASDAQ",
     "date": "2026-08-12",
