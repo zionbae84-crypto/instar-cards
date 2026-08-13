@@ -1,5 +1,14 @@
 [
   {
+    "company": "마벨 테크놀로지 (Marvell)",
+    "code": "MRVL · NASDAQ",
+    "date": "2026-08-13",
+    "price": "$217.08",
+    "change": "+2.25%",
+    "risk": "상",
+    "file": "reports/mrvl-2026-08-13.html"
+  },
+  {
     "company": "삼성전기",
     "code": "009150 · KOSPI",
     "date": "2026-08-13",
