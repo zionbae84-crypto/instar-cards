@@ -1,5 +1,14 @@
 [
   {
+    "company": "레딧 (Reddit)",
+    "code": "RDDT · NYSE",
+    "date": "2026-08-14",
+    "price": "$158.12",
+    "change": "+3.04% (S&P500 편입 발표 전 기준)",
+    "risk": "상",
+    "file": "reports/reddit-rddt-2026-08-14.html"
+  },
+  {
     "company": "마벨 테크놀로지 (Marvell)",
     "code": "MRVL · NASDAQ",
     "date": "2026-08-13",
