@@ -1,5 +1,14 @@
 [
   {
+    "company": "두산에너빌리티",
+    "code": "034020 · KOSPI",
+    "date": "2026-08-16",
+    "price": "82,600원",
+    "change": "+2.1%",
+    "risk": "상",
+    "file": "reports/doosan-enerbility-034020-2026-08-16.html"
+  },
+  {
     "company": "크라우드스트라이크 (CrowdStrike)",
     "code": "CRWD · NASDAQ",
     "date": "2026-08-16",
