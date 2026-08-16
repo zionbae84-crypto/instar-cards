@@ -1,5 +1,14 @@
 [
   {
+    "company": "크라우드스트라이크 (CrowdStrike)",
+    "code": "CRWD · NASDAQ",
+    "date": "2026-08-16",
+    "price": "$216.95",
+    "change": "-3.80% (8/14 종가)",
+    "risk": "상",
+    "file": "reports/crwd-2026-08-16.html"
+  },
+  {
     "company": "레딧 (Reddit)",
     "code": "RDDT · NYSE",
     "date": "2026-08-14",
