@@ -1,5 +1,14 @@
 [
   {
+    "company": "삼성전자 (주주환원 업데이트)",
+    "code": "005930 · KOSPI",
+    "date": "2026-08-21",
+    "price": "281,500원",
+    "change": "+3.87%",
+    "risk": "상",
+    "file": "reports/samsung-005930-2026-08-21.html"
+  },
+  {
     "company": "두산에너빌리티",
     "code": "034020 · KOSPI",
     "date": "2026-08-16",
