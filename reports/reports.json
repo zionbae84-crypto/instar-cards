@@ -1,5 +1,14 @@
 [
   {
+    "company": "우버 (Uber Technologies)",
+    "code": "UBER · NYSE",
+    "date": "2026-08-22",
+    "price": "$78.80",
+    "change": "+11.8% (2주 반등, 8/21 종가)",
+    "risk": "중상",
+    "file": "reports/uber-2026-08-22.html"
+  },
+  {
     "company": "삼성전자 (주주환원 업데이트)",
     "code": "005930 · KOSPI",
     "date": "2026-08-21",
