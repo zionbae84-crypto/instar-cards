@@ -1,5 +1,14 @@
 [
   {
+    "company": "마이크론 (Micron Technology)",
+    "code": "MU · NASDAQ",
+    "date": "2026-08-25",
+    "price": "$903",
+    "change": "-6.54% (8/24 장중)",
+    "risk": "중상",
+    "file": "reports/micron-mu-2026-08-25.html"
+  },
+  {
     "company": "우버 (Uber Technologies)",
     "code": "UBER · NYSE",
     "date": "2026-08-22",
