@@ -1,5 +1,14 @@
 [
   {
+    "company": "GS",
+    "code": "078930 · KOSPI",
+    "date": "2026-08-25",
+    "price": "123,200원",
+    "change": "+7.5% (당일, 52주 신고가)",
+    "risk": "상",
+    "file": "reports/gs-078930-2026-08-25.html"
+  },
+  {
     "company": "마이크론 (Micron Technology)",
     "code": "MU · NASDAQ",
     "date": "2026-08-25",

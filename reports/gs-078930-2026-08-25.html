@@ -1,0 +1,878 @@
+<title>GS 주가가 계속 오르는 이유는?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800&display=swap">
+<style>
+:root{
+  --bg:#F7F8FA; --surface:#FFFFFF; --surface-2:#F2F4F6; --ink:#191F28; --muted:#8B95A1;
+  --accent:#3182F6; --accent-soft:#EBF2FE; --up:#F04452; --down:#3182F6; --line:#E5E8EB;
+  --up-soft:#FDECEE; --shadow:0 1px 3px rgba(0,0,0,.04), 0 6px 20px rgba(0,0,0,.05);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#16181C; --surface:#202124; --surface-2:#26282C; --ink:#F2F3F5; --muted:#8B95A1;
+    --accent:#4593FC; --accent-soft:#1D2A3D; --up:#FF5D6C; --down:#4593FC; --line:#2E3136;
+    --up-soft:#3A2126; --shadow:0 1px 3px rgba(0,0,0,.3), 0 6px 20px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#16181C; --surface:#202124; --surface-2:#26282C; --ink:#F2F3F5; --muted:#8B95A1;
+  --accent:#4593FC; --accent-soft:#1D2A3D; --up:#FF5D6C; --down:#4593FC; --line:#2E3136;
+  --up-soft:#3A2126; --shadow:0 1px 3px rgba(0,0,0,.3), 0 6px 20px rgba(0,0,0,.35);
+}
+:root[data-theme="light"]{
+  --bg:#F7F8FA; --surface:#FFFFFF; --surface-2:#F2F4F6; --ink:#191F28; --muted:#8B95A1;
+  --accent:#3182F6; --accent-soft:#EBF2FE; --up:#F04452; --down:#3182F6; --line:#E5E8EB;
+  --up-soft:#FDECEE; --shadow:0 1px 3px rgba(0,0,0,.04), 0 6px 20px rgba(0,0,0,.05);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:"Pretendard","Apple SD Gothic Neo","Noto Sans KR",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:16px; line-height:1.65; -webkit-font-smoothing:antialiased;
+  font-variant-numeric:tabular-nums;
+}
+.wrap{max-width:820px; margin:0 auto; padding:32px 20px 80px; display:flex; flex-direction:column; gap:14px}
+h1,h2,h3,h4{margin:0; text-wrap:balance; letter-spacing:-.02em}
+p{margin:0}
+.num{font-variant-numeric:tabular-nums}
+
+/* ---------- header ---------- */
+header.hero{
+  background:var(--surface); border-radius:24px; padding:32px 28px; box-shadow:var(--shadow);
+  display:flex; flex-direction:column; gap:14px;
+}
+.pill{
+  display:inline-flex; align-items:center; gap:6px; padding:5px 12px; border-radius:999px;
+  font-size:12.5px; font-weight:700; background:var(--surface-2); color:var(--muted);
+}
+.pill.blue{background:var(--accent-soft); color:var(--accent)}
+.pill.red{background:var(--up-soft); color:var(--up)}
+.pillrow{display:flex; flex-wrap:wrap; gap:7px}
+h1{font-size:34px; font-weight:800; line-height:1.28}
+.hero .sub{color:var(--muted); font-size:14.5px}
+.priceline{display:flex; align-items:flex-end; gap:12px; flex-wrap:wrap; margin-top:2px}
+.bigprice{font-size:56px; font-weight:800; letter-spacing:-.035em; line-height:1}
+.bigprice .won{font-size:24px; font-weight:700; margin-left:2px}
+.chg{font-size:17px; font-weight:700; color:var(--up); padding-bottom:6px}
+
+/* ---------- share ---------- */
+.sharebar{position:relative; display:flex; justify-content:flex-end}
+.sharebtn{
+  font:inherit; font-size:14px; font-weight:700; color:var(--ink); background:var(--surface);
+  border:0; border-radius:999px; padding:10px 20px; cursor:pointer; box-shadow:var(--shadow);
+}
+.sharebtn:hover{background:var(--surface-2)}
+.sharebtn:focus-visible, .mi:focus-visible, .copybtn:focus-visible, .sendlink:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+.panel{
+  position:absolute; top:calc(100% + 8px); right:0; width:min(360px, 92vw); z-index:30;
+  background:var(--surface); border-radius:18px; box-shadow:0 8px 32px rgba(0,0,0,.16); padding:8px;
+  display:none; flex-direction:column; gap:2px;
+}
+.panel.open{display:flex}
+.mi{
+  font:inherit; font-size:14.5px; font-weight:600; text-align:left; color:var(--ink);
+  background:none; border:0; border-radius:12px; padding:12px 14px; cursor:pointer; width:100%;
+}
+.mi:hover{background:var(--surface-2)}
+.mibody{display:none; flex-direction:column; gap:8px; padding:4px 14px 14px}
+.mibody.open{display:flex}
+.mibody input[type=email], .mibody textarea{
+  font:inherit; font-size:14px; width:100%; border-radius:12px; border:1px solid var(--line);
+  background:var(--surface-2); color:var(--ink); padding:11px 13px; resize:vertical;
+}
+.mibody textarea{min-height:104px; line-height:1.5}
+.rowend{display:flex; align-items:center; gap:8px}
+.sendlink, .copybtn{
+  font:inherit; font-size:14px; font-weight:700; border:0; border-radius:12px; padding:10px 18px;
+  background:var(--accent); color:#fff; cursor:pointer; text-decoration:none; display:inline-block;
+}
+.sendlink[aria-disabled="true"]{background:var(--surface-2); color:var(--muted); pointer-events:none}
+.hint{font-size:12px; color:var(--muted); line-height:1.5}
+
+/* ---------- section ---------- */
+section{background:var(--surface); border-radius:24px; padding:30px 28px; box-shadow:var(--shadow);
+  display:flex; flex-direction:column; gap:18px}
+.seclabel{font-size:12px; font-weight:800; letter-spacing:.08em; color:var(--accent)}
+h2{font-size:23px; font-weight:800}
+.lede{font-size:15.5px; color:var(--ink); opacity:.9; max-width:62ch}
+h3{font-size:15px; font-weight:700; color:var(--muted)}
+.note{font-size:12.5px; color:var(--muted); line-height:1.6}
+
+/* ---------- stat tiles ---------- */
+.tiles{display:grid; grid-template-columns:repeat(auto-fit,minmax(148px,1fr)); gap:10px}
+.tile{background:var(--surface-2); border-radius:18px; padding:18px 18px 16px; display:flex; flex-direction:column; gap:3px}
+.tile .k{font-size:12.5px; color:var(--muted); font-weight:600}
+.tile .v{font-size:29px; font-weight:800; letter-spacing:-.03em; line-height:1.15}
+.tile .v small{font-size:15px; font-weight:700}
+.tile .d{font-size:12px; color:var(--muted)}
+.tile.hi{background:var(--up-soft)}
+.tile.hi .v{color:var(--up)}
+.tile.acc{background:var(--accent-soft)}
+.tile.acc .v{color:var(--accent)}
+
+/* ---------- bars ---------- */
+.bars{display:flex; flex-direction:column; gap:9px}
+.bar{display:grid; grid-template-columns:74px 1fr auto; align-items:center; gap:12px}
+.bar .bl{font-size:13px; color:var(--muted); font-weight:600}
+.track{height:12px; border-radius:999px; background:var(--surface-2); overflow:hidden}
+.fill{height:100%; border-radius:999px; background:var(--accent)}
+.fill.red{background:var(--up)}
+.fill.soft{background:var(--accent); opacity:.35}
+.fill.softred{background:var(--up); opacity:.35}
+.bar .bv{font-size:13.5px; font-weight:700; min-width:74px; text-align:right}
+.bar.big .track{height:16px}
+.card{background:var(--surface-2); border-radius:18px; padding:20px}
+.card h4{font-size:14px; font-weight:700; margin-bottom:12px}
+.grid2{display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:12px}
+.grid3{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px}
+
+/* ---------- why box ---------- */
+.why{background:linear-gradient(160deg,var(--accent-soft),var(--surface-2)); border-radius:24px;
+  padding:30px 28px; box-shadow:var(--shadow); display:flex; flex-direction:column; gap:18px}
+.why h2{font-size:26px}
+.twocol{display:grid; grid-template-columns:repeat(auto-fit,minmax(268px,1fr)); gap:12px}
+.colcard{background:var(--surface); border-radius:18px; padding:20px; display:flex; flex-direction:column; gap:12px}
+.colhead{font-size:14px; font-weight:800}
+.colhead.up{color:var(--up)} .colhead.dn{color:var(--accent)}
+.item{display:flex; flex-direction:column; gap:2px}
+.item .t{font-size:14.5px; font-weight:700}
+.item .s{font-size:13px; color:var(--muted); line-height:1.55}
+
+/* ---------- gauge ---------- */
+.gauge{display:flex; flex-direction:column; gap:7px}
+.gtrack{position:relative; height:10px; border-radius:999px;
+  background:linear-gradient(90deg, var(--accent) 0%, var(--surface-2) 42%, var(--surface-2) 62%, var(--up) 100%)}
+.gmark{position:absolute; top:-5px; width:4px; height:20px; border-radius:2px; background:var(--ink); transform:translateX(-2px)}
+.gscale{display:flex; justify-content:space-between; font-size:11.5px; color:var(--muted)}
+
+/* ---------- chips ---------- */
+.chips{display:flex; flex-wrap:wrap; gap:8px}
+.chip{display:inline-flex; align-items:center; gap:7px; padding:9px 14px; border-radius:999px;
+  background:var(--surface-2); font-size:13px; font-weight:700}
+.chip b{font-weight:800}
+.chip.red{background:var(--up-soft); color:var(--up)}
+.chip.blue{background:var(--accent-soft); color:var(--accent)}
+.dot{width:8px; height:8px; border-radius:50%; display:inline-block; flex:0 0 auto}
+.dot.red{background:var(--up)} .dot.blue{background:var(--accent)} .dot.gray{background:var(--muted)}
+
+/* ---------- timeline ---------- */
+.tl{position:relative; display:flex; flex-direction:column; gap:0; padding-left:8px}
+.tl::before{content:""; position:absolute; left:63px; top:10px; bottom:10px; width:2px; background:var(--line)}
+.ev{display:grid; grid-template-columns:56px 22px 1fr; align-items:start; gap:0; padding:9px 0}
+.ev .date{font-size:12px; font-weight:700; color:var(--muted); padding-top:2px; text-align:right}
+.ev .mk{display:flex; justify-content:center; padding-top:7px; position:relative; z-index:1}
+.ev .mk span{width:11px; height:11px; border-radius:50%; box-shadow:0 0 0 4px var(--surface)}
+.ev .txt{font-size:14px; line-height:1.55}
+.ev .txt b{font-weight:700}
+.ev .txt em{font-style:normal; color:var(--muted); font-size:13px}
+.sentbar{display:flex; height:12px; border-radius:999px; overflow:hidden; gap:2px}
+.sentbar div{height:100%}
+
+/* ---------- risk ---------- */
+.risks{display:flex; flex-direction:column; gap:8px}
+.risk{display:grid; grid-template-columns:5px 1fr; gap:14px; background:var(--surface-2);
+  border-radius:14px; overflow:hidden}
+.risk .stripe{background:var(--up)}
+.risk.mid .stripe{background:var(--up); opacity:.5}
+.risk.low .stripe{background:var(--up); opacity:.22}
+.risk .body{padding:15px 16px 15px 0; display:flex; flex-direction:column; gap:3px}
+.risk .rh{display:flex; align-items:center; gap:8px; flex-wrap:wrap}
+.risk .rn{font-size:14.5px; font-weight:700}
+.grade{font-size:11px; font-weight:800; padding:3px 9px; border-radius:999px; background:var(--up); color:#fff}
+.risk.mid .grade{background:var(--up); opacity:.62}
+.risk.low .grade{background:var(--muted)}
+.risk .rd{font-size:13px; color:var(--muted); line-height:1.6}
+
+/* ---------- table ---------- */
+.scroll{overflow-x:auto}
+table{border-collapse:collapse; width:100%; font-size:13.5px; min-width:460px}
+th,td{padding:10px 12px; text-align:right; white-space:nowrap}
+th:first-child, td:first-child{text-align:left}
+thead th{font-size:12px; color:var(--muted); font-weight:700}
+tbody tr{background:var(--surface-2)}
+tbody tr:nth-child(even){background:transparent}
+tbody td:first-child{border-radius:10px 0 0 10px}
+tbody td:last-child{border-radius:0 10px 10px 0}
+
+.disc{font-size:12.5px; color:var(--muted); line-height:1.7; background:var(--surface-2);
+  border-radius:14px; padding:16px 18px}
+footer{text-align:center; font-size:12px; color:var(--muted); padding-top:6px}
+svg{display:block; max-width:100%; height:auto}
+
+@media (max-width:560px){
+  .bigprice{font-size:44px}
+  h1{font-size:27px}
+  .bar{grid-template-columns:62px 1fr auto; gap:9px}
+  .bar .bv{min-width:64px; font-size:12.5px}
+  section,.why,header.hero{padding:24px 18px; border-radius:20px}
+  .tl::before{left:55px}
+  .ev{grid-template-columns:48px 22px 1fr}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none !important; transition:none !important}}
+
+@media print{
+  body{background:#fff; color:#000; font-size:11pt}
+  .sharebar, .panel{display:none !important}
+  .wrap{max-width:none; padding:0; gap:10px}
+  header.hero, section, .why, .card, .tile, .risk, .disc{box-shadow:none !important; background:#fff !important;
+    border:1px solid #ddd; page-break-inside:avoid; break-inside:avoid}
+  .why{background:#fff !important}
+  section, .why, header.hero{padding:16px}
+  .tl, .tiles, table, .risks, .twocol{page-break-inside:avoid; break-inside:avoid}
+  h2{page-break-after:avoid}
+}
+</style>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="pillrow">
+    <span class="pill blue">코스피 078930</span>
+    <span class="pill">지주회사</span>
+    <span class="pill">2026. 08. 25 기준</span>
+  </div>
+  <h1>GS 주가가 계속 오르는 이유는?</h1>
+  <p class="sub">GS(주) 투자 컨설팅 리포트 · 산업 · 재무 · 기술 · 뉴스 · 리스크 5개 관점 종합</p>
+  <div class="priceline">
+    <div class="bigprice num">123,200<span class="won">원</span></div>
+    <div class="chg num">+7.5% (당일) · 52주 신고가</div>
+  </div>
+</header>
+
+<div class="sharebar">
+  <button class="sharebtn" id="shareBtn" aria-haspopup="true" aria-expanded="false">공유</button>
+  <div class="panel" id="sharePanel" role="menu">
+    <button class="mi" id="miMail" aria-expanded="false">메일로 보내기</button>
+    <div class="mibody" id="bodyMail">
+      <input type="email" id="mailTo" placeholder="받는 사람 이메일 주소" autocomplete="email">
+      <div class="rowend">
+        <a class="sendlink" id="mailLink" href="#" aria-disabled="true">보내기</a>
+      </div>
+      <p class="hint">클릭하면 메일 작성창이 열리며, 직접 보내기를 눌러야 전달됩니다. 자동 발송되지 않습니다.</p>
+    </div>
+    <button class="mi" id="miKakao" aria-expanded="false">카카오톡으로 공유</button>
+    <div class="mibody" id="bodyKakao">
+      <textarea id="shareText" readonly></textarea>
+      <div class="rowend">
+        <button class="copybtn" id="copyBtn">복사</button>
+        <button class="copybtn" id="nativeBtn" style="display:none; background:var(--surface-2); color:var(--ink)">다른 앱으로 공유</button>
+      </div>
+      <p class="hint">복사한 내용을 카카오톡 채팅방에 붙여넣어 공유하세요.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 1. 요약 ============ -->
+<section>
+  <div class="seclabel">SUMMARY</div>
+  <h2>한눈에 보는 GS</h2>
+  <div class="tiles">
+    <div class="tile hi"><span class="k">현재가 (당일)</span><span class="v num">+7.5<small>%</small></span><span class="d num">123,200원 · 신고가</span></div>
+    <div class="tile"><span class="k">PER (TTM)</span><span class="v num">4.99<small>배</small></span><span class="d">피어 4.9~10.9배</span></div>
+    <div class="tile"><span class="k">PBR</span><span class="v num">0.71<small>배</small></span><span class="d num">BPS 173,176원</span></div>
+    <div class="tile acc"><span class="k">RSI (14)</span><span class="v num">72.8</span><span class="d">70 초과 · 과매수</span></div>
+    <div class="tile hi"><span class="k">1년 수익률</span><span class="v num">+149.9<small>%</small></span><span class="d">52주 저점 대비 +187.9%</span></div>
+    <div class="tile"><span class="k">종합 리스크</span><span class="v">높음</span><span class="d">5단계 중 4단계</span></div>
+  </div>
+  <p class="lede">2026년 2분기 영업이익 1조 7,174억원(전년 대비 +253%)이라는 분기 사상 최대 실적과 6월 말 발표된 2.4GW 규모 AI 데이터센터 신사업이 주가를 1년 만에 2.5배로 밀어올렸습니다. 다만 그 영업이익의 약 절반은 유가 상승에 따른 재고평가이익이며, 3분기 컨센서스는 이미 전분기 대비 -29% 둔화를 반영하고 있습니다.</p>
+  <div class="grid3">
+    <div class="card">
+      <h4>시가총액</h4>
+      <div class="tile" style="background:transparent; padding:0"><span class="v num">11.4<small>조원</small></span><span class="d">코스피 64위</span></div>
+    </div>
+    <div class="card">
+      <h4>배당수익률</h4>
+      <div class="tile" style="background:transparent; padding:0"><span class="v num">2.43<small>%</small></span><span class="d num">DPS 3,000원 · 주가 급등으로 희석</span></div>
+    </div>
+    <div class="card">
+      <h4>부채비율</h4>
+      <div class="tile" style="background:transparent; padding:0"><span class="v num">80.0<small>%</small></span><span class="d">2023년 95.5%에서 개선</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHY 강조 박스 ============ -->
+<div class="why">
+  <div class="seclabel">WHY NOW</div>
+  <h2>주가는 왜 올랐고, 무엇이 걸리나</h2>
+  <p class="lede">상승에는 실제 근거가 있습니다. 동시에 그 근거들이 얼마나 오래 갈지에 대한 반대 신호도 같은 데이터 안에 있습니다. 양쪽 모두 사실입니다.</p>
+  <div class="twocol">
+    <div class="colcard">
+      <div class="colhead up">올라온 이유 4가지</div>
+      <div class="item"><span class="t">1 · 2개 분기 연속 어닝 서프라이즈</span><span class="s">2Q26 영업이익 1조 7,174억원, 컨센서스 +53% 상회. 상반기 누적 영업이익 2조 9,760억원(+130.8%). GS칼텍스 정유·윤활유가 견인.</span></div>
+      <div class="item"><span class="t">2 · 30조원 AI 데이터센터 신사업</span><span class="s">6월 29일 강원 동해 북평2산단 2.4GW급 캠퍼스 발표. 유진투자증권은 완공 시 지배주주순이익 최소 20% 이상 증가 가능으로 분석.</span></div>
+      <div class="item"><span class="t">3 · 지주사 리레이팅 기대</span><span class="s">상법개정·밸류업 논의로 9개 주요 지주사 통합 NAV 할인율 51.9%(20년래 최저 근접). GS는 7월까지 PBR 0.4배 내외 최하위권이었음.</span></div>
+      <div class="item"><span class="t">4 · 기술적 추세 자체는 건전</span><span class="s">이동평균 정배열(MA20&gt;MA60&gt;MA120), 골든크로스 2회, 데드크로스 없음. 급등 초입 거래량이 평균의 2~3배로 실매수세 동반.</span></div>
+    </div>
+    <div class="colcard">
+      <div class="colhead dn">동시에 걸리는 것 4가지</div>
+      <div class="item"><span class="t">1 · 이익의 절반이 일회성</span><span class="s">2Q 영업이익 1조 7,174억원 중 재고평가이익 약 8,465억원(49.3%). 회사 스스로 "일시적 요인"이라고 밝힘.</span></div>
+      <div class="item"><span class="t">2 · 저PER이 사이클 상단 신호일 수 있음</span><span class="s">2025년 순이익(1.04조) 기준으로 환산하면 PER 약 11배, 2024년 기준 약 13배. 4.99배는 피크이익 기준 착시.</span></div>
+      <div class="item"><span class="t">3 · 기술적 과열 지표 동시 점등</span><span class="s">RSI 72.8, MA120 대비 이격 +58.4%, 52주 밴드 내 99.1% 최상단. 신고가에도 거래량은 20일 평균 하회.</span></div>
+      <div class="item"><span class="t">4 · 밸류에이션 여유 소진</span><span class="s">목표주가 최상단(유진투자증권 14만원)까지 상승여력 약 14%. 컨센서스가 이미 주가를 따라간 상태.</span></div>
+    </div>
+  </div>
+  <p class="note">※ 위 두 열은 어느 한쪽이 결론이 아닙니다. 상승 배경과 과열 신호를 같은 무게로 병기한 것입니다.</p>
+</div>
+
+<!-- ============ 2. 산업 개요 ============ -->
+<section>
+  <div class="seclabel">INDUSTRY</div>
+  <h2>산업 개요 · 사업 포트폴리오</h2>
+  <p class="lede">GS는 2004년 LG그룹에서 분리된 지주회사로, GS칼텍스(정유·석화), GS리테일(유통), GS건설, GS에너지·GS EPS·GS파워(발전)를 거느립니다. 계열사는 104개로 SK(151개)·한화(116개)보다 단순한 구조입니다.</p>
+
+  <div class="card">
+    <h4>정유 내수 경질유 점유율 — GS칼텍스는 3위</h4>
+    <div class="bars">
+      <div class="bar"><span class="bl">SK에너지</span><div class="track"><div class="fill soft" style="width: 100.0%"></div></div><span class="bv num">29.9%</span></div>
+      <div class="bar"><span class="bl">에쓰오일</span><div class="track"><div class="fill soft" style="width: 80.9%"></div></div><span class="bv num">24.2%</span></div>
+      <div class="bar"><span class="bl">GS칼텍스</span><div class="track"><div class="fill" style="width: 78.9%"></div></div><span class="bv num">23.6%</span></div>
+      <div class="bar"><span class="bl">현대오일뱅크</span><div class="track"><div class="fill soft" style="width: 67.9%"></div></div><span class="bv num">20.3%</span></div>
+    </div>
+    <p class="note" style="margin-top:12px">과거 2위였으나 에쓰오일에 역전당해 현재 3위입니다.</p>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <h4>유통 — 편의점 시장이 처음 줄었다</h4>
+      <div class="tiles" style="grid-template-columns:1fr">
+        <div class="tile" style="background:transparent; padding:0">
+          <span class="k">2025년말 편의점 4사 합계 점포수</span>
+          <span class="v num">5.33<small>만개</small></span>
+          <span class="d num">전년 대비 -1,586개 · 36년 만의 첫 역성장</span>
+        </div>
+      </div>
+      <p class="note" style="margin-top:10px">양적 확장에서 질적 성장으로 전환하는 국면. GS25는 2026년 브랜드평판 1위를 유지 중이며, 프레시푸드 특화점(FCS) 매출은 기존점 대비 50~60% 높습니다. GS리테일은 2028년 영업이익 3,800억원 목표를 제시했습니다.</p>
+    </div>
+    <div class="card">
+      <h4>건설 — 시공능력평가 3위로 2계단 상승</h4>
+      <div class="chips" style="margin-bottom:12px">
+        <span class="chip">1위 삼성물산</span>
+        <span class="chip">2위 현대건설</span>
+        <span class="chip blue"><b>3위 GS건설</b></span>
+      </div>
+      <p class="note">대우건설과 순위를 맞바꿔 2계단 올랐습니다. 2026년 1~4월 수주 6.31조원으로 전년 대비 약 2배. 주택 원가율 개선과 하반기 해외·비주택 수주 확대로 업황 회복 초기 국면 가능성이 거론됩니다.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h4>구조적 변화 축</h4>
+    <div class="chips">
+      <span class="chip">탈정유 · SAF · 바이오연료 전환</span>
+      <span class="chip">편의점 성숙기 진입</span>
+      <span class="chip">건설 신사업(원전 · IDC) 다각화</span>
+      <span class="chip">지주사 거버넌스 개혁 · 리레이팅</span>
+      <span class="chip">해상풍력 · VPP · 직접PPA 확대</span>
+    </div>
+    <p class="note" style="margin-top:12px">한계: GS 지주사 자체를 커버하는 증권사 리포트가 뚜렷하지 않고, GS25와 CU의 편의점 순위는 집계 기준에 따라 엇갈립니다.</p>
+  </div>
+</section>
+
+<!-- ============ 3. 재무 분석 ============ -->
+<section>
+  <div class="seclabel">FINANCIALS</div>
+  <h2>재무 분석</h2>
+  <p class="lede">2024~2025년은 역성장에서 정체 구간이었습니다. 반전은 2026년 상반기에 일어났고, 그 폭이 매우 큽니다.</p>
+
+  <div class="grid3">
+    <div class="card">
+      <h4>매출 (조원)</h4>
+      <div class="bars">
+        <div class="bar"><span class="bl">2023</span><div class="track"><div class="fill soft" style="width: 90.6%"></div></div><span class="bv num">25.98</span></div>
+        <div class="bar"><span class="bl">2024</span><div class="track"><div class="fill soft" style="width: 88.1%"></div></div><span class="bv num">25.25</span></div>
+        <div class="bar"><span class="bl">2025</span><div class="track"><div class="fill soft" style="width: 87.9%"></div></div><span class="bv num">25.18</span></div>
+        <div class="bar"><span class="bl">2026E</span><div class="track"><div class="fill" style="width: 100.0%"></div></div><span class="bv num">28.66</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <h4>영업이익 (조원)</h4>
+      <div class="bars">
+        <div class="bar"><span class="bl">2023</span><div class="track"><div class="fill soft" style="width: 72.0%"></div></div><span class="bv num">3.72</span></div>
+        <div class="bar"><span class="bl">2024</span><div class="track"><div class="fill soft" style="width: 59.6%"></div></div><span class="bv num">3.08</span></div>
+        <div class="bar"><span class="bl">2025</span><div class="track"><div class="fill soft" style="width: 56.9%"></div></div><span class="bv num">2.94</span></div>
+        <div class="bar"><span class="bl">2026E</span><div class="track"><div class="fill red" style="width: 100.0%"></div></div><span class="bv num">5.17</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <h4>순이익 (조원)</h4>
+      <div class="bars">
+        <div class="bar"><span class="bl">2023</span><div class="track"><div class="fill soft" style="width: 52.8%"></div></div><span class="bv num">1.58</span></div>
+        <div class="bar"><span class="bl">2024</span><div class="track"><div class="fill soft" style="width: 28.8%"></div></div><span class="bv num">0.86</span></div>
+        <div class="bar"><span class="bl">2025</span><div class="track"><div class="fill soft" style="width: 34.8%"></div></div><span class="bv num">1.04</span></div>
+        <div class="bar"><span class="bl">2026E</span><div class="track"><div class="fill red" style="width: 100.0%"></div></div><span class="bv num">2.99</span></div>
+      </div>
+    </div>
+  </div>
+  <p class="note">2026년은 추정치(E)입니다. 매출은 +13.8%인데 영업이익은 +76.1%, 순이익은 +187.8%로 이익 레버리지가 매우 크게 잡혀 있습니다.</p>
+
+  <div class="card">
+    <h4>분기 영업이익 (조원) — 2Q26이 압도적</h4>
+    <div class="bars">
+      <div class="bar big"><span class="bl">25.06</span><div class="track"><div class="fill soft" style="width: 28.3%"></div></div><span class="bv num">0.49</span></div>
+      <div class="bar big"><span class="bl">25.09</span><div class="track"><div class="fill soft" style="width: 50.7%"></div></div><span class="bv num">0.87</span></div>
+      <div class="bar big"><span class="bl">25.12</span><div class="track"><div class="fill soft" style="width: 45.2%"></div></div><span class="bv num">0.78</span></div>
+      <div class="bar big"><span class="bl">26.03</span><div class="track"><div class="fill" style="width: 73.4%"></div></div><span class="bv num">1.26</span></div>
+      <div class="bar big"><span class="bl">26.06</span><div class="track"><div class="fill red" style="width: 100.0%"></div></div><span class="bv num">1.72</span></div>
+      <div class="bar big"><span class="bl">26.09E</span><div class="track"><div class="fill softred" style="width: 71.0%"></div></div><span class="bv num">1.22</span></div>
+    </div>
+    <p class="note" style="margin-top:12px">3분기 컨센서스 1.22조원은 전분기 대비 -29%입니다. 시장도 2분기를 일회성 효과로 인식하고 있다는 뜻입니다.</p>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <h4>2Q26 영업이익 1조 7,174억원의 구성</h4>
+      <div style="display:flex; height:22px; border-radius:999px; overflow:hidden; gap:2px; margin-bottom:12px">
+        <div style="width: 49.3%; background:var(--muted); opacity:.5"></div>
+        <div style="width: 50.7%; background:var(--up)"></div>
+      </div>
+      <div class="chips">
+        <span class="chip"><span class="dot gray"></span>재고평가이익 약 8,465억 · 49.3%</span>
+        <span class="chip red"><span class="dot red"></span>그 외 · 50.7%</span>
+      </div>
+      <p class="note" style="margin-top:12px">유가 상승에 따른 재고평가이익이 절반을 차지합니다. 유가·정제마진은 회사가 통제할 수 없는 외생변수입니다.</p>
+    </div>
+    <div class="card">
+      <h4>분기 영업이익률 (%)</h4>
+      <div class="bars">
+        <div class="bar"><span class="bl">25.06</span><div class="track"><div class="fill soft" style="width: 35.3%"></div></div><span class="bv num">8.19%</span></div>
+        <div class="bar"><span class="bl">25.09</span><div class="track"><div class="fill soft" style="width: 57.5%"></div></div><span class="bv num">13.32%</span></div>
+        <div class="bar"><span class="bl">25.12</span><div class="track"><div class="fill soft" style="width: 51.6%"></div></div><span class="bv num">11.96%</span></div>
+        <div class="bar"><span class="bl">26.03</span><div class="track"><div class="fill" style="width: 79.4%"></div></div><span class="bv num">18.39%</span></div>
+        <div class="bar"><span class="bl">26.06</span><div class="track"><div class="fill red" style="width: 100.0%"></div></div><span class="bv num">23.17%</span></div>
+      </div>
+    </div>
+  </div>
+
+  <h3>밸류에이션</h3>
+  <div class="grid2">
+    <div class="card">
+      <h4>실질 피어 대비 PER — 중위권</h4>
+      <div class="bars">
+        <div class="bar"><span class="bl">SK</span><div class="track"><div class="fill soft" style="width: 45.1%"></div></div><span class="bv num">4.92배</span></div>
+        <div class="bar"><span class="bl">GS</span><div class="track"><div class="fill" style="width: 45.8%"></div></div><span class="bv num">4.99배</span></div>
+        <div class="bar"><span class="bl">SK디스커버리</span><div class="track"><div class="fill soft" style="width: 49.7%"></div></div><span class="bv num">5.42배</span></div>
+        <div class="bar"><span class="bl">S-Oil</span><div class="track"><div class="fill soft" style="width: 100.0%"></div></div><span class="bv num">10.90배</span></div>
+      </div>
+      <p class="note" style="margin-top:12px">네이버 분류상 "동일업종 PER 30.50배"는 업종 분류가 이질적이어서 비교 기준으로 신뢰도가 낮습니다.</p>
+    </div>
+    <div class="card">
+      <h4>정상화 이익으로 환산하면 달라진다</h4>
+      <div class="bars">
+        <div class="bar"><span class="bl">현재 TTM</span><div class="track"><div class="fill" style="width: 38.4%"></div></div><span class="bv num">4.99배</span></div>
+        <div class="bar"><span class="bl">2025 이익 기준</span><div class="track"><div class="fill softred" style="width: 84.6%"></div></div><span class="bv num">약 11배</span></div>
+        <div class="bar"><span class="bl">2024 이익 기준</span><div class="track"><div class="fill red" style="width: 100.0%"></div></div><span class="bv num">약 13배</span></div>
+      </div>
+      <p class="note" style="margin-top:12px">피크 이익을 정상 이익처럼 놓으면 PER이 낮아 보입니다. 2024~2025년 수준의 이익으로 되돌아갈 경우 11~13배(개략치)입니다.</p>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <h4>부채비율 (%) — 4년 연속 개선</h4>
+      <div class="bars">
+        <div class="bar"><span class="bl">2023</span><div class="track"><div class="fill soft" style="width: 100.0%"></div></div><span class="bv num">95.45</span></div>
+        <div class="bar"><span class="bl">2024</span><div class="track"><div class="fill soft" style="width: 94.1%"></div></div><span class="bv num">89.84</span></div>
+        <div class="bar"><span class="bl">2025</span><div class="track"><div class="fill soft" style="width: 90.1%"></div></div><span class="bv num">86.04</span></div>
+        <div class="bar"><span class="bl">26.2Q</span><div class="track"><div class="fill" style="width: 83.8%"></div></div><span class="bv num">79.98</span></div>
+      </div>
+      <p class="note" style="margin-top:12px">개선의 상당 부분이 이익 급증에 따른 자기자본 증가 효과입니다.</p>
+    </div>
+    <div class="card">
+      <h4>주당배당금 (원) — 매년 증액</h4>
+      <div class="bars">
+        <div class="bar"><span class="bl">2023</span><div class="track"><div class="fill soft" style="width: 73.1%"></div></div><span class="bv num">2,500</span></div>
+        <div class="bar"><span class="bl">2024</span><div class="track"><div class="fill soft" style="width: 78.9%"></div></div><span class="bv num">2,700</span></div>
+        <div class="bar"><span class="bl">2025</span><div class="track"><div class="fill soft" style="width: 87.7%"></div></div><span class="bv num">3,000</span></div>
+        <div class="bar"><span class="bl">2026E</span><div class="track"><div class="fill" style="width: 100.0%"></div></div><span class="bv num">3,420</span></div>
+      </div>
+      <p class="note" style="margin-top:12px">시가배당률은 2023년 6.11% → 2025년 5.33%. 배당성향은 18.2% → 45.1% → 35.6%로 변동성이 큽니다.</p>
+    </div>
+  </div>
+
+  <h3>2Q26 자회사별 성적표</h3>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>자회사</th><th>매출</th><th>영업이익</th><th>비고</th></tr></thead>
+      <tbody>
+        <tr><td>GS칼텍스 (정유)</td><td>미공개</td><td>약 2.6조원</td><td>사상 최대, 그룹 실적 견인</td></tr>
+        <tr><td>GS칼텍스 (윤활유)</td><td>6,861억</td><td>약 3,577~3,677억</td><td>역대 최고, 전년 대비 3배 이상</td></tr>
+        <tr><td>GS칼텍스 (석유화학)</td><td>미공개</td><td>적자 전환</td><td>나프타 가격 상승분 미반영</td></tr>
+        <tr><td>GS건설</td><td>2.78조 (-13.0%)</td><td>914억 (-43.6%)</td><td>순이익 144억 흑자전환, 수주 +61.7%</td></tr>
+        <tr><td>GS리테일 (GS25)</td><td>2.28조 (+4.5%)</td><td>730억 (+2.1%)</td><td>완만한 성장</td></tr>
+        <tr><td>GS더프레시</td><td>4,698억 (+9.6~10.1%)</td><td>93억 (+61.8~72.2%)</td><td>견조</td></tr>
+        <tr><td>GS에너지 발전 (GS EPS 등)</td><td>미공개</td><td>약 -73억</td><td>SMP 하락·가동률 저하</td></tr>
+        <tr><td>GS글로벌 (무역)</td><td>1.13조 (+6%)</td><td>117억 (-41%)</td><td>수익성 저하</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">지주회사임에도 실질적인 사업 분산 효과가 크지 않습니다. 정유 한 부문이 전체를 끌고 가는 동안 석유화학은 적자, 건설은 역성장, 발전은 영업손실이었습니다.</p>
+</section>
+
+<!-- ============ 4. 기술적 분석 ============ -->
+<section>
+  <div class="seclabel">TECHNICAL</div>
+  <h2>기술적 분석</h2>
+  <p class="lede">추세는 뚜렷한 상승입니다. 동시에 단기 과열 지표가 한꺼번에 켜져 있습니다. 두 문장 모두 같은 차트에서 나옵니다.</p>
+
+  <div class="card">
+    <h4>주요 분기점 기준 주가 흐름 (2025.08 ~ 2026.08)</h4>
+    <svg viewBox="0 0 720 240" role="img" aria-label="2025년 8월 42,800원 저점에서 2026년 8월 25일 123,200원까지의 주요 분기점 주가 흐름">
+      <defs>
+        <linearGradient id="ar" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="var(--up)" stop-opacity="0.22"/>
+          <stop offset="100%" stop-color="var(--up)" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <g stroke="var(--line)" stroke-width="1">
+        <line x1="44" y1="196" x2="700" y2="196"/>
+        <line x1="44" y1="158.2" x2="700" y2="158.2"/>
+        <line x1="44" y1="120.4" x2="700" y2="120.4"/>
+        <line x1="44" y1="82.7" x2="700" y2="82.7"/>
+        <line x1="44" y1="44.9" x2="700" y2="44.9"/>
+      </g>
+      <g fill="var(--muted)" font-size="10" font-family="inherit" text-anchor="end">
+        <text x="38" y="199">4만</text>
+        <text x="38" y="161.2">6만</text>
+        <text x="38" y="123.4">8만</text>
+        <text x="38" y="85.7">10만</text>
+        <text x="38" y="47.9">12만</text>
+      </g>
+      <line x1="44" y1="78.1" x2="700" y2="78.1" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="5 4"/>
+      <text x="48" y="73" fill="var(--accent)" font-size="10.5" font-weight="700" font-family="inherit">MA20 102,405</text>
+      <line x1="44" y1="111.8" x2="700" y2="111.8" stroke="var(--muted)" stroke-width="1" stroke-dasharray="3 4"/>
+      <text x="48" y="107" fill="var(--muted)" font-size="10.5" font-family="inherit">MA60 84,572</text>
+      <polygon fill="url(#ar)" points="44,196 44.0,190.7 180.5,158.2 519.2,120.4 583.0,148.8 634.4,106.1 700.0,38.8 700,196"/>
+      <polyline fill="none" stroke="var(--up)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"
+        points="44.0,190.7 180.5,158.2 519.2,120.4 583.0,148.8 634.4,106.1 700.0,38.8"/>
+      <g fill="var(--up)" stroke="var(--surface)" stroke-width="2">
+        <circle cx="44" cy="190.7" r="4.5"/>
+        <circle cx="180.5" cy="158.2" r="4.5"/>
+        <circle cx="519.2" cy="120.4" r="4.5"/>
+        <circle cx="583" cy="148.8" r="4.5"/>
+        <circle cx="634.4" cy="106.1" r="4.5"/>
+        <circle cx="700" cy="38.8" r="6.5"/>
+      </g>
+      <g fill="var(--ink)" font-size="11" font-weight="700" font-family="inherit">
+        <text x="50" y="212">42,800</text>
+        <text x="164" y="176" text-anchor="middle">60,000대</text>
+        <text x="519" y="112" text-anchor="middle">80,000대</text>
+        <text x="583" y="168" text-anchor="middle">65,000대</text>
+        <text x="620" y="96" text-anchor="middle">87,600</text>
+        <text x="700" y="28" text-anchor="end">123,200</text>
+      </g>
+      <g fill="var(--muted)" font-size="10" font-family="inherit">
+        <text x="44" y="228">25.08 저점</text>
+        <text x="164" y="228">25.11</text>
+        <text x="500" y="228">26.05</text>
+        <text x="614" y="228" text-anchor="middle">26.07</text>
+        <text x="700" y="228" text-anchor="end">26.08.25</text>
+      </g>
+    </svg>
+    <p class="note" style="margin-top:10px">보도·데이터로 확인된 주요 분기점만 연결한 개략도입니다. 연속 일봉 차트가 아니며, 구간 내 실제 등락은 이보다 훨씬 잦습니다.</p>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <h4>구간별 수익률 (%)</h4>
+      <div class="bars">
+        <div class="bar"><span class="bl">1개월</span><div class="track"><div class="fill softred" style="width: 23.0%"></div></div><span class="bv num">+34.5</span></div>
+        <div class="bar"><span class="bl">3개월</span><div class="track"><div class="fill softred" style="width: 44.2%"></div></div><span class="bv num">+66.3</span></div>
+        <div class="bar"><span class="bl">6개월</span><div class="track"><div class="fill softred" style="width: 41.9%"></div></div><span class="bv num">+62.8</span></div>
+        <div class="bar"><span class="bl">1년</span><div class="track"><div class="fill red" style="width: 100.0%"></div></div><span class="bv num">+149.9</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <h4>이동평균 대비 이격도 (%)</h4>
+      <div class="bars">
+        <div class="bar"><span class="bl">MA20</span><div class="track"><div class="fill softred" style="width: 34.8%"></div></div><span class="bv num">+20.3</span></div>
+        <div class="bar"><span class="bl">MA60</span><div class="track"><div class="fill softred" style="width: 78.3%"></div></div><span class="bv num">+45.7</span></div>
+        <div class="bar"><span class="bl">MA120</span><div class="track"><div class="fill red" style="width: 100.0%"></div></div><span class="bv num">+58.4</span></div>
+      </div>
+      <p class="note" style="margin-top:12px">이격도가 매우 큽니다. MA60(84,572원)까지만 회귀해도 -31%입니다.</p>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <h4>RSI (14) — 과매수 구간</h4>
+      <div class="gauge">
+        <div class="gtrack"><div class="gmark" style="left: 72.84%"></div></div>
+        <div class="gscale"><span>0 과매도</span><span>30</span><span>50</span><span>70</span><span>100 과매수</span></div>
+      </div>
+      <p class="note" style="margin-top:12px"><b style="color:var(--up)">72.84</b> — 70을 넘었습니다. 다만 2025년 11월 약 82, 2026년 2월 약 78에서도 장기간 유지되며 추가 상승한 이력이 있어 즉각적인 하락 신호로 보기는 어렵습니다.</p>
+    </div>
+    <div class="card">
+      <h4>52주 밴드 내 위치</h4>
+      <div class="gauge">
+        <div class="gtrack" style="background:var(--surface); border:1px solid var(--line)">
+          <div style="position:absolute; left:0; top:0; bottom:0; width: 99.1%; border-radius:999px; background:var(--up); opacity:.3"></div>
+          <div class="gmark" style="left: 99.1%"></div>
+        </div>
+        <div class="gscale"><span class="num">저점 42,800</span><span class="num">고점 123,500</span></div>
+      </div>
+      <p class="note" style="margin-top:12px"><b style="color:var(--up)">99.1%</b> — 사실상 최상단입니다. 신고가를 경신 중이라 과거 가격대 기준 상단 저항은 없습니다.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h4>지표 상태 요약</h4>
+    <div class="chips">
+      <span class="chip red"><span class="dot red"></span>이동평균 정배열 MA20&gt;MA60&gt;MA120</span>
+      <span class="chip red"><span class="dot red"></span>골든크로스 2회 (26.01.27 · 26.07.22)</span>
+      <span class="chip red"><span class="dot red"></span>데드크로스 없음</span>
+      <span class="chip red"><span class="dot red"></span>MACD 9,509 &gt; Signal 8,220 · Hist +1,289</span>
+      <span class="chip blue"><span class="dot blue"></span>RSI 72.8 과매수</span>
+      <span class="chip blue"><span class="dot blue"></span>거래량 다이버전스 (신고가에도 평균 하회)</span>
+    </div>
+    <p class="note" style="margin-top:12px">8월 25일 거래량 398,297주는 20일 평균 571,318주를 밑돕니다. 상승 초입(7/23~24, 8/12~14)에는 평소의 2~3배인 80만~101만주가 실렸던 것과 대조됩니다.</p>
+  </div>
+
+  <div class="card">
+    <h4>지지선까지의 거리</h4>
+    <div class="bars">
+      <div class="bar"><span class="bl">MA20</span><div class="track"><div class="fill soft" style="width: 45.8%"></div></div><span class="bv num">-16.9%</span></div>
+      <div class="bar"><span class="bl">매물대 상단</span><div class="track"><div class="fill soft" style="width: 53.1%"></div></div><span class="bv num">-19.6%</span></div>
+      <div class="bar"><span class="bl">매물대 하단</span><div class="track"><div class="fill soft" style="width: 62.1%"></div></div><span class="bv num">-22.9%</span></div>
+      <div class="bar"><span class="bl">MA60</span><div class="track"><div class="fill" style="width: 85.1%"></div></div><span class="bv num">-31.4%</span></div>
+      <div class="bar"><span class="bl">MA120</span><div class="track"><div class="fill" style="width: 100.0%"></div></div><span class="bv num">-36.9%</span></div>
+    </div>
+    <p class="note" style="margin-top:12px">1차 MA20 약 102,400원, 2차 8월 초 매물대 95,000~99,000원, 3차 MA60 약 84,600원, 장기 MA120 약 77,800원. 지난 1년 최대낙폭(MDD)이 -23.9%였던 점을 감안하면 20~30% 조정은 이례적인 수준이 아닙니다.</p>
+  </div>
+
+  <p class="note">technical-analyst가 생성한 차트 이미지 파일은 이번 분석에 포함되지 않아, 확인된 수치를 기반으로 리포트 내에서 직접 시각화했습니다.</p>
+</section>
+
+<!-- ============ 5. 뉴스 ============ -->
+<section>
+  <div class="seclabel">NEWS &amp; SENTIMENT</div>
+  <h2>최근 6개월 뉴스 · 시장 심리</h2>
+  <p class="lede">2026년 2월부터 8월까지 여론은 뚜렷하게 긍정 쪽입니다. 핵심 동력은 실적 서프라이즈와 AI 데이터센터 발표 두 가지였습니다.</p>
+
+  <div class="card">
+    <h4>주요 뉴스 19건의 성격</h4>
+    <div class="sentbar">
+      <div style="width: 73.7%; background:var(--up)"></div>
+      <div style="width: 15.8%; background:var(--muted); opacity:.45"></div>
+      <div style="width: 10.5%; background:var(--accent)"></div>
+    </div>
+    <div class="chips" style="margin-top:12px">
+      <span class="chip red"><span class="dot red"></span>긍정 14건 · 73.7%</span>
+      <span class="chip"><span class="dot gray"></span>중립 3건 · 15.8%</span>
+      <span class="chip blue"><span class="dot blue"></span>부정 2건 · 10.5%</span>
+    </div>
+  </div>
+
+  <div class="tl">
+    <div class="ev"><span class="date">02.03</span><span class="mk"><span class="dot gray" style="width:11px;height:11px"></span></span><span class="txt"><b>오너가 지주사 지분 매도</b> — 승산 37억, 허연수 전 대표 50억. 승계 재원 목적 추정. <em>당시 주가 10년 만에 7만원대 근접</em></span></div>
+    <div class="ev"><span class="date">05.13</span><span class="mk"><span class="dot red" style="width:11px;height:11px"></span></span><span class="txt"><b>1분기 영업이익 1.26조원</b> (전분기 +62.15%) — 중동 전쟁발 유가 상승, GS칼텍스 정유부문 영업이익 전년 대비 +1,882%</span></div>
+    <div class="ev"><span class="date">05.13</span><span class="mk"><span class="dot blue" style="width:11px;height:11px"></span></span><span class="txt"><b>회사측 규제 코멘트</b> — "정유 최고가격제 영향으로 재고효과 제외 시 정제마진 이익은 오히려 전분기 대비 감소"</span></div>
+    <div class="ev"><span class="date">05.19</span><span class="mk"><span class="dot blue" style="width:11px;height:11px"></span></span><span class="txt"><b>건설주 동반 약세</b> — 현대건설 철근 누락 사건 여파로 GS건설 하루 -6.51%</span></div>
+    <div class="ev"><span class="date">05월</span><span class="mk"><span class="dot gray" style="width:11px;height:11px"></span></span><span class="txt"><b>지주사 할인율 축소 트렌드 리포트</b> — -50%에서 -40%로. 단 GS PBR은 코스피 시총 100대 기업 중 최하위권(1분기 0.25배)</span></div>
+    <div class="ev"><span class="date">06.15</span><span class="mk"><span class="dot red" style="width:11px;height:11px"></span></span><span class="txt"><b>GS건설 본업 정상화</b> — 주택 원가율 안정화, 상반기 신규수주 목표 72% 달성(8.6조원)</span></div>
+    <div class="ev"><span class="date">06.29</span><span class="mk"><span class="dot red" style="width:11px;height:11px"></span></span><span class="txt"><b>강원 동해 2.4GW AI 데이터센터 캠퍼스 발표</b> — 직접투자 약 30조원(장비 포함 약 120조원), 2028년 1.2GW·2029년 추가 1.2GW 단계 구축. <em>다수 매체가 지목한 핵심 이벤트</em></span></div>
+    <div class="ev"><span class="date">07.03</span><span class="mk"><span class="dot red" style="width:11px;height:11px"></span></span><span class="txt"><b>GS리테일 2Q 프리뷰</b> — 기존점 성장률 2016년 이후 최고 수준 전망</span></div>
+    <div class="ev"><span class="date">07.07</span><span class="mk"><span class="dot red" style="width:11px;height:11px"></span></span><span class="txt"><b>주가 +6.98% 급등, 78,100원 마감</b> — 7월 들어 17.8% 상승. AI 데이터센터 기대감, PER 6.4배·PBR 0.4배 매력 부각</span></div>
+    <div class="ev"><span class="date">07.07</span><span class="mk"><span class="dot gray" style="width:11px;height:11px"></span></span><span class="txt"><b>3세→4세 세대교체 관측</b> — 허동수·허세홍 부자 4월 GS건설 지분 전량 처분. 대규모 경영권 분쟁은 아님</span></div>
+    <div class="ev"><span class="date">07.19</span><span class="mk"><span class="dot red" style="width:11px;height:11px"></span></span><span class="txt"><b>52주 신고가 87,600원</b> 기록</span></div>
+    <div class="ev"><span class="date">07.30</span><span class="mk"><span class="dot red" style="width:11px;height:11px"></span></span><span class="txt"><b>GS건설 2Q 리뷰</b> — 교보증권 목표주가 34,000원, "본업인 주택에 관심을"</span></div>
+    <div class="ev"><span class="date">08.05</span><span class="mk"><span class="dot red" style="width:11px;height:11px"></span></span><span class="txt"><b>GS건설 데이터센터·원전 겹모멘텀</b> — "10조원 시공 물량" 기대감</span></div>
+    <div class="ev"><span class="date">08.06</span><span class="mk"><span class="dot red" style="width:11px;height:11px"></span></span><span class="txt"><b>2분기 깜짝 실적 후 주가 10% 급등</b> — "고점 대비 아직도 싸다" 평가</span></div>
+    <div class="ev"><span class="date">08.10</span><span class="mk"><span class="dot red" style="width:11px;height:11px"></span></span><span class="txt"><b>GS건설 기관·외국인 동반 순매수</b> — 외국인 지분율 19.8%→24.5%. GS이니마 매각으로 약 1.3조원 현금화 기대. <em>블로그 출처로 신뢰도 검증 필요</em></span></div>
+    <div class="ev"><span class="date">08.11</span><span class="mk"><span class="dot red" style="width:11px;height:11px"></span></span><span class="txt"><b>2분기 연결 영업이익 1조 7,174억원</b> (+253.37%, 컨센서스 +53% 상회) — 상반기 누적 2조 9,760억원(+130.82%)</span></div>
+    <div class="ev"><span class="date">08.11</span><span class="mk"><span class="dot red" style="width:11px;height:11px"></span></span><span class="txt"><b>GS리테일 "편의점이 효자"</b> — FCS 매출이 기존점 대비 50~60% 높음</span></div>
+    <div class="ev"><span class="date">08.11</span><span class="mk"><span class="dot red" style="width:11px;height:11px"></span></span><span class="txt"><b>GS칼텍스 흑자전환</b> — 정유부문 힘입어 그룹 동반 호실적</span></div>
+    <div class="ev"><span class="date">08.12</span><span class="mk"><span class="dot red" style="width:11px;height:11px"></span></span><span class="txt"><b>증권사 목표주가 잇단 상향</b> — 유진투자증권 10만→14만원(+40%), BNK투자증권 10만→12만원. "정유 본업 + AI 인프라" 이중 성장동력</span></div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <h4>애널리스트 논리 3가지</h4>
+      <p class="note">① GS칼텍스 정유·윤활유 호실적에 따른 배당 재원 확충<br>② 2.4GW 데이터센터 완공 시 지배주주순이익 최소 20% 이상 증가 가능<br>③ 상법개정·밸류업 논의에 따른 지주사 할인율 축소</p>
+    </div>
+    <div class="card">
+      <h4>여론에서 빠진 것</h4>
+      <p class="note">조사 기간 내 새로운 대규모 자사주 매입·소각 공시는 확인되지 않았습니다. 정유 최고가격제가 정제마진 실질 개선을 제약한다는 회사측 우려는 반복 언급되었고, GS건설 PF 만기 집중과 잠재 미분양 인수 리스크는 구조적으로 남아 있습니다.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 6. 리스크 ============ -->
+<section>
+  <div class="seclabel">RISK</div>
+  <h2>리스크 분석</h2>
+  <div class="tiles">
+    <div class="tile hi"><span class="k">종합 리스크 등급</span><span class="v">높음</span><span class="d">5단계 중 4단계</span></div>
+    <div class="tile"><span class="k">高 등급 항목</span><span class="v num">7<small>개</small></span><span class="d">전체 10개 카테고리 중</span></div>
+    <div class="tile"><span class="k">연환산 변동성</span><span class="v num">52.9<small>%</small></span><span class="d">KOSPI 52.5%와 동등</span></div>
+    <div class="tile"><span class="k">1년 최대낙폭</span><span class="v num">-23.9<small>%</small></span><span class="d">베타 0.35 (1년)</span></div>
+  </div>
+  <p class="lede">베타 0.35는 저변동을 뜻하지 않습니다. KOSPI 자체가 고변동 국면이라 분모가 컸을 뿐, GS의 절대 변동성(52.9%)은 시장과 동등합니다. 낮은 시장 민감도와 높은 고유 변동성이 결합된 구조입니다.</p>
+
+  <div class="risks">
+    <div class="risk"><div class="stripe"></div><div class="body">
+      <div class="rh"><span class="rn">실적 · 이익의 질</span><span class="grade">高</span></div>
+      <p class="rd">2Q26 영업이익 1.72조 중 재고평가이익 약 8,465억(49%)이 일회성. 3Q 컨센서스는 1.22조로 QoQ -29%. 이익 원천이 유가·정제마진이라는 통제 불가 외생변수.</p>
+    </div></div>
+    <div class="risk"><div class="stripe"></div><div class="body">
+      <div class="rh"><span class="rn">밸류에이션 — 사이클 함정</span><span class="grade">高</span></div>
+      <p class="rd">PER 4.98배·PBR 0.71배는 피크 이익 기준 착시. 정상화 이익 환산 시 PER 약 11~13배. 저PER은 사이클 상단의 전형적 신호이기도 함. 배당수익률도 급등으로 2.44%까지 희석.</p>
+    </div></div>
+    <div class="risk"><div class="stripe"></div><div class="body">
+      <div class="rh"><span class="rn">기술적 과열 · 가격</span><span class="grade">高</span></div>
+      <p class="rd">RSI 72.84, MA20 이격 +20.3%/MA60 +45.7%/MA120 +58.4%, 52주 밴드 99.1%. 신고가에도 거래량 평균 하회(다이버전스). MA60 회귀만으로 -31% 낙폭 가능.</p>
+    </div></div>
+    <div class="risk"><div class="stripe"></div><div class="body">
+      <div class="rh"><span class="rn">산업 · 규제</span><span class="grade">高</span></div>
+      <p class="rd">정유 최고가격제로 회사 자체가 실질 정제마진 악화를 인정. 중동 정세 완화 시 재고이익 소멸 및 역재고평가손 가능. 내수 경질유 점유율 3위로 하락, 석유화학 2Q 적자전환, 탈정유 전환 압력.</p>
+    </div></div>
+    <div class="risk"><div class="stripe"></div><div class="body">
+      <div class="rh"><span class="rn">사업 집중도</span><span class="grade">高</span></div>
+      <p class="rd">GS칼텍스 단일 의존도가 극단적. 2Q 정유 영업이익 약 2.6조가 전체를 견인하는 동안 석유화학 적자, GS건설 역성장, GS EPS 영업손실, GS글로벌 이익 감소. 지주사임에도 실질 분산 효과 부재.</p>
+    </div></div>
+    <div class="risk"><div class="stripe"></div><div class="body">
+      <div class="rh"><span class="rn">계열사 리스크 — GS건설</span><span class="grade">高</span></div>
+      <p class="rd">PF 대출 만기 1년 내 68.4% 집중(약 1.77조), 잠재 미분양 인수 리스크 최대 약 2.7조. 합산 최대 4.5조는 GS 시총 11.4조의 약 39%. 2026년 5월 업종 이벤트로 하루 -6.51% 동반 급락한 전이 민감도 확인.</p>
+    </div></div>
+    <div class="risk"><div class="stripe"></div><div class="body">
+      <div class="rh"><span class="rn">신사업 실행 · 자금조달 (AI DC)</span><span class="grade">高</span><span class="pill blue" style="padding:3px 9px; font-size:11px">양날의 검</span></div>
+      <p class="rd">직접투자 30조는 시총의 2.6배, 피크 영업이익(5.17조)의 6배. 자금조달 구조·전력 확보·앵커 테넌트 계약 미확정. 현재 주가에 상당 부분 선반영되어 지연·축소·유상증자 조달 시 되돌림 위험. 반대로 최대 상방 옵션이기도 함.</p>
+    </div></div>
+    <div class="risk mid"><div class="stripe"></div><div class="body">
+      <div class="rh"><span class="rn">지배구조 · 수급 오버행</span><span class="grade">中</span></div>
+      <p class="rd">오너 3세 지속 매도를 4세 매입이 상쇄 중. 대규모 경영권 분쟁은 아니나 승계 진행 국면에서 고점 부근 추가 매도 유인 상존. 완화 요인은 지주사 할인율 축소 트렌드와 계열사 104개의 단순한 구조.</p>
+    </div></div>
+    <div class="risk mid"><div class="stripe"></div><div class="body">
+      <div class="rh"><span class="rn">커버리지 · 정보 리스크</span><span class="grade">中</span></div>
+      <p class="rd">GS 지주사 전담 증권사 리포트가 뚜렷하지 않음. 목표주가 상향(유진 14만, BNK 12만)은 모두 어닝 서프라이즈 직후의 사후적 상향이며, 최상단 대비 상승여력은 약 14%에 불과.</p>
+    </div></div>
+    <div class="risk low"><div class="stripe"></div><div class="body">
+      <div class="rh"><span class="rn">재무 리스크</span><span class="grade">下~中</span></div>
+      <p class="rd">부채비율 80.0%까지 지속 개선. 다만 상당 부분이 일회성 이익 증가 효과. 배당은 매년 증액이나 배당성향 변동성이 큼(2025년 4분기 단독 117.31%). GS건설 우발채무는 감내 여력 범위이나 AI DC 투자와 동시 진행 시 부담 급증.</p>
+    </div></div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <h4>상방과 하방의 비대칭</h4>
+      <div class="bars">
+        <div class="bar"><span class="bl">상방</span><div class="track"><div class="fill softred" style="width: 44.6%"></div></div><span class="bv num">+14.0%</span></div>
+        <div class="bar"><span class="bl">하방 (MA20)</span><div class="track"><div class="fill soft" style="width: 53.8%"></div></div><span class="bv num">-16.9%</span></div>
+        <div class="bar"><span class="bl">하방 (매물대)</span><div class="track"><div class="fill soft" style="width: 72.9%"></div></div><span class="bv num">-22.9%</span></div>
+        <div class="bar"><span class="bl">하방 (MA60)</span><div class="track"><div class="fill" style="width: 100.0%"></div></div><span class="bv num">-31.4%</span></div>
+      </div>
+      <p class="note" style="margin-top:12px">상방은 목표주가 최상단 14만원 기준, 하방은 기술적 지지선 기준입니다.</p>
+    </div>
+    <div class="card">
+      <h4>확인해야 할 트리거 5가지</h4>
+      <p class="note">① 3분기 실적(26.11 발표) — 컨센서스 1.22조 충족 여부와 순수 정제마진 수준<br>② 국제유가·정제마진 방향 — 역재고평가손 가능성<br>③ AI 데이터센터 자금조달 구조 공시 — 유상증자·대규모 차입 시 즉각 반영<br>④ GS건설 PF 만기 대응 — 1.77조 롤오버 성사 여부<br>⑤ 기술적 확인 — MA20(102,400원) 이탈 시 조정 국면 진입 신호</p>
+    </div>
+  </div>
+  <p class="note">정보 한계: 베타는 공식 제공 수치가 아닌 직접 산출값이며, 전담 커버리지 부족으로 컨센서스 표본이 얇습니다. 지배구조 리스크는 정성 평가에 그쳤고, 정상화 이익 기준 PER(11~13배)은 개략치입니다. 52주 최저가는 자료 시점에 따라 42,800원과 43,650원으로 소폭 엇갈립니다.</p>
+</section>
+
+<!-- ============ 7. 종합 정리 ============ -->
+<section>
+  <div class="seclabel">CONCLUSION</div>
+  <h2>종합 정리</h2>
+  <p class="lede">재평가(re-rating) 자체에는 정당성이 있습니다. 4.3만원 시절 PBR 0.25~0.4배는 명백한 저평가였고, AI 데이터센터라는 새 성장축과 지주사 할인 축소 트렌드는 실체가 있는 상향 요인입니다. 반면 최근 1개월 +34.5% 구간은 사이클 피크 실적을 정상 이익처럼 자본화한 결과로 볼 여지가 있습니다.</p>
+
+  <div class="twocol">
+    <div class="colcard" style="background:var(--up-soft)">
+      <div class="colhead up">긍정 요인</div>
+      <div class="item"><span class="t">분기 사상 최대 실적</span><span class="s">2Q26 영업이익 1조 7,174억원(+253.4%), 컨센서스 +53% 상회. 상반기 누적 2조 9,760억원(+130.8%).</span></div>
+      <div class="item"><span class="t">신성장 동력의 실체</span><span class="s">2.4GW AI 데이터센터 캠퍼스. GS파워·GS건설·GS칼텍스 그룹 역량 총동원 구조.</span></div>
+      <div class="item"><span class="t">재무 건전성 개선</span><span class="s">부채비율 95.45%→79.98%로 4년 연속 개선.</span></div>
+      <div class="item"><span class="t">배당 연속 증액</span><span class="s">DPS 2,500→2,700→3,000원, 2026E 3,420원. 2025년 7월 밸류업 계획 공시.</span></div>
+      <div class="item"><span class="t">건전한 추세 구조</span><span class="s">정배열, 골든크로스 2회, 데드크로스 부재, 계단식 상승. 8/19~24 기관 순매수 우위.</span></div>
+      <div class="item"><span class="t">단순한 지배구조</span><span class="s">계열사 104개로 SK(151)·한화(116) 대비 단순. 지주사 할인 축소 트렌드의 수혜 대상.</span></div>
+    </div>
+    <div class="colcard" style="background:var(--accent-soft)">
+      <div class="colhead dn">부정 요인</div>
+      <div class="item"><span class="t">이익의 절반이 지속 불가</span><span class="s">2Q 영업이익 중 재고평가이익 약 8,465억(49.3%). 3Q 컨센서스는 이미 -29% 둔화.</span></div>
+      <div class="item"><span class="t">저평가 논거의 소진</span><span class="s">7월 PBR 0.4배 매력은 주가 상승으로 상당 부분 소진. 목표주가 최상단 대비 상승여력 약 14%.</span></div>
+      <div class="item"><span class="t">기술적 과열 동시 점등</span><span class="s">RSI 72.8, MA120 이격 +58.4%, 52주 밴드 99.1%, 거래량 다이버전스.</span></div>
+      <div class="item"><span class="t">단일 사업 의존</span><span class="s">GS칼텍스 정유 한 부문이 전체를 견인. 석화 적자, 건설 역성장, 발전 영업손실.</span></div>
+      <div class="item"><span class="t">잠재 부채와 초대형 투자 동시 진행</span><span class="s">GS건설 최대 4.5조 우발 익스포저(시총의 39%) + AI DC 직접투자 30조(시총의 2.6배).</span></div>
+      <div class="item"><span class="t">규제 제약</span><span class="s">정유 최고가격제로 재고효과 제외 시 실질 정제마진은 오히려 감소했다고 회사가 직접 밝힘.</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h4>정리하면</h4>
+    <p class="note" style="font-size:14px; color:var(--ink); opacity:.9">GS 주가 상승은 실적이라는 근거를 가지고 있었습니다. 다만 그 실적의 약 절반이 유가에 연동된 일회성 항목이고, 시장은 이미 3분기 -29% 둔화를 컨센서스에 반영해 두었습니다. 상승 서사(정유 호황 + AI 인프라 + 지주사 리레이팅)와 과열 신호(RSI·이격도·거래량 다이버전스·소진된 밸류에이션 여유)는 같은 데이터에서 동시에 도출되며, 어느 쪽이 우세한지는 3분기 실적과 AI 데이터센터 자금조달 구조가 공개되는 시점에 갈릴 가능성이 큽니다.</p>
+  </div>
+
+  <div class="disc">
+    본 리포트는 정보 제공을 목적으로 하며 투자 조언이 아닙니다. 투자 결정과 그 책임은 투자자 본인에게 있습니다.<br>
+    본 리포트는 특정 종목의 매수·매도·보유를 권유하지 않으며, 5개 분석 관점의 조사 결과를 종합해 긍정 요인과 부정 요인을 정리한 자료입니다. 모든 수치는 2026년 8월 25일 기준이며, 이후 시장 상황에 따라 달라질 수 있습니다. 일부 데이터는 출처에 따라 값이 소폭 엇갈릴 수 있습니다.
+  </div>
+</section>
+
+<footer>GS (078930) · 분석일 2026. 08. 25 · industry-research · financial-analyst · technical-analyst · news-monitor · risk-analyst 종합</footer>
+
+</div>
+
+<script>
+(function(){
+  var btn=document.getElementById('shareBtn'), panel=document.getElementById('sharePanel');
+  function close(){panel.classList.remove('open'); btn.setAttribute('aria-expanded','false');}
+  btn.addEventListener('click', function(e){
+    e.stopPropagation();
+    var o=panel.classList.toggle('open');
+    btn.setAttribute('aria-expanded', o?'true':'false');
+  });
+  panel.addEventListener('click', function(e){e.stopPropagation();});
+  document.addEventListener('click', close);
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape') close(); });
+
+  function toggler(miId, bodyId){
+    var mi=document.getElementById(miId), body=document.getElementById(bodyId);
+    mi.addEventListener('click', function(){
+      var o=body.classList.toggle('open');
+      mi.setAttribute('aria-expanded', o?'true':'false');
+    });
+  }
+  toggler('miMail','bodyMail');
+  toggler('miKakao','bodyKakao');
+
+  var SUMMARY = 'GS(078930) 2026.08.25 종가 123,200원(+7.5%), 52주 신고가.\n2Q26 영업이익 1조 7,174억원(+253%) 어닝 서프라이즈와 2.4GW AI 데이터센터 신사업이 상승 배경이나, 영업이익의 약 49%가 재고평가이익이고 RSI 72.8 과매수 등 과열 신호도 동시에 나타납니다.\n종합 리스크 등급: 높음(5단계 중 4단계).';
+
+  var ta=document.getElementById('shareText');
+  ta.value = '[GS 투자 컨설팅 리포트]\n' + SUMMARY + '\n\n리포트 보기: ' + window.location.href;
+
+  var copyBtn=document.getElementById('copyBtn');
+  copyBtn.addEventListener('click', function(){
+    ta.focus(); ta.select(); ta.setSelectionRange(0, ta.value.length);
+    var ok=false;
+    try { ok = document.execCommand('copy'); } catch(err) { ok=false; }
+    if(ok){
+      var prev=copyBtn.textContent;
+      copyBtn.textContent='복사됨!';
+      setTimeout(function(){ copyBtn.textContent=prev; }, 1600);
+    }
+  });
+
+  if(navigator.share){
+    var nb=document.getElementById('nativeBtn');
+    nb.style.display='inline-block';
+    nb.addEventListener('click', function(){
+      navigator.share({title:'GS 투자 컨설팅 리포트', text:SUMMARY, url:window.location.href}).catch(function(){});
+    });
+  }
+
+  var input=document.getElementById('mailTo'), link=document.getElementById('mailLink');
+  var subject = encodeURIComponent('GS 투자 컨설팅 리포트 - 2026.08.25');
+  function bodyText(){ return encodeURIComponent(SUMMARY + '\n\n리포트 보기: ' + window.location.href); }
+  input.addEventListener('input', function(){
+    if(input.value && input.checkValidity()){
+      link.href = 'mailto:' + input.value + '?subject=' + subject + '&body=' + bodyText();
+      link.setAttribute('aria-disabled','false');
+    } else {
+      link.href = '#';
+      link.setAttribute('aria-disabled','true');
+    }
+  });
+})();
+</script>
