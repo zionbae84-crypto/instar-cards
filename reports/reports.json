@@ -1,5 +1,14 @@
 [
   {
+    "company": "SNT에너지 (재분석)",
+    "code": "100840 · KOSPI",
+    "date": "2026-08-26",
+    "price": "28,050원",
+    "change": "+2.0% (직전 분석 대비) · 52주 저점 대비 +28.7%",
+    "risk": "중",
+    "file": "reports/snt-energy-100840-2026-08-26.html"
+  },
+  {
     "company": "GS",
     "code": "078930 · KOSPI",
     "date": "2026-08-25",
