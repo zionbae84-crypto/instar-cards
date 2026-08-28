@@ -1,0 +1,893 @@
+<title>엔비디아 재분석 리포트</title>
+<style>
+:root{
+  --bg:#F7F8FA; --surface:#FFFFFF; --surface-2:#F2F4F6; --ink:#191F28; --muted:#8B95A1;
+  --accent:#3182F6; --accent-soft:#EBF2FE; --up:#F04452; --down:#3182F6; --line:#E5E8EB;
+  --warn:#FF9500; --warn-soft:#FFF4E5; --up-soft:#FEECEE; --neutral:#B0B8C1;
+  --shadow:0 1px 3px rgba(25,31,40,.05), 0 6px 20px rgba(25,31,40,.06);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#16181C; --surface:#202124; --surface-2:#26282C; --ink:#F2F3F5; --muted:#8B95A1;
+    --accent:#4593FC; --accent-soft:#1D2A3D; --up:#FF5D6C; --down:#4593FC; --line:#2E3136;
+    --warn:#FFA726; --warn-soft:#3A2E18; --up-soft:#3A1F24; --neutral:#5A626B;
+    --shadow:0 1px 3px rgba(0,0,0,.3), 0 6px 20px rgba(0,0,0,.25);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#16181C; --surface:#202124; --surface-2:#26282C; --ink:#F2F3F5; --muted:#8B95A1;
+  --accent:#4593FC; --accent-soft:#1D2A3D; --up:#FF5D6C; --down:#4593FC; --line:#2E3136;
+  --warn:#FFA726; --warn-soft:#3A2E18; --up-soft:#3A1F24; --neutral:#5A626B;
+  --shadow:0 1px 3px rgba(0,0,0,.3), 0 6px 20px rgba(0,0,0,.25);
+}
+:root[data-theme="light"]{
+  --bg:#F7F8FA; --surface:#FFFFFF; --surface-2:#F2F4F6; --ink:#191F28; --muted:#8B95A1;
+  --accent:#3182F6; --accent-soft:#EBF2FE; --up:#F04452; --down:#3182F6; --line:#E5E8EB;
+  --warn:#FF9500; --warn-soft:#FFF4E5; --up-soft:#FEECEE; --neutral:#B0B8C1;
+  --shadow:0 1px 3px rgba(25,31,40,.05), 0 6px 20px rgba(25,31,40,.06);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:"Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  -webkit-font-smoothing:antialiased; line-height:1.55;
+  font-variant-numeric:tabular-nums; letter-spacing:-0.01em;
+}
+.wrap{max-width:760px; margin:0 auto; padding:32px 20px 80px; display:flex; flex-direction:column; gap:14px}
+.num{font-variant-numeric:tabular-nums}
+
+/* header */
+.hd{display:flex; flex-direction:column; gap:20px; padding:8px 4px 4px}
+.hd-top{display:flex; align-items:center; gap:8px; flex-wrap:wrap}
+.pill{display:inline-flex; align-items:center; gap:5px; border-radius:999px; padding:5px 11px;
+  font-size:12px; font-weight:700; background:var(--surface-2); color:var(--muted)}
+.pill.brand{background:var(--accent-soft); color:var(--accent)}
+.pill.re{background:var(--up-soft); color:var(--up)}
+h1{font-size:30px; font-weight:800; margin:0; letter-spacing:-0.035em; line-height:1.2; text-wrap:balance}
+.hd-price{display:flex; align-items:flex-end; gap:12px; flex-wrap:wrap}
+.px{font-size:56px; font-weight:800; letter-spacing:-0.045em; line-height:1}
+.px small{font-size:22px; font-weight:700; margin-right:2px}
+.chg{font-size:17px; font-weight:700; color:var(--up); padding-bottom:6px}
+.hd-sub{font-size:13px; color:var(--muted)}
+
+/* share */
+.share{position:relative; align-self:flex-start}
+.share-btn{border:0; cursor:pointer; border-radius:999px; padding:10px 18px; font:inherit;
+  font-size:14px; font-weight:700; background:var(--ink); color:var(--bg); display:inline-flex; align-items:center; gap:7px}
+.share-btn:hover{opacity:.88}
+.share-btn:focus-visible,.mi:focus-visible,.mini:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+.panel{position:absolute; z-index:30; top:calc(100% + 8px); left:0; width:min(340px,86vw);
+  background:var(--surface); border-radius:18px; box-shadow:0 8px 32px rgba(25,31,40,.16); padding:8px;
+  display:none; flex-direction:column; gap:2px}
+.panel.open{display:flex}
+.mi{width:100%; text-align:left; border:0; background:transparent; color:var(--ink); font:inherit;
+  font-size:14px; font-weight:600; padding:12px 14px; border-radius:12px; cursor:pointer;
+  display:flex; align-items:center; justify-content:space-between; gap:8px}
+.mi:hover{background:var(--surface-2)}
+.mi .caret{color:var(--muted); font-size:12px}
+.body{display:none; padding:4px 14px 14px; flex-direction:column; gap:8px}
+.body.open{display:flex}
+.body input,.body textarea{width:100%; font:inherit; font-size:13px; color:var(--ink);
+  background:var(--surface-2); border:0; border-radius:12px; padding:11px 13px; resize:none}
+.body input:focus,.body textarea:focus{outline:2px solid var(--accent)}
+.body textarea{height:120px; line-height:1.5}
+.mini{display:inline-flex; justify-content:center; border:0; cursor:pointer; font:inherit; font-size:13px;
+  font-weight:700; padding:10px 14px; border-radius:12px; background:var(--accent); color:#fff; text-decoration:none}
+.mini:hover{opacity:.9}
+.mini[aria-disabled="true"]{background:var(--surface-2); color:var(--muted); pointer-events:none}
+.hint{font-size:11.5px; color:var(--muted); line-height:1.45; margin:0}
+
+/* cards */
+.card{background:var(--surface); border-radius:20px; padding:26px 24px; box-shadow:var(--shadow);
+  display:flex; flex-direction:column; gap:18px}
+.card.hl{background:linear-gradient(180deg,var(--accent-soft) 0%, var(--surface) 190px)}
+.sec-h{display:flex; align-items:baseline; gap:10px; flex-wrap:wrap}
+.sec-n{font-size:11px; font-weight:800; color:var(--accent); letter-spacing:.08em}
+h2{font-size:20px; font-weight:800; margin:0; letter-spacing:-0.03em}
+h3.sub{margin:0; font-size:13px; font-weight:800; color:var(--muted); letter-spacing:-0.01em}
+.lede{font-size:14.5px; color:var(--ink); opacity:.85; margin:0; line-height:1.65; max-width:62ch}
+.note{font-size:12.5px; color:var(--muted); margin:0; line-height:1.55; max-width:64ch}
+.sec-note{font-size:12.5px; color:var(--muted); margin:0; line-height:1.55}
+.reuse{display:inline-flex; align-items:center; gap:6px; align-self:flex-start; border-radius:999px;
+  padding:5px 12px; font-size:11.5px; font-weight:700; background:var(--surface-2); color:var(--muted)}
+
+/* stat tiles */
+.tiles{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px}
+.tile{background:var(--surface-2); border-radius:16px; padding:16px 16px 15px; display:flex; flex-direction:column; gap:5px}
+.tile .lab{font-size:11.5px; font-weight:600; color:var(--muted)}
+.tile .val{font-size:27px; font-weight:800; letter-spacing:-0.04em; line-height:1.1}
+.tile .val.sm{font-size:22px}
+.tile .sub{font-size:11.5px; font-weight:600; color:var(--muted)}
+.up{color:var(--up)} .down{color:var(--down)} .warnc{color:var(--warn)}
+
+/* delta tiles */
+.deltas{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:10px}
+.dt{background:var(--surface); border-radius:16px; padding:17px 17px 16px; display:flex; flex-direction:column; gap:8px;
+  box-shadow:0 1px 3px rgba(25,31,40,.06)}
+.dt .lab{font-size:11.5px; font-weight:700; color:var(--muted)}
+.dt-row{display:flex; align-items:baseline; gap:8px; flex-wrap:wrap}
+.dt .was{font-size:15px; font-weight:700; color:var(--muted); text-decoration:line-through; text-decoration-thickness:1px; opacity:.75}
+.dt .arw{font-size:13px; color:var(--muted)}
+.dt .now{font-size:26px; font-weight:800; letter-spacing:-0.04em; line-height:1}
+.dt .chgv{font-size:12px; font-weight:800}
+.dt .sub{font-size:11.5px; color:var(--muted); font-weight:600; line-height:1.45}
+
+/* bars */
+.bars{display:flex; flex-direction:column; gap:11px}
+.bar-row{display:grid; grid-template-columns:96px 1fr auto; align-items:center; gap:12px}
+.bar-row .bl{font-size:12.5px; font-weight:600; color:var(--muted); text-align:right}
+.bar-row.wide{grid-template-columns:118px 1fr auto}
+.track{height:12px; background:var(--surface-2); border-radius:999px; overflow:hidden}
+.fill{height:100%; border-radius:999px; background:var(--accent)}
+.fill.n{background:var(--neutral)} .fill.r{background:var(--up)} .fill.w{background:var(--warn)}
+.fill.soft{background:var(--accent); opacity:.38}
+.bv{font-size:13px; font-weight:800; letter-spacing:-0.02em; min-width:70px; text-align:right}
+.grp-t{font-size:12px; font-weight:700; color:var(--muted); margin-bottom:-2px}
+
+/* chips */
+.chips{display:flex; flex-wrap:wrap; gap:7px}
+.chip{display:inline-flex; align-items:center; gap:6px; border-radius:999px; padding:7px 13px;
+  font-size:12.5px; font-weight:700; background:var(--surface-2); color:var(--ink)}
+.chip.b{background:var(--accent-soft); color:var(--accent)}
+.chip.r{background:var(--up-soft); color:var(--up)}
+.chip.w{background:var(--warn-soft); color:var(--warn)}
+.chip .dot{width:6px; height:6px; border-radius:50%; background:currentColor}
+
+/* kv grid */
+.kv{display:grid; grid-template-columns:repeat(auto-fit,minmax(148px,1fr)); gap:10px}
+.kv .k{font-size:11.5px; color:var(--muted); font-weight:600}
+.kv .v{font-size:16px; font-weight:800; letter-spacing:-0.02em}
+.kv > div{background:var(--surface-2); border-radius:14px; padding:13px 14px; display:flex; flex-direction:column; gap:3px}
+
+/* meter */
+.meters{display:flex; flex-direction:column; gap:20px}
+.meter{display:flex; flex-direction:column; gap:7px}
+.meter-top{display:flex; justify-content:space-between; align-items:baseline; gap:10px}
+.meter-lab{font-size:12.5px; font-weight:700; color:var(--muted)}
+.meter-val{font-size:19px; font-weight:800; letter-spacing:-0.03em}
+.rail{position:relative; height:10px; border-radius:999px; background:var(--surface-2); overflow:visible}
+.rail .seg{position:absolute; top:0; bottom:0}
+.rail .seg:first-of-type{border-radius:999px 0 0 999px}
+.rail .seg:last-of-type{border-radius:0 999px 999px 0}
+.rail .knob{position:absolute; top:50%; width:16px; height:16px; border-radius:50%; background:var(--ink);
+  transform:translate(-50%,-50%); box-shadow:0 0 0 3px var(--surface)}
+.scale{display:flex; justify-content:space-between; font-size:11px; color:var(--muted); font-weight:600}
+
+/* timeline */
+.tl{display:flex; flex-direction:column; gap:0; position:relative; padding-left:2px}
+.tl-item{display:grid; grid-template-columns:52px 20px 1fr; gap:0 10px; align-items:start; padding-bottom:20px; position:relative}
+.tl-item:last-child{padding-bottom:0}
+.tl-date{font-size:11.5px; font-weight:700; color:var(--muted); padding-top:2px; text-align:right}
+.tl-rail{position:relative; display:flex; justify-content:center}
+.tl-rail::before{content:""; position:absolute; top:9px; bottom:-20px; width:2px; background:var(--line)}
+.tl-item:last-child .tl-rail::before{display:none}
+.tl-dot{width:11px; height:11px; border-radius:50%; margin-top:4px; position:relative; z-index:1;
+  box-shadow:0 0 0 3px var(--surface)}
+.d-pos{background:var(--up)} .d-neg{background:var(--down)} .d-neu{background:var(--neutral)} .d-evt{background:var(--warn)}
+.tl-body{display:flex; flex-direction:column; gap:3px; padding-bottom:2px}
+.tl-t{font-size:14px; font-weight:700; letter-spacing:-0.02em}
+.tl-d{font-size:12.5px; color:var(--muted); line-height:1.5}
+.tone-bar{display:flex; height:10px; border-radius:999px; overflow:hidden; gap:2px; background:transparent}
+.tone-bar div{height:100%}
+.senti-legend{display:flex; flex-wrap:wrap; gap:7px; margin-top:9px}
+
+/* risk stripes */
+.risks{display:flex; flex-direction:column; gap:8px}
+.risk{display:grid; grid-template-columns:6px 1fr auto; gap:0 14px; align-items:center;
+  background:var(--surface-2); border-radius:14px; overflow:hidden; padding-right:14px}
+.risk .stripe{align-self:stretch}
+.s-hi{background:var(--up)} .s-mid{background:var(--warn)} .s-lo{background:var(--neutral)}
+.risk .rn{padding:12px 0; display:flex; flex-direction:column; gap:2px}
+.risk .rt{font-size:13.5px; font-weight:700; display:flex; align-items:center; gap:7px; flex-wrap:wrap}
+.risk .rd{font-size:12px; color:var(--muted); line-height:1.45}
+.mv{font-size:10.5px; font-weight:800; border-radius:999px; padding:2px 7px; background:var(--surface); color:var(--muted)}
+.badge{font-size:11px; font-weight:800; border-radius:999px; padding:4px 10px; white-space:nowrap}
+.b-hi{background:var(--up-soft); color:var(--up)}
+.b-mid{background:var(--warn-soft); color:var(--warn)}
+.b-lo{background:var(--surface); color:var(--muted)}
+
+/* two column */
+.two{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+.col{border-radius:16px; padding:18px 18px 20px; display:flex; flex-direction:column; gap:11px}
+.col.pos{background:var(--up-soft)} .col.neg{background:var(--accent-soft)}
+.col.plain{background:var(--surface-2)}
+.col h3{margin:0; font-size:14px; font-weight:800; letter-spacing:-0.02em}
+.col.pos h3{color:var(--up)} .col.neg h3{color:var(--accent)} .col.plain h3{color:var(--ink)}
+.col ul{margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:9px}
+.col li{font-size:13px; line-height:1.55; padding-left:13px; position:relative; color:var(--ink)}
+.col li::before{content:""; position:absolute; left:0; top:8px; width:5px; height:5px; border-radius:50%; background:currentColor; opacity:.45}
+.col .cap{font-size:11.5px; color:var(--muted); font-weight:600; margin:0}
+
+/* issue list */
+.issues{display:flex; flex-direction:column; gap:9px}
+.iss{display:grid; grid-template-columns:26px 1fr; gap:0 12px; align-items:start;
+  background:var(--surface-2); border-radius:14px; padding:14px 15px}
+.iss .no{font-size:13px; font-weight:800; color:var(--muted); line-height:1.45}
+.iss .it{font-size:13.5px; font-weight:700; letter-spacing:-0.02em; display:flex; gap:8px; align-items:center; flex-wrap:wrap}
+.iss .id{font-size:12.5px; color:var(--muted); line-height:1.5; margin-top:3px}
+.tag{font-size:10.5px; font-weight:800; border-radius:999px; padding:2px 8px}
+.t-pos{background:var(--up-soft); color:var(--up)}
+.t-neg{background:var(--accent-soft); color:var(--accent)}
+.t-neu{background:var(--surface); color:var(--muted)}
+
+.disc{background:var(--surface-2); border-radius:14px; padding:14px 16px; font-size:12px; color:var(--muted); line-height:1.6}
+.fn{display:flex; flex-direction:column; gap:9px}
+.fn div{font-size:11.5px; color:var(--muted); line-height:1.6}
+.fn b{color:var(--ink); font-weight:700}
+footer{text-align:left; font-size:11.5px; color:var(--muted); padding:6px 4px; line-height:1.6}
+
+@media (max-width:600px){
+  .two{grid-template-columns:1fr} .px{font-size:44px} h1{font-size:25px}
+  .bar-row,.bar-row.wide{grid-template-columns:88px 1fr auto}
+  .bv{min-width:58px}
+}
+@media print{
+  body{background:#fff; color:#000}
+  .share{display:none !important}
+  .wrap{max-width:100%; padding:0}
+  .card,.card.hl{box-shadow:none; border:1px solid #ddd; page-break-inside:avoid; padding:16px; background:#fff}
+  .tile,.risk,.kv>div,.col,.iss,.dt{background:#f5f5f5 !important; page-break-inside:avoid}
+  .tl-item,.bar-row,.meter,.deltas{page-break-inside:avoid}
+  h2{page-break-after:avoid}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none !important; transition:none !important}}
+</style>
+
+<div class="wrap">
+
+<header class="hd">
+  <div class="hd-top">
+    <span class="pill brand">NASDAQ NVDA</span>
+    <span class="pill re">재분석 · 직전 2026.07.27</span>
+    <span class="pill">기준일 2026.08.28 (종가 08.27)</span>
+  </div>
+  <div>
+    <h1 class="title">엔비디아 투자 컨설팅 리포트</h1>
+    <div class="hd-sub">산업 · 재무 · 기술 · 뉴스 · 리스크 5개 분석 결과 종합 (업데이트)</div>
+  </div>
+  <div class="hd-price">
+    <div class="px num"><small>$</small>227.98</div>
+    <div class="chg num">+8.74% <span style="font-weight:600">(08.27, 실적 발표 다음날)</span></div>
+  </div>
+</header>
+
+<!-- 공유 -->
+<div class="share">
+  <button class="share-btn" id="shareBtn" aria-expanded="false" aria-haspopup="true">공유 <span aria-hidden="true">▾</span></button>
+  <div class="panel" id="sharePanel" role="menu">
+    <button class="mi" id="miMail" role="menuitem" aria-expanded="false">메일로 보내기 <span class="caret" aria-hidden="true">▾</span></button>
+    <div class="body" id="bdMail">
+      <input type="email" id="mailTo" placeholder="받는 사람 이메일 주소" autocomplete="email">
+      <a class="mini" id="mailLink" href="#" aria-disabled="true">보내기</a>
+      <p class="hint">클릭하면 메일 작성창이 열리며, 직접 보내기를 눌러야 전달됩니다. 자동 발송되지 않습니다.</p>
+    </div>
+    <button class="mi" id="miKakao" role="menuitem" aria-expanded="false">카카오톡으로 공유 <span class="caret" aria-hidden="true">▾</span></button>
+    <div class="body" id="bdKakao">
+      <textarea id="kkText" readonly></textarea>
+      <button class="mini" id="kkCopy" type="button">복사</button>
+      <button class="mini" id="kkShare" type="button" style="display:none; background:var(--surface-2); color:var(--ink)">다른 앱으로 공유</button>
+      <p class="hint">복사한 내용을 카카오톡 채팅방에 붙여넣어 공유하세요.</p>
+    </div>
+  </div>
+</div>
+
+<!-- 01 이전 분석 대비 변화 -->
+<section class="card hl">
+  <div class="sec-h"><span class="sec-n">01</span><h2>이전 분석(2026.07.27) 대비 변화</h2></div>
+
+  <div class="deltas">
+    <div class="dt">
+      <span class="lab">현재가</span>
+      <div class="dt-row">
+        <span class="was num">$196.51</span><span class="arw" aria-hidden="true">→</span>
+        <span class="now num">$227.98</span>
+      </div>
+      <span class="chgv up num">+16.01% (한 달)</span>
+      <span class="sub">52주 고점 대비 −16.92% → −3.62%</span>
+    </div>
+    <div class="dt">
+      <span class="lab">PER (TTM)</span>
+      <div class="dt-row">
+        <span class="was num">30.05배</span><span class="arw" aria-hidden="true">→</span>
+        <span class="now num">28.83배</span>
+      </div>
+      <span class="chgv down num">−1.22배</span>
+      <span class="sub">주가는 올랐지만 이익이 더 크게 늘어 배수는 하락</span>
+    </div>
+    <div class="dt">
+      <span class="lab">종합 리스크</span>
+      <div class="dt-row">
+        <span class="was" style="text-decoration:none; opacity:1; color:var(--warn)">중상</span>
+        <span class="arw" aria-hidden="true">→</span>
+        <span class="now warnc">중상</span>
+      </div>
+      <span class="chgv" style="color:var(--muted)">등급 유지 · 성격 변화</span>
+      <span class="sub">상향도 하향도 아님. 아래 성격 변화 참고</span>
+    </div>
+  </div>
+
+  <div>
+    <h3 class="sub" style="margin-bottom:10px">한 달 사이 새로 확인된 핵심 이슈 5가지</h3>
+    <div class="issues">
+      <div class="iss">
+        <span class="no num">01</span>
+        <div>
+          <div class="it">Q2 FY27 실적 서프라이즈로 단기 최대 변수 해소 <span class="tag t-pos">긍정</span></div>
+          <div class="id">직전 리포트가 "8월 26일 실적이 방향을 가르는 최대 변수"로 지목했던 이벤트가 지나갔습니다. 매출·EPS·가이던스가 모두 컨센서스를 웃돌았고 다음날 주가는 +8.74% 급등했습니다.</div>
+        </div>
+      </div>
+      <div class="iss">
+        <span class="no num">02</span>
+        <div>
+          <div class="it">순환금융 논란은 해소가 아니라 격화 <span class="tag t-neg">부정</span></div>
+          <div class="id">7월의 우려가 8월에는 회사와 공매도 세력의 공개 설전으로 번졌습니다. 8월 27일 엔비디아가 월가에 공식 반박 메모를 보냈으나 논란은 현재까지 미해소입니다.</div>
+        </div>
+      </div>
+      <div class="iss">
+        <span class="no num">03</span>
+        <div>
+          <div class="it">장기부채 급증과 잉여현금흐름 반토막 <span class="tag t-neg">부정</span></div>
+          <div class="id">장기부채가 $7.5B에서 $32.4B로 늘며 부채비율이 6.6%에서 약 17%로 올랐고, FCF 마진은 59.5%에서 22.2%로 떨어졌습니다. 매출채권·재고 급증이 직접 원인입니다.</div>
+        </div>
+      </div>
+      <div class="iss">
+        <span class="no num">04</span>
+        <div>
+          <div class="it">52주 고점 근접으로 하방 쿠션 소멸 <span class="tag t-neg">부정</span></div>
+          <div class="id">한 달 전에는 고점 대비 −16.92% 자리여서 가격 자체가 완충 역할을 했습니다. 지금은 −3.62%로 52주 밴드 상위권이라 그 완충이 사라졌습니다.</div>
+        </div>
+      </div>
+      <div class="iss">
+        <span class="no num">05</span>
+        <div>
+          <div class="it">Q3 매출총이익률 가이던스 하락에 따른 마진 정점론 <span class="tag t-neg">부정</span></div>
+          <div class="id">Q3 매출총이익률 가이던스가 75%에서 74%로 낮아졌습니다. 1%p이지만 "마진이 정점을 찍었다"는 해석의 근거로 인용되고 있습니다.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <h3 class="sub" style="margin-bottom:10px">같은 '중상'이지만 리스크의 성격이 바뀌었습니다</h3>
+    <div class="two">
+      <div class="col plain">
+        <h3>7월 · 이벤트 대기형</h3>
+        <p class="cap">직전 분석 2026.07.27</p>
+        <ul>
+          <li>8/26 실적이라는 촉매를 앞둔 불확실성</li>
+          <li>고점 대비 −16.92%라는 가격 완충 존재</li>
+          <li>실현변동성 시장 대비 2.8~3.2배</li>
+        </ul>
+      </div>
+      <div class="col neg">
+        <h3>8월 · 밸류에이션 재조정 + 회계신뢰성 내러티브형</h3>
+        <p class="cap">이번 분석 2026.08.28</p>
+        <ul>
+          <li>실적 방어막을 이미 소진한 상태</li>
+          <li>고점 부근에서 순환금융 논란이 부채 급증·FCF 급감·데이터센터 집중과 결합</li>
+          <li>20일 실현변동성 시장 대비 4.09배로 확대</li>
+        </ul>
+      </div>
+    </div>
+    <p class="note" style="margin-top:12px">요인들이 서로를 증폭시킬 수 있는 국면이라는 점이 등급 숫자보다 중요합니다.</p>
+  </div>
+</section>
+
+<!-- 02 요약 -->
+<section class="card">
+  <div class="sec-h"><span class="sec-n">02</span><h2>요약</h2></div>
+  <div class="tiles">
+    <div class="tile"><span class="lab">현재가 (08.27 종가)</span><span class="val num">$227.98</span><span class="sub up num">+8.74% · 52주 고점 대비 −3.62%</span></div>
+    <div class="tile"><span class="lab">PER (TTM)</span><span class="val num">28.83<span style="font-size:15px">배</span></span><span class="sub num">Forward PER 19.01배</span></div>
+    <div class="tile"><span class="lab">RSI (14)</span><span class="val num">61.32</span><span class="sub">중립 상단 · 과매수 미도달</span></div>
+    <div class="tile"><span class="lab">Q2 FY27 매출</span><span class="val num">$96.2<span style="font-size:15px">B</span></span><span class="sub up num">YoY +106% · QoQ +18%</span></div>
+    <div class="tile"><span class="lab">52주 밴드 위치</span><span class="val num">89.4<span style="font-size:15px">%</span></span><span class="sub">저점 대비 +38.95% 지점</span></div>
+    <div class="tile"><span class="lab">종합 리스크</span><span class="val sm warnc">중상</span><span class="sub">5단계 중 4단계 · 직전과 동일</span></div>
+  </div>
+  <p class="lede">8월 26일 Q2 FY27 실적이 매출·EPS·가이던스 전 항목에서 컨센서스를 넘기며 주가가 하루 만에 +8.74% 올랐고, 한 달 전 기술적 붕괴 국면은 중장기 이동평균 정배열로 되돌아왔습니다. 동시에 장기부채가 4배 이상 늘고 FCF 마진이 절반 아래로 떨어졌으며, 순환금융을 둘러싼 신뢰성 논란은 회사와 공매도 세력의 공개 설전으로 번져 아직 끝나지 않았습니다.</p>
+  <p class="sec-note">실적은 확인됐고 가격은 고점 부근 — 이제 논점은 성장이 아니라 현금흐름의 질입니다</p>
+</section>
+
+<!-- 03 산업 개요 -->
+<section class="card">
+  <div class="sec-h"><span class="sec-n">03</span><h2>산업 개요</h2><span class="pill">AI 가속기 · 데이터센터 반도체</span></div>
+  <span class="reuse">데이터 출처 · 산업 구도는 직전 분석(2026.07.27) 기준 유지, 델타만 반영</span>
+
+  <div class="bars">
+    <div class="grp-t">AI 가속기 매출 기준 점유율 · 2026년 추정 (직전 분석 수치 재사용)</div>
+    <div class="bar-row wide"><span class="bl">NVIDIA</span><div class="track"><div class="fill" style="width:100.0%"></div></div><span class="bv num">78%</span></div>
+    <div class="bar-row wide"><span class="bl">커스텀 ASIC</span><div class="track"><div class="fill n" style="width:16.7%"></div></div><span class="bv num">13%</span></div>
+    <div class="bar-row wide"><span class="bl">AMD</span><div class="track"><div class="fill n" style="width:7.7%"></div></div><span class="bv num">6%</span></div>
+    <div class="bar-row wide"><span class="bl">Intel Gaudi</span><div class="track"><div class="fill n" style="width:3.8%"></div></div><span class="bv num">3%</span></div>
+  </div>
+  <p class="note">엔비디아의 압도적 1위, 2024년 정점(87%) 대비 점유율 하락 추세, AMD의 실질 2위 부상, 하이퍼스케일러 자체 ASIC의 추론 워크로드 잠식 — 이 네 가지 구도는 한 달 사이 근본적으로 바뀌지 않았습니다. 아래는 이번 조사에서 새로 확인된 변화분입니다.</p>
+
+  <div>
+    <h3 class="sub" style="margin-bottom:10px">이번에 새로 확인된 관찰 포인트 3가지</h3>
+    <div class="issues">
+      <div class="iss">
+        <span class="no" aria-hidden="true">·</span>
+        <div>
+          <div class="it">MS Maia 300, 9월 출시 예정 <span class="tag t-neg">경쟁 심화</span></div>
+          <div class="id">TSMC 캐파 30만 개 이상을 확보한 것으로 알려졌습니다. 하이퍼스케일러 자체 칩 확산이라는 기존 트렌드의 연장선이지만, 규모 면에서 새로운 신호입니다.</div>
+        </div>
+      </div>
+      <div class="iss">
+        <span class="no" aria-hidden="true">·</span>
+        <div>
+          <div class="it">미 정부, 중국의 '역외 경로' 칩 접근 재검토 <span class="tag t-neg">규제</span></div>
+          <div class="id">2026년 8월 7일 Bloomberg 보도. 중국 AI 기업이 제3국 경로로 엔비디아 칩에 접근하는 것을 미 정부가 다시 들여다보기 시작했습니다. 수출규제 리스크가 소폭 재점화됐습니다.</div>
+        </div>
+      </div>
+      <div class="iss">
+        <span class="no" aria-hidden="true">·</span>
+        <div>
+          <div class="it">Rubin 아키텍처 초도 출하 개시 <span class="tag t-pos">기술 리더십</span></div>
+          <div class="id">계획대로, 일부 고객사에는 다소 앞당겨 초도 출하가 시작됐습니다. 차세대 아키텍처 로드맵이 지연 없이 굴러가고 있다는 점에서 기술 리더십 유지에 긍정적입니다.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 재무 분석 -->
+<section class="card">
+  <div class="sec-h"><span class="sec-n">04</span><h2>재무 분석</h2><span class="pill">Q2 FY27 · 2026.08.26 발표</span></div>
+
+  <div class="tiles">
+    <div class="tile"><span class="lab">매출</span><span class="val num">$96.2<span style="font-size:15px">B</span></span><span class="sub up num">YoY +106% · QoQ +18%</span></div>
+    <div class="tile"><span class="lab">영업이익률</span><span class="val num">66.2<span style="font-size:15px">%</span></span><span class="sub up num">65.6% → 개선</span></div>
+    <div class="tile"><span class="lab">FCF 마진</span><span class="val num down">22.2<span style="font-size:15px">%</span></span><span class="sub down num">59.5% → 급감</span></div>
+    <div class="tile"><span class="lab">ROE</span><span class="val num">117.2<span style="font-size:15px">%</span></span><span class="sub up">상승</span></div>
+  </div>
+
+  <div class="bars">
+    <div class="grp-t">분기 매출 추이 ($B) · 가속은 이어지지만 증가폭은 둔화 조짐</div>
+    <div class="bar-row wide"><span class="bl">Q2 FY26<sup>*</sup></span><div class="track"><div class="fill soft" style="width:43.2%"></div></div><span class="bv num">$46.7B</span></div>
+    <div class="bar-row wide"><span class="bl">Q1 FY27</span><div class="track"><div class="fill" style="width:75.6%"></div></div><span class="bv num">$81.6B</span></div>
+    <div class="bar-row wide"><span class="bl">Q2 FY27</span><div class="track"><div class="fill" style="width:89.1%"></div></div><span class="bv num">$96.2B</span></div>
+    <div class="bar-row wide"><span class="bl">Q3 가이던스</span><div class="track"><div class="fill w" style="width:100.0%"></div></div><span class="bv num">$108.0B</span></div>
+  </div>
+  <p class="note">Q3 가이던스는 QoQ +12.3%로, Q2의 QoQ +18%보다 낮습니다. 절대 성장은 여전히 강하지만 증가 속도가 꺾이기 시작한 첫 구간입니다.</p>
+
+  <div class="bars">
+    <div class="grp-t">Q2 FY27 수익성 지표 (%)</div>
+    <div class="bar-row wide"><span class="bl">매출총이익률<sup>†</sup></span><div class="track"><div class="fill" style="width:100.0%"></div></div><span class="bv num">74.0%</span></div>
+    <div class="bar-row wide"><span class="bl">영업이익률</span><div class="track"><div class="fill" style="width:89.5%"></div></div><span class="bv num">66.2%</span></div>
+    <div class="bar-row wide"><span class="bl">순이익률 GAAP</span><div class="track"><div class="fill n" style="width:83.8%"></div></div><span class="bv num">62.0%</span></div>
+    <div class="bar-row wide"><span class="bl">순이익률 Non-GAAP</span><div class="track"><div class="fill n" style="width:75.8%"></div></div><span class="bv num">56.1%</span></div>
+    <div class="bar-row wide"><span class="bl">FCF 마진</span><div class="track"><div class="fill r" style="width:30.0%"></div></div><span class="bv num">22.2%</span></div>
+  </div>
+  <p class="note">GAAP 순이익률이 71.5%에서 62.0%로 내려간 것은 영업외손익 요인이며 본업 훼손이 아닙니다. Non-GAAP 기준 56.1%는 안정적으로 유지됐고, 영업이익률은 오히려 개선됐습니다.</p>
+
+  <div class="two">
+    <div class="col plain">
+      <h3>현금흐름이 반토막 난 자리</h3>
+      <div class="bars" style="margin-top:2px">
+        <div class="bar-row" style="grid-template-columns:70px 1fr auto"><span class="bl">Q1 FY27</span><div class="track"><div class="fill soft" style="width:100.0%"></div></div><span class="bv num">59.5%</span></div>
+        <div class="bar-row" style="grid-template-columns:70px 1fr auto"><span class="bl">Q2 FY27</span><div class="track"><div class="fill r" style="width:37.3%"></div></div><span class="bv num">22.2%</span></div>
+      </div>
+      <p class="cap">FCF 마진. 영업현금흐름·FCF가 매출채권·재고 급증으로 전 분기 대비 절반 이하로 줄었습니다.</p>
+    </div>
+    <div class="col plain">
+      <h3>장기부채가 4배 이상 늘었습니다</h3>
+      <div class="bars" style="margin-top:2px">
+        <div class="bar-row" style="grid-template-columns:70px 1fr auto"><span class="bl">직전</span><div class="track"><div class="fill soft" style="width:23.1%"></div></div><span class="bv num">$7.5B</span></div>
+        <div class="bar-row" style="grid-template-columns:70px 1fr auto"><span class="bl">현재</span><div class="track"><div class="fill r" style="width:100.0%"></div></div><span class="bv num">$32.4B</span></div>
+      </div>
+      <p class="cap">부채비율 6.6% → 약 17%. Apollo·BlackRock·Blackstone 등과의 $500B+ 컴퓨트 파이낸싱 플랫폼과 연관된 것으로 보고됩니다.</p>
+    </div>
+  </div>
+
+  <div class="kv">
+    <div><span class="k">데이터센터 매출 비중</span><span class="v num">92.5%</span></div>
+    <div><span class="k">순현금<sup>‡</sup></span><span class="v num">$66.0B</span></div>
+    <div><span class="k">유동비율</span><span class="v num">4.59x</span></div>
+    <div><span class="k">PBR</span><span class="v num">24.04배</span></div>
+  </div>
+  <p class="note">데이터센터 비중이 92.5%까지 올라 사업 집중도가 더 심해졌습니다. 한 부문이 흔들리면 전사가 흔들리는 구조입니다. 반면 순현금은 $68.2B에서 $66.0B로 거의 유지됐고 유동비율 4.59x는 여전히 우수합니다.</p>
+
+  <div class="bars">
+    <div class="grp-t">밸류에이션 배수 · 이익 증가가 주가 상승을 앞질러 PER은 오히려 하락</div>
+    <div class="bar-row wide"><span class="bl">PER (TTM)</span><div class="track"><div class="fill" style="width:100.0%"></div></div><span class="bv num">28.83배</span></div>
+    <div class="bar-row wide"><span class="bl">PBR</span><div class="track"><div class="fill r" style="width:83.4%"></div></div><span class="bv num">24.04배</span></div>
+    <div class="bar-row wide"><span class="bl">Forward PER</span><div class="track"><div class="fill soft" style="width:65.9%"></div></div><span class="bv num">19.01배</span></div>
+  </div>
+  <p class="note">PER은 30.05배에서 28.83배로 내려왔지만, 자산 대비 가격을 보는 PBR 24.04배는 여전히 높은 수준입니다.</p>
+</section>
+
+<!-- 05 기술적 분석 -->
+<section class="card">
+  <div class="sec-h"><span class="sec-n">05</span><h2>기술적 분석</h2><span class="pill">2026.08.27 종가 기준</span></div>
+  <p class="note">이번 재분석에서는 차트 이미지가 생성되지 않아, 아래 수치 해석으로 대체합니다.</p>
+
+  <div class="tiles">
+    <div class="tile"><span class="lab">현재가</span><span class="val num">$227.98</span><span class="sub up num">8/27 +8.74%</span></div>
+    <div class="tile"><span class="lab">52주 고점 대비</span><span class="val num down">−3.62<span style="font-size:15px">%</span></span><span class="sub num">직전 −16.92%에서 회복</span></div>
+    <div class="tile"><span class="lab">거래량</span><span class="val num">2.98<span style="font-size:15px">억주</span></span><span class="sub">최근 6개월 최대</span></div>
+    <div class="tile"><span class="lab">52주 저점 대비</span><span class="val num up">+38.95<span style="font-size:15px">%</span></span><span class="sub">52주 밴드 상위 89.4% 지점</span></div>
+  </div>
+
+  <div class="bars">
+    <div class="grp-t">현재가가 각 이동평균선보다 몇 % 위에 있는가</div>
+    <div class="bar-row wide"><span class="bl">MA5 $214.78</span><div class="track"><div class="fill r" style="width:37.3%"></div></div><span class="bv num">+6.15%</span></div>
+    <div class="bar-row wide"><span class="bl">MA20 $217.21</span><div class="track"><div class="fill r" style="width:30.1%"></div></div><span class="bv num">+4.96%</span></div>
+    <div class="bar-row wide"><span class="bl">MA200 $195.73</span><div class="track"><div class="fill r" style="width:100.0%"></div></div><span class="bv num">+16.48%</span></div>
+  </div>
+  <p class="note">한 달 전에는 MA5·20·60·120을 한꺼번에 이탈한 상태였습니다. 7월 29일 하루 MA200까지 단기 이탈했지만 7월 30일 곧바로 되돌렸고 이후 재이탈은 없었습니다. 지금은 60·120·200일선이 완전 정배열입니다.</p>
+
+  <div class="meters">
+    <div class="meter">
+      <div class="meter-top"><span class="meter-lab">RSI (14) · 과열 여부</span><span class="meter-val num">61.32</span></div>
+      <div class="rail">
+        <div class="seg" style="left:0%; width:30%; background:var(--accent); opacity:.35"></div>
+        <div class="seg" style="left:30%; width:40%; background:var(--surface-2)"></div>
+        <div class="seg" style="left:70%; width:30%; background:var(--up); opacity:.35"></div>
+        <div class="knob" style="left:61.32%"></div>
+      </div>
+      <div class="scale"><span>0 과매도</span><span>30</span><span>70</span><span>100 과매수</span></div>
+    </div>
+    <div class="meter">
+      <div class="meter-top"><span class="meter-lab">52주 밴드 내 위치</span><span class="meter-val num">상위 89.4%</span></div>
+      <div class="rail">
+        <div class="seg" style="left:0%; width:100%; background:var(--surface-2)"></div>
+        <div class="seg" style="left:70%; width:30%; background:var(--up); opacity:.28"></div>
+        <div class="knob" style="left:89.4%"></div>
+      </div>
+      <div class="scale"><span>52주 저점</span><span>중간</span><span>52주 고점 $236.54</span></div>
+    </div>
+  </div>
+
+  <div class="chips">
+    <span class="chip r"><span class="dot"></span>중장기 MA 완전 정배열 (60·120·200)</span>
+    <span class="chip r"><span class="dot"></span>MA5 &lt; MA20 &lt; 현재가</span>
+    <span class="chip w"><span class="dot"></span>MACD 8/21 데드크로스 → 재골든크로스 임박</span>
+    <span class="chip b"><span class="dot"></span>RSI 61.32 · 과매수 미도달</span>
+    <span class="chip"><span class="dot"></span>8/27 갭업 시가 +6.30%</span>
+  </div>
+  <p class="sec-note">직전 분석의 "MA200 방어선" 시나리오는 지켜졌고, 실적 이후 상승으로 추세가 되돌아온 형태입니다.</p>
+</section>
+
+<!-- 06 뉴스 · 시장 심리 -->
+<section class="card">
+  <div class="sec-h"><span class="sec-n">06</span><h2>최근 뉴스와 시장 심리</h2><span class="pill">07.27 ~ 08.28</span></div>
+
+  <div>
+    <div class="tone-bar" aria-label="뉴스 논조 비율: 총 13건 중 긍정 4건, 부정 6건, 중립·이벤트 3건">
+      <div style="width:30.8%; background:var(--up)"></div>
+      <div style="width:46.2%; background:var(--down)"></div>
+      <div style="width:23.1%; background:var(--neutral)"></div>
+    </div>
+    <div class="senti-legend">
+      <span class="chip r"><span class="dot"></span>긍정 4건</span>
+      <span class="chip b"><span class="dot"></span>부정 6건</span>
+      <span class="chip"><span class="dot"></span>중립·이벤트 3건</span>
+    </div>
+  </div>
+  <p class="lede">한 달간의 여론은 "실적은 명확히 긍정적이나 순환금융 신뢰성 논란과 마진·경쟁 우려가 병존하는 혼재 국면"으로 요약됩니다. 건수로는 부정 기사가 더 많지만, 8월 26일 실적이라는 사실관계가 확정되면서 시장은 소폭 긍정 쪽으로 기운 상태로 받아들이고 있습니다.</p>
+
+  <div class="tl">
+    <div class="tl-item">
+      <div class="tl-date">07.28</div>
+      <div class="tl-rail"><div class="tl-dot d-neg"></div></div>
+      <div class="tl-body">
+        <div class="tl-t">'매출의 질' 의혹 제기</div>
+        <div class="tl-d">마이클 버리와 번스타인이 매출 인식 구조에 의문을 제기하며 순환금융 논쟁이 다시 불붙었습니다.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">08.07</div>
+      <div class="tl-rail"><div class="tl-dot d-neg"></div></div>
+      <div class="tl-body">
+        <div class="tl-t">미 정부, 중국의 역외 경로 칩 접근 재검토</div>
+        <div class="tl-d">Bloomberg 보도. 수출규제 리스크가 소폭 재점화됐습니다.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">08.11</div>
+      <div class="tl-rail"><div class="tl-dot d-neg"></div></div>
+      <div class="tl-body">
+        <div class="tl-t">버리, 숏 포지션 확대</div>
+        <div class="tl-d">공개적으로 공매도 규모를 늘렸다고 밝혔습니다.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">08.14</div>
+      <div class="tl-rail"><div class="tl-dot d-neg"></div></div>
+      <div class="tl-body">
+        <div class="tl-t">엔론 비유 발언으로 논쟁 격화</div>
+        <div class="tl-d">회계 신뢰성 자체를 겨냥한 비유가 나오며 논란의 성격이 밸류에이션에서 신뢰성으로 옮겨갔습니다.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">08월 중</div>
+      <div class="tl-rail"><div class="tl-dot d-neg"></div></div>
+      <div class="tl-body">
+        <div class="tl-t">메타-구글 TPU 6년 $10B+ 계약</div>
+        <div class="tl-d">하이퍼스케일러 자체 칩 확산이 계속되고 있음을 보여주는 대형 계약입니다.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">08월 중</div>
+      <div class="tl-rail"><div class="tl-dot d-pos"></div></div>
+      <div class="tl-body">
+        <div class="tl-t">AWS, GPU 200만 개 추가 계약</div>
+        <div class="tl-d">자체 칩 확산의 부정적 영향을 상당 부분 상쇄하는 규모입니다.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">08월 중</div>
+      <div class="tl-rail"><div class="tl-dot d-pos"></div></div>
+      <div class="tl-body">
+        <div class="tl-t">Rubin 아키텍처 초도 출하 시작</div>
+        <div class="tl-d">주요 고객사 대상으로 계획대로, 일부는 앞당겨 출하가 개시됐습니다.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">08.26</div>
+      <div class="tl-rail"><div class="tl-dot d-pos"></div></div>
+      <div class="tl-body">
+        <div class="tl-t">Q2 FY27 실적, 전 항목 컨센서스 상회</div>
+        <div class="tl-d">매출·EPS·가이던스가 모두 시장 기대를 넘었습니다. FY28 매출성장 가이던스는 70%로, 컨센서스 44%를 크게 웃돌았습니다.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">08.26</div>
+      <div class="tl-rail"><div class="tl-dot d-neg"></div></div>
+      <div class="tl-body">
+        <div class="tl-t">Q3 매출총이익률 가이던스 75% → 74%</div>
+        <div class="tl-d">중국향 H20 매출은 이번 분기 0으로 확인됐습니다. 다만 젠슨 황은 향후 Blackwell의 중국 진입 가능성을 시사했습니다.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">08.26</div>
+      <div class="tl-rail"><div class="tl-dot d-neu"></div></div>
+      <div class="tl-body">
+        <div class="tl-t">실적 당일에도 공매도 추가 확대</div>
+        <div class="tl-d">호실적 발표에도 숏 포지션이 더 늘었습니다.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">08.27</div>
+      <div class="tl-rail"><div class="tl-dot d-pos"></div></div>
+      <div class="tl-body">
+        <div class="tl-t">주가 +8.74% 급등, 거래량 6개월 최대</div>
+        <div class="tl-d">갭업 시가 +6.30%로 출발해 2.98억 주가 거래됐습니다.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">08.27</div>
+      <div class="tl-rail"><div class="tl-dot d-evt"></div></div>
+      <div class="tl-body">
+        <div class="tl-t">엔비디아, 월가에 공식 반박 메모 발송</div>
+        <div class="tl-d">회사와 공매도 세력 간 공개 설전으로 비화했습니다. 논란은 현재까지 미해소 상태입니다.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">09월 예정</div>
+      <div class="tl-rail"><div class="tl-dot d-neu"></div></div>
+      <div class="tl-body">
+        <div class="tl-t">MS Maia 300 출시 예정</div>
+        <div class="tl-d">TSMC 캐파 30만 개 이상 확보. 경쟁 심화 신호로 주목받고 있습니다.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 07 리스크 분석 -->
+<section class="card">
+  <div class="sec-h"><span class="sec-n">07</span><h2>리스크 분석</h2><span class="pill">종합 중상 · 5단계 중 4단계</span></div>
+
+  <div class="risks">
+    <div class="risk">
+      <div class="stripe s-hi"></div>
+      <div class="rn">
+        <div class="rt">가격 · 변동성 리스크 <span class="mv">중상 → 상 · 상향</span></div>
+        <div class="rd">하방 쿠션이 사라진 것과 실현변동성 확대가 결정적입니다. MA200 방어선 유지와 RSI 과매수 미도달은 완화 요인.</div>
+      </div>
+      <span class="badge b-hi">상</span>
+    </div>
+    <div class="risk">
+      <div class="stripe s-hi"></div>
+      <div class="rn">
+        <div class="rt">이벤트 · 뉴스 리스크 <span class="mv">중상 → 상 · 상향</span></div>
+        <div class="rd">순환금융 논란이 해소가 아니라 격화되어 회사와 공매도 세력의 공개 설전으로 비화한 점이 결정적입니다. 실적 서프라이즈와 공매도 잔고 감소는 완화 요인.</div>
+      </div>
+      <span class="badge b-hi">상</span>
+    </div>
+    <div class="risk">
+      <div class="stripe s-mid"></div>
+      <div class="rn">
+        <div class="rt">산업 · 경쟁 리스크 <span class="mv">중상 유지</span></div>
+        <div class="rd">MS Maia 300, 메타-구글 TPU 계약 등 자체 칩 확산은 기존 트렌드의 연장입니다. Rubin 초도 출하는 반대 방향의 신호.</div>
+      </div>
+      <span class="badge b-mid">중상</span>
+    </div>
+    <div class="risk">
+      <div class="stripe s-mid"></div>
+      <div class="rn">
+        <div class="rt">재무 리스크 <span class="mv">하~중 → 중 · 소폭 상향</span></div>
+        <div class="rd">부채 급증, FCF 반토막, 데이터센터 집중도 심화가 원인입니다. 다만 순현금 $66.0B, 유동비율 4.59x 등 절대 수준은 여전히 견고합니다.</div>
+      </div>
+      <span class="badge b-mid">중</span>
+    </div>
+  </div>
+
+  <div class="bars">
+    <div class="grp-t">실현변동성 · 시장(SPY) 대비 몇 배로 흔들리는가</div>
+    <div class="bar-row wide"><span class="bl">20일</span><div class="track"><div class="fill r" style="width:100.0%"></div></div><span class="bv num">4.09배</span></div>
+    <div class="bar-row wide"><span class="bl">60일</span><div class="track"><div class="fill n" style="width:74.1%"></div></div><span class="bv num">3.03배</span></div>
+    <div class="bar-row wide"><span class="bl">1년</span><div class="track"><div class="fill n" style="width:72.1%"></div></div><span class="bv num">2.95배</span></div>
+  </div>
+  <p class="note">60일·1년 배수는 직전 분석의 2.8~3.2배 범위를 유지했지만, 최근 20일 배수만 4.09배로 튀어올랐습니다. 20일 연율 실현변동성은 42.92%입니다.</p>
+
+  <div class="bars">
+    <div class="grp-t">베타 · 측정 기간에 따라 값이 다릅니다<sup>§</sup></div>
+    <div class="bar-row wide"><span class="bl">5년</span><div class="track"><div class="fill r" style="width:100.0%"></div></div><span class="bv num">2.21</span></div>
+    <div class="bar-row wide"><span class="bl">60일 실측</span><div class="track"><div class="fill n" style="width:94.6%"></div></div><span class="bv num">2.09</span></div>
+    <div class="bar-row wide"><span class="bl">1년 실측</span><div class="track"><div class="fill n" style="width:86.9%"></div></div><span class="bv num">1.92</span></div>
+  </div>
+
+  <div class="kv">
+    <div><span class="k">1년 최대낙폭 (MDD)</span><span class="v num">−20.21%</span></div>
+    <div><span class="k">최근 1개월 수익률</span><span class="v num up">+19.98%</span></div>
+    <div><span class="k">같은 기간 SPY</span><span class="v num">+5.71%</span></div>
+    <div><span class="k">공매도 잔고</span><span class="v num">285.96M주</span></div>
+  </div>
+  <p class="note">공매도 잔고는 전월 292.67M주 대비 오히려 줄었습니다. 여론상 공매도 논쟁이 커진 것과 실제 포지션 규모는 다른 방향을 가리키고 있습니다.</p>
+
+  <div class="two">
+    <div class="col neg">
+      <h3>등급 상향으로 이어질 조건</h3>
+      <ul>
+        <li>MA200을 하회한 뒤 3거래일 안에 회복하지 못하는 경우</li>
+        <li>Q3에도 FCF 마진이 회복되지 않는 경우</li>
+        <li>순환금융 관련 SEC 조회 등 공식 절차가 개시되는 경우</li>
+        <li>부채비율이 20%를 넘어서는 경우</li>
+      </ul>
+    </div>
+    <div class="col pos">
+      <h3>등급 하향으로 이어질 조건</h3>
+      <ul>
+        <li>Q3 FCF 마진이 40% 이상으로 회복</li>
+        <li>순환금융 논란이 실질적으로 종결</li>
+        <li>52주 밴드 위치가 60~70%대로 조정</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 08 종합 정리 -->
+<section class="card">
+  <div class="sec-h"><span class="sec-n">08</span><h2>종합 정리</h2></div>
+  <p class="lede">한 달 사이 확인된 사실들을 긍정 요인과 부정 요인으로 나눠 정리했습니다. 이 리포트는 어느 한쪽으로 결론을 내리지 않으며, 판단은 읽는 분의 몫입니다.</p>
+
+  <div class="two">
+    <div class="col pos">
+      <h3>긍정 요인</h3>
+      <ul>
+        <li>Q2 FY27 매출 $96.2B, YoY +106%로 성장 가속. 매출·EPS·가이던스 전 항목 컨센서스 상회</li>
+        <li>FY28 매출성장 가이던스 70%로 컨센서스 44%를 크게 상회</li>
+        <li>영업이익률 66.2%로 오히려 개선, ROE 117.2% 상승, 유동비율 4.59x 우수</li>
+        <li>PER(TTM)이 30.05배에서 28.83배로 하락. 이익 증가가 주가 상승을 앞질렀다는 뜻</li>
+        <li>중장기 이동평균 완전 정배열 회복. 직전 분석의 MA200 방어선 시나리오가 지켜짐</li>
+        <li>Rubin 아키텍처가 지연 없이 초도 출하 개시, AWS GPU 200만 개 추가 계약</li>
+        <li>공매도 잔고가 292.67M주에서 285.96M주로 감소</li>
+      </ul>
+    </div>
+    <div class="col neg">
+      <h3>부정 요인</h3>
+      <ul>
+        <li>순환금융 신뢰성 논란이 해소가 아니라 격화. 회사와 공매도 세력의 공개 설전으로 비화, 현재까지 미해소</li>
+        <li>장기부채 $7.5B → $32.4B, 부채비율 6.6% → 약 17%</li>
+        <li>FCF 마진 59.5% → 22.2%. 매출채권·재고 급증이 원인</li>
+        <li>Q3 매출총이익률 가이던스 75% → 74%로 마진 정점론 부상</li>
+        <li>52주 고점 대비 −3.62%로 하방 쿠션 소멸, 밴드 상위 89.4% 위치</li>
+        <li>20일 실현변동성이 시장의 4.09배로 확대, 5년 베타 2.21로 상승</li>
+        <li>데이터센터 매출 비중 92.5%로 집중도 심화. Q3 가이던스 QoQ +12.3%로 성장 둔화 조짐</li>
+        <li>중국향 H20 매출 0, MS Maia 300 출시 예정 등 규제·경쟁 압력 지속</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="disc">
+    본 리포트는 정보 제공을 목적으로 하며 투자 조언이 아닙니다. 투자 결정과 그 책임은 투자자 본인에게 있습니다.
+  </div>
+</section>
+
+<!-- 각주 -->
+<section class="card">
+  <div class="sec-h"><span class="sec-n">주석</span><h2>데이터 신뢰도 참고</h2></div>
+  <div class="fn">
+    <div><b>*</b> Q2 FY26 매출 $46.7B은 Q2 FY27 매출 $96.221B과 YoY +106% 수치로 역산한 추정치입니다. 회사 발표 원본 수치와 소폭 차이가 있을 수 있습니다.</div>
+    <div><b>†</b> 매출총이익률 74.0%는 Q3 FY27 가이던스 값입니다. 다른 수익성 지표(영업이익률·순이익률·FCF 마진)는 Q2 FY27 실적 기준이므로 같은 분기 비교가 아닙니다.</div>
+    <div><b>‡</b> <b>순현금 정의 차이</b> — 본문의 $66.0B은 현금·현금성자산에 단기투자자산까지 포함해 총차입금을 차감한 광의 기준입니다. 단기 유동자산만으로 좁게 계산하면 약 $23.61B로 산출됩니다. 어느 정의를 쓰느냐에 따라 순현금 규모가 3배 가까이 달라지므로 다른 자료와 비교할 때 기준을 확인해야 합니다.</div>
+    <div><b>§</b> <b>베타 측정 기간 차이</b> — 5년 베타는 2.21이지만 SPY 대비 1년 실측 베타는 1.92, 60일 실측 베타는 2.09입니다. 널리 인용되는 5년 값이 최근 실제 민감도보다 높게 나오는 구간이므로, 단기 리스크 판단에는 실측치를 함께 보는 편이 적절합니다.</div>
+    <div><b>재사용 데이터</b> — 산업 점유율(NVIDIA 78% / 커스텀 ASIC 13% / AMD 6% / Intel Gaudi 3%)과 산업 구도 서술은 2026.07.27 분석 결과를 그대로 재사용했으며, 이번 조사에서는 델타(MS Maia 300, 역외 경로 규제 재검토, Rubin 출하)만 반영했습니다. 52주 고점 $236.54도 직전 분석과 동일한 값입니다.</div>
+    <div><b>차트 이미지</b> — 이번 재분석에서는 기술적 분석 차트 이미지가 생성되지 않아 수치 기반 해석으로 대체했습니다.</div>
+  </div>
+</section>
+
+<footer>
+  엔비디아(NASDAQ: NVDA) 재분석 리포트 · 분석 기준일 2026.08.28 (주가는 08.27 종가) · 직전 분석 2026.07.27<br>
+  산업 리서치 · 재무 분석 · 기술적 분석 · 뉴스 모니터링 · 리스크 분석 5개 결과를 종합해 작성했습니다.
+</footer>
+
+</div>
+
+<script>
+(function(){
+  var COMPANY="엔비디아(NVDA)", DATE="2026-08-28";
+  var SUMMARY=[
+    "엔비디아(NASDAQ: NVDA) 투자 컨설팅 리포트 · "+DATE+" (재분석)",
+    "현재가 $227.98 (직전 7/27 $196.51 대비 +16.01%) · PER(TTM) 28.83배 · 종합 리스크 중상(유지)",
+    "Q2 FY27 매출 $96.2B, YoY +106%로 컨센서스 전 항목 상회. 다만 장기부채 $7.5B→$32.4B, FCF 마진 59.5%→22.2%로 하락했고 순환금융 신뢰성 논란은 미해소 상태입니다."
+  ].join("\n");
+
+  var btn=document.getElementById("shareBtn"),
+      panel=document.getElementById("sharePanel"),
+      miMail=document.getElementById("miMail"), bdMail=document.getElementById("bdMail"),
+      miKakao=document.getElementById("miKakao"), bdKakao=document.getElementById("bdKakao"),
+      mailTo=document.getElementById("mailTo"), mailLink=document.getElementById("mailLink"),
+      kkText=document.getElementById("kkText"), kkCopy=document.getElementById("kkCopy"),
+      kkShare=document.getElementById("kkShare");
+
+  function link(){ return window.location.href; }
+  kkText.value = SUMMARY + "\n\n리포트 보기: " + link();
+
+  function closePanel(){ panel.classList.remove("open"); btn.setAttribute("aria-expanded","false"); }
+  btn.addEventListener("click", function(e){
+    e.stopPropagation();
+    var open = panel.classList.toggle("open");
+    btn.setAttribute("aria-expanded", open ? "true" : "false");
+    if(open) kkText.value = SUMMARY + "\n\n리포트 보기: " + link();
+  });
+  document.addEventListener("click", function(e){
+    if(panel.classList.contains("open") && !panel.contains(e.target) && e.target!==btn) closePanel();
+  });
+  document.addEventListener("keydown", function(e){ if(e.key==="Escape") closePanel(); });
+
+  function toggleBody(mi, bd){
+    mi.addEventListener("click", function(){
+      var open = bd.classList.toggle("open");
+      mi.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+  }
+  toggleBody(miMail, bdMail);
+  toggleBody(miKakao, bdKakao);
+
+  function updateMail(){
+    var to = mailTo.value.trim();
+    if(to && mailTo.checkValidity()){
+      var subject = COMPANY + " 투자 컨설팅 리포트 - " + DATE;
+      var body = SUMMARY + "\n\n리포트 보기: " + link();
+      // 수신자 주소는 인코딩하지 않는다 (@가 %40이 되면 받는사람 필드가 깨짐)
+      mailLink.setAttribute("href", "mailto:" + to + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body));
+      mailLink.removeAttribute("aria-disabled");
+    } else {
+      mailLink.setAttribute("href", "#");
+      mailLink.setAttribute("aria-disabled","true");
+    }
+  }
+  mailTo.addEventListener("input", updateMail);
+  updateMail();
+
+  kkCopy.addEventListener("click", function(){
+    kkText.focus(); kkText.select();
+    var ok=false;
+    try { ok = document.execCommand("copy"); } catch(err) { ok=false; }
+    if(ok){
+      var t=kkCopy.textContent; kkCopy.textContent="복사됨!";
+      setTimeout(function(){ kkCopy.textContent=t; }, 1600);
+    }
+  });
+
+  if(navigator.share){
+    kkShare.style.display="inline-flex";
+    kkShare.addEventListener("click", function(){
+      navigator.share({ title: COMPANY+" 투자 컨설팅 리포트", text: SUMMARY, url: link() }).catch(function(){});
+    });
+  }
+})();
+</script>

@@ -1,5 +1,14 @@
 [
   {
+    "company": "엔비디아 (재분석)",
+    "code": "NVDA · NASDAQ",
+    "date": "2026-08-28",
+    "price": "$227.98",
+    "change": "+16.0% (직전 분석 대비) · 8/26 실적 후 +8.74%",
+    "risk": "중상",
+    "file": "reports/nvda-2026-08-28.html"
+  },
+  {
     "company": "SNT에너지 (재분석)",
     "code": "100840 · KOSPI",
     "date": "2026-08-26",
