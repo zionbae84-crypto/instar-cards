@@ -1,5 +1,14 @@
 [
   {
+    "company": "SpaceX (Space Exploration Technologies Corp)",
+    "code": "SPCX · NASDAQ",
+    "date": "2026-08-31",
+    "price": "$141.50",
+    "change": "공모가 대비 +4.8% · 상장 80일차 (8/30 종가)",
+    "risk": "상",
+    "file": "reports/spcx-2026-08-31.html"
+  },
+  {
     "company": "엔비디아 (재분석)",
     "code": "NVDA · NASDAQ",
     "date": "2026-08-28",
