@@ -1,5 +1,14 @@
 [
   {
+    "company": "플래닛랩스 (Planet Labs PBC)",
+    "code": "PL · NYSE",
+    "date": "2026-09-04",
+    "price": "$18.35 (09-03 종가, 프리마켓 +10%)",
+    "change": "52주 고점 대비 -64.5% · Q2 실적서프라이즈 +58% YoY",
+    "risk": "중상",
+    "file": "reports/pl-2026-09-04.html"
+  },
+  {
     "company": "SpaceX (Space Exploration Technologies Corp)",
     "code": "SPCX · NASDAQ",
     "date": "2026-08-31",
