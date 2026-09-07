@@ -1,5 +1,14 @@
 [
   {
+    "company": "두산에너빌리티 (Doosan Enerbility)",
+    "code": "034020 · KOSPI",
+    "date": "2026-09-07",
+    "price": "87,900원 (09-07 종가, 전일 대비 +10.98%)",
+    "change": "이전 분석(08-16) 대비 +6.4% · PER 342.7→364.6배",
+    "risk": "상",
+    "file": "reports/doosan-enerbility-034020-2026-09-07.html"
+  },
+  {
     "company": "플래닛랩스 (Planet Labs PBC)",
     "code": "PL · NYSE",
     "date": "2026-09-04",
