@@ -241,5 +241,14 @@
     "change": "+3.90% (실적후 프리 +11%)",
     "risk": "중상",
     "file": "reports/amazon-2026-07-31.html"
+  },
+  {
+    "company": "오라클 (Oracle)",
+    "code": "ORCL · NYSE",
+    "date": "2026-09-11",
+    "price": "$152.94",
+    "change": "+5.13% (1개월, 실적후 시간외 +7%)",
+    "risk": "상",
+    "file": "reports/orcl-2026-09-11.html"
   }
 ]
