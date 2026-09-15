@@ -1,5 +1,14 @@
 [
   {
+    "company": "포스코인터내셔널 (POSCO International)",
+    "code": "047050 · KOSPI",
+    "date": "2026-09-15",
+    "price": "55,700원 (09-15 기준, 전일 대비 -1.59%)",
+    "change": "2Q26 영업이익 +26.9% YoY 역대 최대 · 52주 고점 대비 약 -40%",
+    "risk": "중상",
+    "file": "reports/posco-international-047050-2026-09-15.html"
+  },
+  {
     "company": "두산에너빌리티 (Doosan Enerbility)",
     "code": "034020 · KOSPI",
     "date": "2026-09-07",
